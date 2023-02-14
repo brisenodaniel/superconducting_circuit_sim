@@ -1,0 +1,16 @@
+#+title: Simulating Geometric Gates on Transmon Qubit
+#+author: Daniel Briseno
+#+STARTUP: latexpreview
+#+begin_src python
+x=3
+print(str(x))
+x
+#+end_src
+
+
+#+begin_src python
+print(x)
+
+#+end_src
+
+#+RESULTS:
