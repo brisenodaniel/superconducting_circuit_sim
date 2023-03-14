@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import numpy as np
+from typing import Collection
 import matplotlib.pyplot as plt
 import qutip as qt
 from scipy.constants import hbar, h, pi
@@ -14,7 +15,6 @@ Implementation of geometric gate on fluxonium as outlined in Setiawan et al. (20
 # Global Parameters
 nlev = 5 # Number of energy levels to consider for each subsystem.
 j = complex(0,1)
-qho_basis = list([qt.basis(nlev,i) for i in range(nlev)])
 # Fluxonium A
 E_JA = 4.5
 E_CA = 1.8
@@ -47,6 +47,10 @@ t_ramp = 0.45 #ns, defined in fig 11 caption
 #################### System Hamiltonian
 
 ########### Define Operators
+def build_qho_basis(nlev):
+    basis_matrix = qt.qeye(nlev)
+    return list([v for v in basis_matrix[:,]])
+
 def fluxonium_hamiltonian(n,
                           phi,
                           phi_ex,
@@ -184,6 +188,31 @@ def find_bare_states(H_bare,
                 labeled_states[n,m,k] = bare_states[labeled_state_idx]
     return comp_state_idx, labeled_states
 
+def find_state(H, state, nlev=None):
+    if nlev is None:
+        nlev = np.array(H.dims).ravel()[0]
+    if type(state) is not type(qt.basis(nlev,0)):
+        state = build_product_state(state,nlev)
+    _, eigenstates = H.eigenstates()
+    gram_row = np.empty(len(eigenstates), dtype=complex)
+    for n, eig in enumerate(eigenstates):
+        gram_row[n] = (eig.dag()*state).tr()
+    state_idx = np.argmax(gram_row)
+    return state_idx, eigenstates[state_idx]
+
+def build_product_state(state:list, nlev):
+    # builds product state in hamiltonian eigenbasis
+    err_msg_type_and_len = 'state parameter must be a list of integers of length 3'
+    err_msg_bounds = 'state parameter must lie in bounds [0,2], parameter out of bounds'
+    assert len(state)==3, err_msg_type_and_len
+    assert all([type(x)== int for x in state]), err_msg_type_and_len
+    assert all([0<=x<=2 for x in state]), err_msg_bounds
+    basis_matrix = qt.qeye(nlev) 
+    q0, q1, q2 = [qt.Qobj(basis_matrix[:,n]) for n in state]
+    return qt.tensor(q0,q1,q2)
+
+
+
 def build_product_basis(a_basis, b_basis, c_basis, nlev=nlev):
     bare_comp_state_tensor = np.empty((3,3,3), dtype=object)
     for n in range(3):
@@ -199,6 +228,7 @@ def build_product_basis(a_basis, b_basis, c_basis, nlev=nlev):
 #Build fluxonium A and B Hamiltonians
 # sub for subsytem operator
 def build_subsystems(nlev=nlev):
+    qho_basis = build_qho_basis(nlev)
     #build fluxonium A
     H_A_sub, A_basis, ops_A_sub = fluxonium_hamiltonian_from_ct_params(
         E_CA,
