@@ -133,7 +133,7 @@ comp_states = [
     (0,0,1)
 ]
 #states_df = track_states_over_nlev(3,20,comp_states)
-energy_df = track_eigenenergies_over_nlev(3,20,comp_states)
+energy_df = track_eigenenergies_over_nlev(10,15,comp_states)
 
 #display(states_df)
 display(energy_df)

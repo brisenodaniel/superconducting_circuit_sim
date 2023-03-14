@@ -63,10 +63,11 @@ def fluxonium_hamiltonian(n,
     capacitor_energy = 4*E_C*n**2
     josephenson_energy = E_J*phi.cosm()
     inductor_energy = (0.5)*E_L*(phi - 2*np.pi*phi_ex*Id)
-    H = capacitor_energy + josephenson_energy + inductor_energy
+    H = capacitor_energy - josephenson_energy + inductor_energy
     #diagonalize hamiltonian, early diagonalization miminizes truncation errors
     eigenval, eigenstate_basis = H.eigenstates()
-    H_diag = qt.qdiags(eigenval, offsets=0)
+    H_diag = H.transform(eigenstate_basis)
+# H_diag = qt.qdiags(eigenval, offsets=0)
     return H_diag, eigenstate_basis
 
 def fluxonium_hamiltonian_from_ct_params(
