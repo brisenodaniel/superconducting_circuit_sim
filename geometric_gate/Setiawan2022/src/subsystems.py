@@ -67,8 +67,8 @@ def build_fluxonium_hamiltonian(n:Qobj,
     nlev:int = np.array(n.dims).ravel()[0]
     Id:Qobj = qt.qeye(nlev)
     capacitor_energy:Qobj = 4*E_C*n**2 # type: ignore
-    josephenson_energy:Qobj = E_J*phi.cosm()
-    inductor_energy:Qobj = 0.5*E_L*(phi - 2*np.pi*phi_ext*Id)
+    josephenson_energy:Qobj = -E_J*phi.cosm()
+    inductor_energy:Qobj = 0.5*E_L*(phi - 2*np.pi*phi_ext*Id)**2
     H = capacitor_energy + josephenson_energy + inductor_energy
     return H
 

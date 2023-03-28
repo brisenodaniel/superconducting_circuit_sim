@@ -17,7 +17,7 @@ with open('./config/circuit_parameters.yaml','r') as stream:
         print(exc)
 
 
-#fluxonium A constructor parameters
+# Subsystem constructor parameters
 param_lbls = ['E_C', 'E_J', 'E_L', 'phi_ext']
 transmon_param_lbls = ['w','U']
 flux_A_params:dict[str,float] = {lbl:ct_params['A'][lbl]\
