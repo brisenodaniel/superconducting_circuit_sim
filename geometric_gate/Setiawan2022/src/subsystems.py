@@ -72,13 +72,13 @@ def build_fluxonium_hamiltonian(n:Qobj,
     H = capacitor_energy + josephenson_energy + inductor_energy
     return H
 
-def build_transmon_operators(nlev:int, w_C:float, U:float) -> dict[str,Qobj]:
+def build_transmon_operators(nlev:int, w:float, U:float) -> dict[str,Qobj]:
     """Method defines the hamiltonian operator for a transmon circuit as described
     in Setiawan et. al. 2022
 
     Args:
         nlev (int): Number of energy levels to consider for transmon circuit.
-        w_C (float): Circuit parameter, frequency of 0 -> 1 transition.
+        w (float): Circuit parameter, frequency of 0 -> 1 transition.
         U (float): Circuit parameter, transmon anharmonicity
 
     Returns:
@@ -86,8 +86,5 @@ def build_transmon_operators(nlev:int, w_C:float, U:float) -> dict[str,Qobj]:
         Includes hamiltonian.
     """
     a:Qobj = qt.destroy(nlev)
-    H:Qobj = w_C*a.dag()*a - U*a.dag()**2 * a**2
+    H:Qobj = w*a.dag()*a - U*a.dag()**2 * a**2
     return {'a': a, 'H': H}
-
-
-
