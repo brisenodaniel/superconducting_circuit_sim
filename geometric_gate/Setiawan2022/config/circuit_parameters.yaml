@@ -17,3 +17,8 @@ B: # Fluxonium B Parameters
 C: # Transmon Coupler Parameters
  U: 0.005
  w: 6.974335690969341
+interaction: # Parameters relevant to interaction hamiltonian
+ g_AC: 0.63
+ g_BC: 0.6
+ g_AB: 0.04
+

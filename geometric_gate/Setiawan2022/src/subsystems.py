@@ -93,6 +93,20 @@ class Subsystem:
             "Cannot add non-float type as tol"
         self._tol = tolerance
 
+    #for hamiltonian
+    @property
+    def H(self)->Qobj:
+        assert 'H' in self._ops, 'Hamiltonian undefined in subsystem'
+        return self._ops['H']
+    @H.setter 
+    def H(self,op:Qobj)->None:
+        self.__setitem__('H', op)
+
+    #for nlev
+    @property 
+    def nlev(self)->int:
+        return self._nlev
+
 
     def __eq__(self, other:Subsystem)->bool:
         """Comparison operator for subsystems.

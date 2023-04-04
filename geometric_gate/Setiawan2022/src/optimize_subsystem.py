@@ -24,7 +24,7 @@ Requirements:
     class defined in subsystems module
 """
 
-from typing import TypeAlias, TypeVar, Callable, Any
+from typing import TypeAlias, Callable
 import qutip as qt
 import numpy as np
 import matplotlib.pyplot as plt
