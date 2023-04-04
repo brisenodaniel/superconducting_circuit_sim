@@ -1,3 +1,8 @@
+"""File contains functions used to identify hamiltonian eigenstates
+with computational states.
+"""
+
+
 import qutip as qt
 import numpy as np
 from typing import TypeAlias
@@ -32,7 +37,7 @@ def get_product_comp_states(sys:CompositeSystem,
     ordered_bases:list[np.ndarray[Qobj]] = list([ord_sys.H.eigenstates()[1]\
                                                  for ord_sys in ordered_subsystems])
 
-    bare_comp_state_tensor = np.empty((3,3,3), dtype=object)
+    bare_comp_state_tensor = np.empty((comp_states,comp_states,comp_states), dtype=object)
     for n in range(comp_states):
         for m in range(comp_states):
             for k in range(comp_states):

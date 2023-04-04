@@ -64,7 +64,7 @@ class CompositeSystem:
         nsys = max(self.idxs.values()) + 1
         subsys_list = np.empty(nsys, dtype=object)
         for sys_lbl, idx in self.idxs.items():
-            subsys_list[idx] = self.subsystems[sys_lbl]
+            subsys_list[idx] = self.subsystems[sys_lbl].H
         return  qt.tensor(subsys_list)
 
     def plus_interaction_term(self, H_int:Qobj)->CompositeSystem:

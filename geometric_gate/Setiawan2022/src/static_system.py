@@ -51,7 +51,7 @@ def build_interaction_H(gs:dict[str:float],
     H_int += gs['g_AB']*n_A*n_B
     return H_int
 
-def build_bare_systems(param_path:str='../config/circuit_parameters.yaml',
+def build_bare_systems(ct_params:dict[dict[float]],
                        stable_levels:int=5,
                        flux_param_lbls:list[str]=['E_C','E_L','E_J','phi_ext'],
                        transmon_param_lbls:list[str]=['w','U'])->CompositeSystem:
@@ -73,7 +73,6 @@ def build_bare_systems(param_path:str='../config/circuit_parameters.yaml',
     flux_constr:Callable['...',Subsystem] = subsystems.build_fluxonium_operators
     transmon_constr:Callable['...',Subsystem] = subsystems.build_transmon_operators
 
-    ct_params:dict[str,dict] = get_params(param_path)
     flux_A_params:dict[str,float] = {lbl:ct_params['A'][lbl] for lbl in flux_param_lbls}
     flux_B_params:dict[str,float] = {lbl:ct_params['B'][lbl] for lbl in flux_param_lbls}
     transmon_params:dict[str,float] = {lbl:ct_params['C'][lbl] for lbl in transmon_param_lbls}
@@ -94,7 +93,7 @@ def build_bare_systems(param_path:str='../config/circuit_parameters.yaml',
     bare_system = CompositeSystem(subsystems_dict, subsystems_idx)
     return bare_system
 
-def build_static_system(param_path:str='../config/circuit_parameters.yaml',
+def build_static_system(ct_params:dict[dict[float]],
                         stable_levels:int=5,
                         flux_param_lbls:list[str]=['E_C','E_L', 'E_J', 'phi_ext'],
                         transmon_param_lbls:list[str]=['w','U'])->CompositeSystem:
@@ -113,9 +112,8 @@ def build_static_system(param_path:str='../config/circuit_parameters.yaml',
             CompositeSystem: The system with subsystems flux_A, flux_B, and transmon. Hamiltonian includes interaction term \
             given by equation (23)
     """
-    ct_params:dict[str,dict] = get_params(param_path)
     interaction_params:dict[str,float] = ct_params['interaction']
-    bare_system:CompositeSystem = build_bare_systems(param_path,
+    bare_system:CompositeSystem = build_bare_systems(ct_params,
                                      stable_levels,
                                      flux_param_lbls,
                                      transmon_param_lbls)

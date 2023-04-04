@@ -57,7 +57,7 @@ def test_get_params():
     assert module_params == ct_params, 'Parameter import failure'
 
 def test_build_bare_systems():
-    module_bare_sys = static_system.build_bare_systems(yaml_path)
+    module_bare_sys = static_system.build_bare_systems(ct_params)
     #handroll composite system
     stable_levels:int = 5
     flux_A:Subsystem = opt.build_optimized_system(flux_constr, flux_A_params, stable_levels)
@@ -77,23 +77,23 @@ def test_build_bare_systems():
 
 def test_build_interaction_H():
     gs = ct_params['interaction']
-    bare_sys = static_system.build_bare_systems(yaml_path)
+    bare_sys = static_system.build_bare_systems(ct_params)
     interaction_H = static_system.build_interaction_H(gs, bare_sys)
     assert not is_diag(interaction_H), 'Interaction Hamiltonian must not be diagonal'
 
 def test_build_static_system():
-    module_static_sys = static_system.build_static_system(yaml_path)
+    module_static_sys = static_system.build_static_system(ct_params)
     #test is_diag
     assert module_static_sys.H.isherm, 'Static System Hamiltonian not Hermitian'
     assert not is_diag(module_static_sys.H), 'Static System Hamiltonian should not be diagonal'
 
 
 def plot_H():
-    module_static_sys = static_system.build_static_system(yaml_path)
+    module_static_sys = static_system.build_static_system(ct_params)
     qt.hinton(abs(module_static_sys.H.full()))
 
 def plot_eigenen():
-    module_static_sys = static_system.build_static_system(yaml_path)
+    module_static_sys = static_system.build_static_system(ct_params)
     eigenen = module_static_sys.H.eigenenergies()
     plt.scatter(range(5), eigenen[:5])
     plt.show()
