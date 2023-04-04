@@ -137,13 +137,18 @@ class Subsystem:
                 if not qt.isequal(self._ops[key], other._ops[key], self._tol): return False
             if self._base_space != other._base_space: return False
             #check basis, last thing to check
-            if self._basis is None: #if no basis defined, check that other also has no basis defined
-                if other._basis is not None: return False
+            if self._transf_list is None: #if no basis defined, check that other also has no basis defined
+                if other._transf_list is not None: return False
             else:
-                if other._basis is None: return False
-                for idx, vector in enumerate(self._basis):
-                    other_vector = other._basis[idx]
-                    if not qt.isequal(vector, other_vector, self._tol): return False
+                if other._transf_list is None: return False
+                for idx, transf in enumerate(self._transf_list):
+                    other_transf = other._transf_list[idx]
+                    if isinstance(transf, np.ndarray):
+                        for i, vector in enumerate(transf):
+                            other_vector = other_transf[i]
+                            if not qt.isequal(vector, other_vector, self._tol): return False
+                    else:
+                        if not qt.isequal(vector, other_vector, self._tol): return False
         return True
     
     def __getitem__(self, key:str)->Qobj:

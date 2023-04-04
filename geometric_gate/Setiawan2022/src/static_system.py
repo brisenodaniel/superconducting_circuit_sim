@@ -28,7 +28,7 @@ def build_interaction_H(gs:dict[str:float],
     , given the coupling strengths g_ij and bare system.
 
     Args:
-        gs (dict[str:float]): Dictionary with labels (AC, BC, AB), corresponding to coupling strengths\
+        gs (dict[str:float]): Dictionary with labels (g_AC, g_BC, g_AB), corresponding to coupling strengths\
          between circuit components
         bare_sys (CompositeSystem): System composed of Subsystem objects for fluxonia A,B, and transmon\
          coupler C.
@@ -38,17 +38,17 @@ def build_interaction_H(gs:dict[str:float],
          described in eq (23) of Setiawan et. al. 2022.
     """
     H_int:Qobj = qt.Qobj(dims=bare_sys.H.dims)
-    for g_lbl in ('AC', 'BC'):
+    for g_lbl in ('g_AC', 'g_BC'):
         # extract coupling strengths and relevant operators
         g:float = gs[g_lbl]
-        sys_lbl:str = g_lbl[0]
+        sys_lbl:str = g_lbl[2]
         n:Qobj = bare_sys.get_raised_op(sys_lbl, 'n')
         a:Qobj = bare_sys.get_raised_op('C', 'a')
         #build interaction hamiltonian
         H_int += g*n*(a.dag()+a)
     n_A:Qobj = bare_sys.get_raised_op('A','n')
     n_B:Qobj = bare_sys.get_raised_op('B','n')
-    H_int += gs['AB']*n_A*n_B
+    H_int += gs['g_AB']*n_A*n_B
     return H_int
 
 def build_bare_systems(param_path:str='../config/circuit_parameters.yaml',
@@ -74,9 +74,9 @@ def build_bare_systems(param_path:str='../config/circuit_parameters.yaml',
     transmon_constr:Callable['...',Subsystem] = subsystems.build_transmon_operators
 
     ct_params:dict[str,dict] = get_params(param_path)
-    flux_A_params:dict[str,float] = ct_params['A'][flux_param_lbls]
-    flux_B_params:dict[str,float] = ct_params['B'][flux_param_lbls]
-    transmon_params:dict[str,float] = ct_params['C'][transmon_param_lbls]
+    flux_A_params:dict[str,float] = {lbl:ct_params['A'][lbl] for lbl in flux_param_lbls}
+    flux_B_params:dict[str,float] = {lbl:ct_params['B'][lbl] for lbl in flux_param_lbls}
+    transmon_params:dict[str,float] = {lbl:ct_params['C'][lbl] for lbl in transmon_param_lbls}
     
     flux_A = opt.build_optimized_system(flux_constr, flux_A_params, stable_levels)
     flux_B = opt.build_optimized_system(flux_constr, flux_B_params, stable_levels)

@@ -32,7 +32,7 @@ import warnings
 from subsystems import Subsystem
 
 Qobj: TypeAlias = qt.Qobj
-Qsys: TypeAlias = dict[str,Qobj]
+Qsys: TypeAlias = Subsystem
 
 j: complex = complex(0,1)
 
@@ -48,9 +48,8 @@ def stabilize_nlev(constr_qsys:Callable['...', Subsystem],
     thier eigenenergies as the Hamiltonian considers higher energy states.
 
     Args:
-        constr_qsys (function): Constructor which returns dictionary of quantum operators (Qsys)\
-         corresponding to operators acting on a quantum system, including the Hamiltonian which \
-         must have key 'H'. Must accept a parameter `nlev` which determines the number of energy \
+        constr_qsys (function): Constructor which returns a Subsystem object as defined in Subystems.py.\
+         Must accept a parameter `nlev` which determines the number of energy \
          levels modeled in Qsys.
         constr_args (dict): Named arguments to constr_qsys. Need not include `nlev`.
         stable_levels (int, optional): Determines which energy levels are stabilized. 
@@ -69,7 +68,7 @@ def stabilize_nlev(constr_qsys:Callable['...', Subsystem],
          with n eigenstates. Defaults to 5.
 
     Returns:
-        tuple[Qsys, int]: (qsys, nlev), where nlev is the minimum number of energy levels modeled to achieve \
+        tuple[Subsystem, int]: (qsys, nlev), where nlev is the minimum number of energy levels modeled to achieve \
          stability of the eigenenergies, and qsys is the return value of `constr_qsys` with nlev energy levels.
     """
     if min_nlev is None:
@@ -88,7 +87,7 @@ def stabilize_nlev(constr_qsys:Callable['...', Subsystem],
     #loop until eigenenergies don't change over `n_stable_reps`
     while stable_reps<n_stable_reps:
         constr_args['nlev'] += 1
-        new_qsys:Qsys = constr_qsys(**constr_args)
+        new_qsys:Subsystem = constr_qsys(**constr_args)
         energies_changed:bool = not has_equal_energies(qsys,
                                                        new_qsys, 
                                                        stable_levels,
@@ -254,13 +253,14 @@ def diagonalize_Qsys(qsys:Subsystem)->Subsystem:
     """
     if is_diag(qsys['H']):
         return qsys
-    _, eigenbasis = qsys['H'].eigenstates()
-    diag_sys = qsys.transform(eigenbasis)
-
+    eigenbasis:np.ndarray[Qobj] = qsys['H'].eigenstates()[1]
+    diag_sys:Subsystem = qsys.transform(eigenbasis)
     return diag_sys
 
 def truncate_Qsys(qsys:Subsystem,
                   truncate_to:int)->Subsystem:
+    #DUMMY FUNCTION TO NOT BREAK TESTS. Equivalent to new Subsystem class method
+    # Subsystem.truncate(). TODO: Remove this function and re-write corresponding tests
     """Function truncates all operators in qsys to an operator acting on a state with `nlev`
     energy levels. Truncates basis vectors in `eigenbasis` if provided.
 
@@ -310,7 +310,7 @@ def build_optimized_system(constr_qsys:Callable['...', Subsystem],
                            max_nlev:int=None,
                            truncate_to:int=None,
                            n_stable_reps:int=5
-                           )->tuple[Subsystem,np.ndarray[Qobj]]:
+                           )->Subsystem:
     """Function first builds the quantum system defined by `constr_qsys` with enough energy levels\
     to model dynamics of the bottom `stable_levels` eigenstates (ordered by increasing eigenenergy)\
     with minimal truncation error. Then, the stable system model is transformed into it's hamiltonian's\
@@ -339,27 +339,24 @@ def build_optimized_system(constr_qsys:Callable['...', Subsystem],
          with n eigenstates. Defaults to 5.
 
     Returns:
-        tuple[Subsystem,np.array[Qobj]]: tuple(sys, basis) where sys is the quantum system returned by `constr_sys`\
-         transformed to it's hamiltonian's eigenbasis and truncated to `truncate_to` energy levels with minimal\
-         truncation error; and `basis` is the truncated hamiltonian eigenbasis. `basis` is given relative to the\
-         basis in which `constr_sys` defines the system operators.
+        Subsystem: The quantum system returned by `constr_sys` transformed to it's hamiltonian's eigenbasis\
+              and truncated to `truncate_to` energy levels with minimal truncation error.
     """
     if truncate_to is None:
         truncate_to = stable_levels
     if min_nlev is None:
         min_nlev = stable_levels
     assert truncate_to<=min_nlev,\
-    f'Parameter `truncate_to` must have value less than or equal to `min_nlev`.'+\
-    f' `truncate_to` has value {truncate_to}, `min_nlev` has {min_nlev}.' +\
+    f'Parameter `truncate_to` must have value less than or equal to `min_nlev`.\n'+\
+    f' `truncate_to` has value {truncate_to}, `min_nlev` has {min_nlev}.\n' +\
     f' If you did not provide `min_nlev` as a parameter, it was set to the value of parameter `stable_levels`.'
-    qsys, _ = stabilize_nlev(constr_qsys,
-                             constr_args,
-                             stable_levels,
-                             tol,
-                             min_nlev,
-                             max_nlev,
-                             n_stable_reps)
+    qsys:Subsystem = stabilize_nlev(constr_qsys,
+                                    constr_args,
+                                    stable_levels,
+                                    tol,
+                                    min_nlev,
+                                    max_nlev,
+                                    n_stable_reps)[0]
     qsys = diagonalize_Qsys(qsys)
     qsys = qsys.truncate(truncate_to)
-   # qsys, eigenbasis = truncate_Qsys(qsys, truncate_to, eigenbasis)
     return qsys

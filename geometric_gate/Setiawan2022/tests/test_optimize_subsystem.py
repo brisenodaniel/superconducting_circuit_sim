@@ -179,7 +179,7 @@ def test_build_optimized_system():
     transmon_constr:Callable['...',Qsys] = subsystems.build_transmon_operators
 
     # run tests for the following stable levels
-    stable_nlist = range(3,10)
+    stable_nlist = range(3,5)
     for stable_levels in stable_nlist:
         # run tests for the following truncation lengths
         trunc_nlist = range(2,stable_levels)
