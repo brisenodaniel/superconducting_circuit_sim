@@ -258,16 +258,18 @@ def build_fluxonium_operators(nlev:int,
 
     Args:
         nlev (int): Number of energy levels to consider in the system
-        E_C (float): Circuit parameter, capacitance energy coefficient
-        E_J (float): Circuit parameter, josephenson energy coefficient
-        E_L (float): Circuit parameter, linear inductive energy coefficient
-        phi_ext (float): External flux threading  loop formed by josephenson
+        E_C (float): Circuit parameter, capacitance energy coefficient in GHz
+        E_J (float): Circuit parameter, josephenson energy coefficient in GHz
+        E_L (float): Circuit parameter, linear inductive energy coefficient in GHz
+        phi_ext (float): External flux threading  loop formed by josephenson 
          junction and linear inductor.
 
     Returns:
         dict[str,Qobj]: _Dictionary of operators acting on fluxonium state vector.
            Includes Hamiltonian operator
     """
+    # Transform E_C, E_J, E_L into units of radian frequency
+    E_C, E_J, E_L = [2*np.pi*E for E in (E_C, E_J, E_L)]
     a:Qobj = qt.destroy(nlev)
     n_zpf:float = (E_L/(32*E_C))**(1/4)
     phi_zpf:float = (2*E_C/E_L)**(1/4)

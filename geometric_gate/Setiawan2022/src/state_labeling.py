@@ -1,8 +1,6 @@
 """File contains functions used to identify hamiltonian eigenstates
 with computational states.
 """
-
-
 import qutip as qt
 import numpy as np
 from typing import TypeAlias
@@ -11,6 +9,7 @@ from subsystems import Subsystem
 
 Qobj:TypeAlias = qt.Qobj
 CompTensor:TypeAlias = np.ndarray[np.ndarray[np.ndarray[Qobj]]]
+CompCoord:TypeAlias = np.ndarray[np.ndarray[np.ndarray[int]]]
 GramTensor:TypeAlias = np.ndarray[np.ndarray[np.ndarray[np.ndarray[float]]]]
 
 
@@ -77,7 +76,7 @@ def get_state_overlap(comp_state_tensor:CompTensor,
     return gram_tensor
 
 def match_states(overlap_tensor:GramTensor,
-                 eigenstates:np.ndarray[Qobj])->CompTensor:
+                 eigenstates:np.ndarray[Qobj])->tuple[CompTensor,CompCoord]:
     """Function to map an eigenstate to a computational state, given a GramTensor with the \
     overlap between each eigenstate and each computational state.
 
@@ -89,21 +88,26 @@ def match_states(overlap_tensor:GramTensor,
 
     Returns:
         CompTensor: 3-d array where index [n,m,k] corresponds to the eigenstate in `eigenstates`\
-         with largest overlap to theorized to theorized state |n,m,k>.
+         with largest overlap to theorized state |n,m,k>.
+        
+        CompCoord: 3-d array where index [n,m,k] contains an index l, such that\
+        `eigenstates[l]` corresponds to computational state |n,m,k>
     """
     n_states:int = overlap_tensor.shape[0]
     comp_states:CompTensor = np.empty((n_states,n_states, n_states), dtype=object)
+    comp_coords:CompCoord = np.empty((n_states, n_states, n_states),dtype=int)
     for n in range(n_states):
         for m in range(n_states):
             for k in range(n_states):
                 overlap_row:np.ndarray[float] = overlap_tensor[n,m,k,:]
                 eigenstate_idx:int = np.argmax(overlap_row)
                 comp_states[n,m,k] = eigenstates[eigenstate_idx]
-    return comp_states 
+                comp_coords[n,m,k] = eigenstate_idx
+    return comp_states, comp_coords
 
 
 def get_bare_comp_states(sys:CompositeSystem,
-                         comp_states:int=5)->CompTensor:
+                         comp_states:int=5)->tuple[CompTensor,CompCoord]:
     """Function to obtain bare computational states 
 
     Args:
@@ -124,7 +128,7 @@ def get_bare_comp_states(sys:CompositeSystem,
     return match_states(gram_tensor, bare_states)
 
 def get_dressed_comp_states(sys:CompositeSystem,
-                            comp_states:int=5)->CompTensor:
+                            comp_states:int=5)->tuple[CompTensor, CompCoord]:
     """Function to obtain dressed computational states
 
     Args:
@@ -137,7 +141,7 @@ def get_dressed_comp_states(sys:CompositeSystem,
         CompTensor: 3-dimensional array with CompTensor[n,m,k] containing the dressed eigenstate corresponding\
         to the product state created from the nth, mth, and kth lowest energy level of the corresponding subsystem.
     """
-    bare_comp_states:CompTensor = get_bare_comp_states(sys, comp_states)
+    bare_comp_states:CompTensor = get_bare_comp_states(sys, comp_states)[0]
     dressed_eigenstates:np.ndarray[Qobj] = sys.H.eigenstates()[1]
     gram_tensor:GramTensor = get_state_overlap(bare_comp_states, dressed_eigenstates, comp_states)
     return match_states(gram_tensor, dressed_eigenstates)
@@ -145,7 +149,7 @@ def get_dressed_comp_states(sys:CompositeSystem,
 
 def get_evolved_comp_state(sys_0:CompositeSystem|CompTensor,
                            sys_1:CompositeSystem|Qobj,
-                           comp_states:int=5)->CompTensor:
+                           comp_states:int=5)->tuple[CompTensor,CompCoord]:
     """Function to obtain computational states of a dynamical hamiltonian at time T, given the hamiltonian at \
     time 0 or the computational states at time 0. 
 
@@ -165,7 +169,7 @@ def get_evolved_comp_state(sys_0:CompositeSystem|CompTensor,
             computational state |n,m,k> at time 0.
     """
     if isinstance(sys_0, CompositeSystem):
-        comp_states_0:CompTensor = get_dressed_comp_states(sys_0, comp_states)
+        comp_states_0:CompTensor = get_dressed_comp_states(sys_0, comp_states)[0]
     else:
         comp_states_0:CompTensor = sys_0
     if isinstance(sys_1, CompositeSystem):

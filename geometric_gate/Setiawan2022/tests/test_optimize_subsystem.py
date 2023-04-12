@@ -72,9 +72,7 @@ def test_stabilize_nlev():
     'Fluxonium A operators of incorrect shape.'
     assert all([flux_B[op].dims==[[nlev_B],[nlev_B]] for op in flux_ops]),\
     'Fluxonium B operators of incorrect shape.'
-    #test assertion error for min_nlev< stable_levels
-    with pytest.raises(AssertionError):
-        opt.stabilize_nlev(flux_constr, flux_A_params, min_nlev=2)
+    #test assertion error for max_nlev<min_nlev
     with pytest.raises(AssertionError):
         opt.stabilize_nlev(flux_constr, flux_A_params,min_nlev=20, max_nlev=5)
     #test warnings about exceeding max_nlev
@@ -180,25 +178,25 @@ def test_build_optimized_system():
 
     # run tests for the following stable levels
     stable_nlist = range(3,5)
-    for stable_levels in stable_nlist:
+    for stable_nlev in stable_nlist:
         # run tests for the following truncation lengths
-        trunc_nlist = range(2,stable_levels)
+        trunc_nlist = range(2,stable_nlev)
         for truncate_to in trunc_nlist:
             #run tests
 
             #build transmon system
             transmon = opt.build_optimized_system(transmon_constr,
                                                            transmon_params,
-                                                           stable_levels=stable_levels,
+                                                           stable_nlev=stable_nlev,
                                                            truncate_to=truncate_to)
             #build fluxonia
             flux_A = opt.build_optimized_system(flux_constr, 
                                                          flux_A_params,
-                                                         stable_levels=stable_levels,
+                                                         stable_nlev=stable_nlev,
                                                          truncate_to=truncate_to)
             flux_B = opt.build_optimized_system(flux_constr, 
                                                          flux_B_params,
-                                                         stable_levels=stable_levels,
+                                                         stable_nlev=stable_nlev,
                                                          truncate_to=truncate_to)
 
             #check that all operators were defined

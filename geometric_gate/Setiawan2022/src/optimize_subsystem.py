@@ -37,12 +37,12 @@ Qsys: TypeAlias = Subsystem
 j: complex = complex(0,1)
 
 def stabilize_nlev(constr_qsys:Callable['...', Subsystem], 
-                  constr_args:dict,
-                  stable_levels:int=3,
-                  tol:float=1e-9,
-                  min_nlev:int=None,
-                  max_nlev:int=None,
-                  n_stable_reps:int=5)->tuple[Subsystem, int]:
+                   constr_args:dict,
+                   stable_levels:int=3,
+                   tol:float=1e-9,
+                   min_nlev:int=None,
+                   max_nlev:int=None,
+                   n_stable_reps:int=5)->tuple[Subsystem, int]:
     """Determines the minimum number of energy levels to consider to simulate\
     a given quantum system such that the relevant energy levels do not change\
     thier eigenenergies as the Hamiltonian considers higher energy states.
@@ -57,10 +57,11 @@ def stabilize_nlev(constr_qsys:Callable['...', Subsystem],
          to 5.
         tol (float, optional): Numerical error tolerance. If two eigenenergies e1 and e2 are such that |e1-e2|<=tol,\
          then e1,e2 will be considered equal.
-        min_nlev (int, optional): Minimum number of simulated levels to consider. Must be\
-         greater than `stable_levels`. If not provided, will be set to the value of `stable levels. Defaults to None.
+        min_nlev (int, optional): Minimum number of simulated levels to consider.\
+            If not provided, will be set to the value of `stable levels. Defaults to None.
         max_nlev (int, optional): Maximum number of simulated levels to consider. If not \
-         provided, function will run until stabilization is achieved. Defaults to None.
+         provided, function will run until stabilization is achieved. If provided, must be \
+         greater than `stable_levels`. Defaults to None.
         n_stable_reps (int, optional): Number of additional energy states of the Hamiltionian \
          to consider when determining stability of the eigenstates. If function detemines that \
          the model is stable with n energy levels, then the hamiltonians with [n+1,...,n+n_stable_reps] \
@@ -71,14 +72,13 @@ def stabilize_nlev(constr_qsys:Callable['...', Subsystem],
         tuple[Subsystem, int]: (qsys, nlev), where nlev is the minimum number of energy levels modeled to achieve \
          stability of the eigenenergies, and qsys is the return value of `constr_qsys` with nlev energy levels.
     """
-    if min_nlev is None:
+    if min_nlev is None or min_nlev<stable_levels:
         min_nlev = stable_levels
-    assert stable_levels <= min_nlev, \
-    'Lower bound of simulated levels `min_nlev`:{} is smaller than desired \
-        number of stable levels `stable_levels`:{}'.format(min_nlev, stable_levels)
-    assert max_nlev is None  or min_nlev<max_nlev,\
-    'Upper bound of simulated levels `max_nlev`:{} is smaller than lower bound\
-        min_nlev:{}'.format(max_nlev,min_nlev)
+    assert max_nlev is None or min_nlev<max_nlev,\
+    f'Upper bound of simulated levels `max_nlev`:{max_nlev} is smaller than lower bound `min_nlev`:{min_nlev}'
+    assert max_nlev is None  or stable_levels<=max_nlev,\
+    'Upper bound of simulated levels `max_nlev`:{} is smaller than desired number of\
+        stable levels:{}'.format(max_nlev,stable_levels)
     #set up loop variables
     nlev:int = min_nlev
     constr_args['nlev'] = min_nlev
@@ -304,11 +304,12 @@ def truncate_Qsys(qsys:Subsystem,
 
 def build_optimized_system(constr_qsys:Callable['...', Subsystem],
                            constr_args:dict,
-                           stable_levels:int=3,
+                           stable_nlev:int=3,                           stabilize:bool=True,
+                           nlev:int=30,
                            tol:float=1e-9,
-                           min_nlev:int=None,
-                           max_nlev:int=None,
-                           truncate_to:int=None,
+                           min_nlev:int|None=None,
+                           max_nlev:int|None=None,
+                           truncate_to:int|None=None,
                            n_stable_reps:int=5
                            )->Subsystem:
     """Function first builds the quantum system defined by `constr_qsys` with enough energy levels\
@@ -343,20 +344,28 @@ def build_optimized_system(constr_qsys:Callable['...', Subsystem],
               and truncated to `truncate_to` energy levels with minimal truncation error.
     """
     if truncate_to is None:
-        truncate_to = stable_levels
+        truncate_to = stable_nlev
     if min_nlev is None:
-        min_nlev = stable_levels
+        min_nlev = stable_nlev
     assert truncate_to<=min_nlev,\
     f'Parameter `truncate_to` must have value less than or equal to `min_nlev`.\n'+\
     f' `truncate_to` has value {truncate_to}, `min_nlev` has {min_nlev}.\n' +\
     f' If you did not provide `min_nlev` as a parameter, it was set to the value of parameter `stable_levels`.'
-    qsys:Subsystem = stabilize_nlev(constr_qsys,
-                                    constr_args,
-                                    stable_levels,
-                                    tol,
-                                    min_nlev,
-                                    max_nlev,
-                                    n_stable_reps)[0]
+    if stabilize:
+        qsys:Subsystem = stabilize_nlev(constr_qsys,
+                                        constr_args,
+                                        stable_nlev,
+                                        tol,
+                                        min_nlev,
+                                        max_nlev,
+                                        n_stable_reps)[0]
+    else:
+        assert truncate_to<=nlev,\
+        'Parameter `truncate_to` must have value less than or equal to `nlev` if `stabilize=False`.\n'\
+        +f'` Truncate_to` has value {truncate_to}, nlev has {nlev}.\n'\
+        +'If you did not set `truncate_to`, parameter was set to the value of stable_nlev'
+        constr_args['nlev'] = nlev
+        qsys:Subsystem = constr_qsys(**constr_args)
     qsys = diagonalize_Qsys(qsys)
     qsys = qsys.truncate(truncate_to)
     return qsys
