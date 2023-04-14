@@ -28,10 +28,10 @@ def get_product_comp_states(sys:CompositeSystem,
     Returns:
         CompTensor: 3-dimensional array with CompTensor[n,m,k] containing the product state\
         qt.tensor(sys_0[n], sys_1[m], sys_2[k]), where sys_i refers to the eigenstates of the \
-        ith system labeled in sys.idxs_to_lbl
+        ith system labeled in sys.idx_to_lbl
     """
     
-    ordered_subsystems:list[Subsystem] = list([sys.subsystems[sys.idxs_to_lbl[i]]\
+    ordered_subsystems:list[Subsystem] = list([sys.subsystems[sys.idx_to_lbl[i]]\
                                                 for i in range(3)])
     ordered_bases:list[np.ndarray[Qobj]] = list([ord_sys.H.eigenstates()[1]\
                                                  for ord_sys in ordered_subsystems])

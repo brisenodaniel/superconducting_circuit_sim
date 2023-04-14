@@ -37,7 +37,7 @@ def build_interaction_H(gs:dict[str:float],
         Qobj: Quantum Object corresponding to interaction term in the composite system hamiltonian as\
          described in eq (23) of Setiawan et. al. 2022.
     """
-    H_int:Qobj = qt.Qobj(dims=bare_sys.H.dims)
+    H_int:Qobj|int = 0
     for g_lbl in ('g_AC', 'g_BC'):
         # extract coupling strengths and relevant operators
         g:float = np.pi*2*gs[g_lbl] #convert coupling strengths to radian frequency
