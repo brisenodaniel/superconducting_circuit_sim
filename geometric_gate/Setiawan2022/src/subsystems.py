@@ -151,6 +151,14 @@ class Subsystem:
                         if not qt.isequal(vector, other_vector, self._tol): return False
         return True
     
+    def _hashed_op(self, op)->int:
+        return hash((x for x in op.full()))
+    
+   
+    def __hash__(self):
+        return hash(((self._hashed_op(op) for op in self._ops.values()),
+                     self.nlev))
+    
     def __getitem__(self, key:str)->Qobj:
         assert key in self._ops, f"Operator {key} not defined for subsystem."
         if 'H' not in self._ops:
