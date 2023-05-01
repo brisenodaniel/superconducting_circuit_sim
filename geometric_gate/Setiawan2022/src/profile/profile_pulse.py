@@ -1,5 +1,6 @@
 PROFILE=True
 import cProfile
+import pstats
 import sys
 sys.path.append('../')
 from pulse import Pulse
@@ -16,6 +17,7 @@ pulse = Pulse(p_params, ct)
 if PROFILE:
     with cProfile.Profile() as pr:
         pulse.delta_wC(1, np.pi)
+        ps = pstats.Stats(pr).sort_stats('cumtime')
         pr.print_stats()
 
 else:

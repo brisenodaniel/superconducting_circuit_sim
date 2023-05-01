@@ -17,12 +17,21 @@ Qobj:TypeAlias = qt.Qobj
 # the following object populates with static coefficients in pulse
 @dataclass
 class StaticPulseAttr:
+    class_idx = 0
+    @staticmethod
+    def __get_unique_id()->int:
+        StaticPulseAttr.class_idx +=1
+        return StaticPulseAttr.class_idx
+    
     def __init__(self, 
                  pulse_params:dict[dict[float]], 
                  circuit:CompositeSystem, 
                  n_comp_state:int=5)->StaticPulseAttr:
+        # give current object it's id
+        self._id = StaticPulseAttr.__get_unique_id()
         # Set up circuit and state indexing
         self._ct:CompositeSystem = circuit
+        self._ct.freeze() # Markes CompositeSystem as immutable object for fast-hashing
         self._params:dict[dict[float]] = pulse_params
         self._n_comp_state:int = n_comp_state
         self._eigenstates:np.ndarray[Qobj]
@@ -38,26 +47,23 @@ class StaticPulseAttr:
         self.w_mod:dict[str,float] = {'A': self.trans_freq('ee0','ge1'),
                  'B': self.trans_freq('gf0','ge1')}
         
-    def _hashed_params(self, params:dict)->int:
-        key_hashes:list[int] = []
-        value_hashes:list[int] = []
-        for key, value in params.items():
-            key_hashes.append(hash(key))
-            if isinstance(value, dict):
-                value_hashes.append(self._hashed_params(value))
-            else:
-                value_hashes.append(hash(value))
-        key_value_hashes = zip(tuple(key_hashes),
-                                tuple(value_hashes))
-        key_value_hashes = tuple(key_value_hashes)
-        return hash(key_value_hashes)
-
+    # def _hashed_params(self, params:dict)->int:
+    #     key_hashes:list[int] = []
+    #     value_hashes:list[int] = []
+    #     for key, value in params.items():
+    #         key_hashes.append(hash(key))
+    #         if isinstance(value, dict):
+    #             value_hashes.append(self._hashed_params(value))
+    #         else:
+    #             value_hashes.append(hash(value))
+    #     key_value_hashes = zip(tuple(key_hashes),
+    #                             tuple(value_hashes))
+    #     key_value_hashes = tuple(key_value_hashes)
+    #     return hash(key_value_hashes)
 
     def __hash__(self):
-        return hash((hash(self._ct), 
-                     self._hashed_params(self._params), 
-                     self._n_comp_state))
-    
+        return self._id
+       
     @property
     def nlev(self)->int:
         return self._nlev 
@@ -76,7 +82,7 @@ class StaticPulseAttr:
         return e_k - e_l
 
 
-    
+    @cache
     def __str_to_tuple(self, state_lbl:str)->tuple[int,3]:
         assert len(state_lbl)==3, f'Expected state label length 3, got {len(state_lbl)}'
         idx = [0,0,0]
@@ -92,14 +98,15 @@ class StaticPulseAttr:
             state = self._comp_coord[state]
         return self._eigenenergies[state]
     
-    def state(self, state_idx:str|tuple[int,3]|int):
+    def state(self, state_idx:str|tuple[int,3]|int)->Qobj:
         if isinstance(state_idx, str):
             state_idx = self.__str_to_tuple(state_idx)
         if isinstance(state_idx, int):
             return self._eigenstates[state_idx]
         else:
             return self._comp_states[state_idx]
-        
+    
+    
     def state_idx(self, state:str|tuple[int,3]|Qobj|int)->int:
         idx = state # idx dummy variable to ensure no side effects on state
         if isinstance(idx, str):
@@ -206,13 +213,7 @@ class Pulse:
             np.pi/(2*tg**2)
         ]
         return derivs[d]*self.__polynom(t/tg, d=d)
-        # derivs:dict[int,float] = {
-        #     0: (np.pi/2)*self.__polynom(t/tg,0),
-        #     1: (np.pi/(2*tg))*self.__polynom(t/tg,1),
-        #     2: (np.pi/(2*tg**2))*self.__polynom(t/tg,2)
-        # }
-        # return derivs[d]
-
+        
     def __theta_interval_2(self, t:float, d:int)->float:
         tg = self._params['tg']
         derivs:list[float] = [
@@ -225,12 +226,6 @@ class Pulse:
         else:
             return -1*derivs[d]*self.__polynom(t/tg - 1/2, d=d)
         
-        # derivs:dict[int,float] = {
-        #     0: (np.pi/2)*(1-self.__polynom(t/tg-1/2,d=0)),
-        #     1: (np.pi/(2*tg))*(self.__polynom(t/tg - 1/2, d=1)),
-        #     2: (np.pi/(2*tg**2))*self.__polynom(t/tg-1/2,d=2)
-        # }
-        # return derivs[d]
     
     def __polynom(self, t:float, d:int=0)->float:
         #implements eq A3
@@ -240,18 +235,11 @@ class Pulse:
             (3840, -2280, 480, 3, 2, 1)
         ]
         return self.__p(t, *derivs[d])
-        
-        # derivs:dict[int,Callable[[float],float]] = {
-        #     0: self.__p(t, 6*2**5,-15*2**4, 10*2**3, 5, 4, 3),
-        #     1: self.__p(t, 960, -960, 240, 4, 3, 2),
-        #     2: self.__p(t, 3840, -2880, 480, 3, 2, 1)
-        # }
-        # return derivs[d]
     
     def __p(self, x:float, c1:float, c2:float, c3:float, e1:float, e2:float, e3:float)->float:
         return c1*x**e1 + c2*x**e2 + c3*x**e3
         
-   # @cache
+    @cache
     def __g_ac(self, t:float, geo_phase:float)->dict[str,float]:
         ge1_idx:int = self.static_attr.state_idx('ge1')
         ee0_idx:int = self.static_attr.state_idx('ee0')
@@ -276,20 +264,18 @@ class Pulse:
     def __delta_ek(self, t:float, state:tuple[int,3]|str, geo_phase:float)->float:
         #implements eq C2b
         leakage_states:list[int] = list(range(self.highest_leakage_st+1))
-        sum_terms = [
-            self.__C2b__summand(t, geo_phase, state, l, flux_lbl, sgn)\
-            for l in leakage_states\
-            for flux_lbl in ['A','B']\
-            for sgn in [-1,1]
-        ]
-        return sum(sum_terms)
-       
+        sum_c2b = 0
+        for l in leakage_states:
+            for flux_lbl in ['A','B']:
+                for sgn in [-1,1]:
+                    sum_c2b += self.__C2b__summand(t, geo_phase, state, l, flux_lbl, sgn)
+        return sum_c2b
 
     def __C2b__summand(self, 
                        t:float, 
                        geo_phase,
                        k:tuple[int,3]|str|int, 
-                       l:tuple[int,3]|str|int,
+                       l:int,
                        flux_lbl:str,
                        sgn:int )->float:
         """Function implements summand in equation C2b
@@ -297,7 +283,7 @@ class Pulse:
         Args:
             t (float): current timestep
             k (tuple[int,3] | str | int): Label for state k in eq C2b
-            l (tuple[int,3] | str | int): Label for leakeage state l iterated over in eq C2b
+            l (int): Label for leakeage state l of total hamiltonian iterated over in eq C2b
             flux_lbl (str): A or B, label for state j in eq C2b
             sgn (int): +1 or -1, sigma in eq C2b
             
@@ -311,9 +297,8 @@ class Pulse:
         if abs(denominator)<=1e-3:
             return 0
         k_idx:int = self.static_attr.state_idx(k)
-        l_idx:int = self.static_attr.state_idx(l)
-        adag_a:Qobj = self.__adag_a #see next function definition for explanation of adag_a
-        k_adaga_l:complex = adag_a.full()[k_idx][l_idx]
+        adag_a:np.ndarray = self._adag_a_as_matrix #see next function definition for explanation of adag_a
+        k_adaga_l:complex = adag_a[k_idx][l]
         g_ac:float = self.__g_ac(t, geo_phase)[flux_lbl]
         numerator:float = (g_ac*k_adaga_l).conjugate()*(g_ac*k_adaga_l)
         return numerator/denominator
@@ -328,6 +313,14 @@ class Pulse:
         eigenbasis:np.array[Qobj] = self._ct.H.eigenstates()[1]
         adag_a = adag_a.transform(eigenbasis)
         return adag_a
+    
+    @cached_property
+    def _adag_a_as_matrix(self)->np.ndarray:
+        """this function is used only for optimization of bottleneck observed in
+        profiling. Returns full numpy matrix for operator a.dag()*a in eigenbasis where a is the QHO destruction operator
+        acting on the transmon coupler
+        """
+        return self.__adag_a.full()
 
     
     def __delta_wmod(self, t:float, geo_phase:float)->dict[str,float]:
@@ -354,14 +347,6 @@ class Pulse:
     @__w_mod.register
     def __(self, tlist:abc.Iterable, geo_phase:float, sys:str)->np.ndarray[float]:
         return np.array([self.__w_mod(t, geo_phase, sys) for t in tlist])
-        
-    # def __vect_w_mod(self, tlist:np.ndarray[float], geo_phase:float, sys:str)->np.ndarray[float]:
-    #     return np.array([self.__w_mod(t, geo_phase, sys) for t in tlist])
-    #     # partial_w_mod:Callable[[float], float] =\
-    #     #       partial(self.__w_mod, geo_phase=geo_phase, sys=sys)
-    #     # v_w_mod:Callable[[np.ndarray[float]], np.ndarray[float]] =\
-    #     #       np.vectorize(partial_w_mod)
-    #     # return v_w_mod(ts)
 
     @singledispatchmethod 
     def delta_wC(self, t:float, geo_phase:float)->float:
@@ -370,9 +355,8 @@ class Pulse:
         gs:dict[str,float] = self.__g_ac(t, geo_phase)
         for flux in ['A','B']:
             ts:np.ndarray[float] = np.arange(0, t, self._dt)
-            w_mods:np.ndarray[float] = self.__w_mod(ts, geo_phase, flux) #changed to use multiple dispatch instead of vect
+            w_mods:np.ndarray[float] = self.__w_mod(ts, geo_phase, flux)
             phase_arg:float = np.trapz(w_mods, ts, self._dt)
-           # phase_arg:float = quad(self.__w_mod,0,t,args=(geo_phase, flux))[0]
             phase:complex = np.exp(-i*phase_arg)
             g_j:float = gs[flux]
             summand:float = g_j*phase.real
@@ -397,10 +381,6 @@ class Pulse:
                 np.save(fname, pulse)
         return pulse
 
-    
-    # def vectorized_delta_wC(self, tlist:np.ndarray[float], geo_phase:float):
-    #     return np.array([self.delta_wC(t,geo_phase) for t in tlist])
-       
 
 ############ Diagnostic functions
     def get_integrand_func(self,

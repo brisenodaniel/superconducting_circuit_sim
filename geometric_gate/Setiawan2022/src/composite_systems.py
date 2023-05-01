@@ -15,26 +15,25 @@ Qobj: TypeAlias = qt.Qobj
 j: complex = complex(0,1)
 
 class CompositeSystem:
-    class_idx = 0
-   
+    class_idx:int = 0
     def __init__(self, 
                  subsystems:dict[str:Subsystem],
                  idxs:dict[str:int], 
                  H_int:Qobj|None=None,
                  tol:float = 1e-9,
-                 immutable:bool=False)->None:
-      self.subsystems:dict[str:Subsystem] = subsystems
-      self._H_int:Qobj = H_int
-      self.lbl_to_idx:dict[str:int] = idxs 
-      self.idx_to_lbl:list = self.build_idx_to_lbl()
-      self._tol = tol
-      self.H:Qobj = qt.qeye(1) #dummy hamiltionian so __hash__ doesn't throw a fit during initialization
-      self.H:Qobj = self.build_hamiltonian()
-      self._immutable=immutable
-      if immutable:
-          self._class_idx = class_idx
-          class_idx += 1
-
+                 immutable:bool=False)->CompositeSystem:
+        self._immutable=immutable # note, self._immutable and self._class_idx must
+        if immutable:             # be first instance variables set in constructor
+            self._class_idx = CompositeSystem.class_idx
+            CompositeSystem.class_idx += 1
+        self.subsystems:dict[str:Subsystem] = subsystems
+        self._H_int:Qobj = H_int
+        self.lbl_to_idx:dict[str:int] = idxs 
+        self.idx_to_lbl:list = self.build_idx_to_lbl()
+        self._tol = tol
+        self.H:Qobj = qt.qeye(1) #dummy hamiltionian so __hash__ doesn't throw a fit during initialization
+        self.H:Qobj = self.build_hamiltonian()
+        
     @property 
     def tol(self)->float:
         return self._tol
@@ -42,6 +41,15 @@ class CompositeSystem:
     @property
     def immutable(self)->bool:
         return self._immutable
+    
+    @property
+    def object_id(self)->int:
+        return self.__hash__()
+    
+    def freeze(self)->None:
+        self._immutable = True 
+        CompositeSystem.class_idx +=1 
+        self._class_idx = CompositeSystem.class_idx
 
     def build_hamiltonian(self)->None:
         H:int|Qobj = 0
@@ -175,7 +183,7 @@ class CompositeSystem:
     
     def __hash__(self):
         if self._immutable:
-            return 0
+            return self._class_idx
         return hash(
             ((x for x in self.H.full()),
              (hash(sys) for sys in self.subsystems.values()))
