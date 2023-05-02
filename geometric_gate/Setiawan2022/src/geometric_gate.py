@@ -63,7 +63,7 @@ def run_pulse(geo_phase:float,
               gate_lbl:str, 
               s0:Qobj|tuple[int,int,int]|str='ggg',
               tg:float=pl_params['tg'],
-              amp:float=pl_params['omega_0'],
+              omega_0:float=pl_params['omega_0'],
               dt:float=1e-2,
               **kwargs)->T:
     if not isinstance(s0, Qobj):
@@ -72,8 +72,9 @@ def run_pulse(geo_phase:float,
                                                     geo_phase=geo_phase, 
                                                     circuit=circuit,
                                                     tg=tg, 
-                                                    amp=amp, 
-                                                    dt=dt)
+                                                    omega_0=omega_0, 
+                                                    dt=dt,
+                                                    **kwargs)
     H_mesolve:list[Qobj|list[Qobj,np.ndarray[float]]] = get_mesolve_formatted_H(circuit, pulse_array)
     tlist = np.arange(0, tg, dt)
     result:T = qt.mesolve(H_mesolve, s0, tlist)
@@ -85,28 +86,19 @@ def run_pulses_in_config(default_s0:str='ggg')->dict[str,tuple[T,dict[str,float]
     pulse_configs:dict[str,dict[str,float]] = get_params('../config/pulses.yaml')
     results:dict[str,T] = {}
     for gate_lbl, set_params in pulse_configs.items():
-        if 's0' in set_params:
-            gate_s0 = get_state(set_params['s0'])
+        if 's0' not in set_params:
+            init_states = [default_s0]
         else:
-            gate_s0 = s0
+            init_states = set_params.pop('s0')
+            if not isinstance(init_states, list):
+                init_states = [init_states]
         gate_params = default_config
         gate_params.update(set_params)
-        gate_spec = {spec_lbl: gate_params[spec_lbl]\
-                     for spec_lbl in ['tg','omega_0','dt']}
-        results[gate_lbl] =(run_pulse(gate_lbl=gate_lbl, s0=gate_s0, **gate_params),
-                            gate_spec)
+        for s0 in init_states:
+            gate_spec = {spec_lbl: gate_params[spec_lbl]\
+                        for spec_lbl in ['tg','omega_0','dt']}
+            phi0 = get_state(s0)
+            results[f'{gate_lbl}_{s0}-s0'] =(run_pulse(gate_lbl=gate_lbl, s0=phi0, save_config=False, **gate_params),
+                                gate_spec)
     return results 
 
-
-
-
-
-#     H_mesolve:list[Qobj|list[Qobj,np.ndarray[str]]] = get_mesolve_formatted_H(circuit, pulse)
-#     tlist = np.arange(0, tg, dt)
-#     result = qt.mesolve(H, s0, tlist)
-
-# def run_pulse(circuit:CompositeSystem, s0:Qobj, pulse_fname:str):
-
-#     pulse:np.ndarray[str] = get_pulse(pulse_fname)
-#     H_mesolve:list[Qobj|list[Qobj,np.ndarray[string]]] = get_mesolve_formatted_H(circuit,pulse)
-#     result = qt.mesolve(H_mesolve)

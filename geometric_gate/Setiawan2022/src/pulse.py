@@ -4,11 +4,12 @@
 from __future__ import annotations
 from functools import cache, cached_property, singledispatchmethod, singledispatch
 import numpy as np
-from typing import TypeAlias
+from typing import TypeAlias, Callable, Any
 from collections import abc
 import qutip as qt
 import yaml
 import os
+import inspect
 import static_system
 from composite_systems import CompositeSystem
 from state_labeling import CompTensor, CompCoord, get_dressed_comp_states
@@ -407,11 +408,19 @@ def get_params(path:str)->dict[str,float|dict[str,float]]:
             print(exc)
     return params
 
-#define default constants
-default_p_params:dict[str,float|dict[str,float]] = \
-    get_params('../config/pulse_parameters.yaml')
-default_tg:float = default_p_params['tg']
-default_amp:float = default_p_params['omega_0']
+#the following raises an error during profiling, but is not used 
+#by the profile, so we wrap in a try-catch
+try:
+    #define default constants
+    default_p_params:dict[str,float|dict[str,float]] = \
+        get_params('../config/pulse_parameters.yaml')
+    default_tg:float = default_p_params['tg']
+    default_amp:float = default_p_params['omega_0']
+except FileNotFoundError as err:
+    default_p_params = {}
+    default_tg = 0
+    default_amp = 0
+
 
 
 def build_npy_fname(gate_lbl:str,
@@ -439,17 +448,19 @@ def build_pulse(gate_label:str,
                 geo_phase:float,
                 circuit:CompositeSystem,
                 tg:float=default_tg,
-                amp:float=default_amp,
-                dt:float=0.01)->np.ndarray[float]:
-    fname = build_npy_fname(gate_label, tg, amp, dt)
-
-    if is_prebuilt(gate_label, tg, amp, dt):
+                omega_0:float=default_amp,
+                dt:float=0.01,
+                save_spec=False,
+                **kwargs)->np.ndarray[float]:
+    fname = build_npy_fname(gate_label, tg, omega_0, dt)
+    if is_prebuilt(gate_label, tg, omega_0, dt) and \
+          'save_components' not in kwargs:
         return np.load(fname)
     else:
         pulse_params:dict[str,float|dict[str,float]] = {
             **default_p_params,
             'tg':tg,
-            'omega_0':amp
+            'omega_0':omega_0
         }
         tlist = np.arange(0,tg,dt)
         pulse_generator:Pulse = Pulse(pulse_params=pulse_params,
@@ -458,10 +469,19 @@ def build_pulse(gate_label:str,
         pulse_spec = {gate_label:{
             'geo_phase': geo_phase,
             'tg': tg,
-            'omega_0': amp,
+            'omega_0': omega_0,
             'dt': dt}}
-        write_pulse_spec(pulse_spec)
-        return pulse_generator.build_pulse(tlist, geo_phase,fname)
+        if save_spec:
+            write_pulse_spec(pulse_spec)
+        if 'save_components' in kwargs:
+            save_pulse_components(pulse_generator, 
+                                  gate_label, 
+                                  pulse_spec[gate_label], 
+                                  **kwargs)
+        if is_prebuilt(gate_label, tg, omega_0, dt):
+            return np.load(fname)
+        else:
+            return pulse_generator.build_pulse(tlist, geo_phase,fname)
     
 def write_pulse_spec(pulse_spec:dict[str,dict[str,float]])->None:
     current_specs = get_params('../config/pulses.yaml')
@@ -491,6 +511,51 @@ def build_pulses(pulses_params:list[dict[str,float|str]]|None=None)->None:
         return list(
             [build_pulse(**pulse_params) for pulse_params in pulses_params]
         )
+    
+def profile_pulse_component(func:Callable['...', float|complex], 
+                            tlist:np.ndarray[float], 
+                            **kwargs:dict[str,float])->np.ndarray[Any]:
+    result_array = np.array([func(t=t,**kwargs) for t in tlist])
+    return result_array
+
+def save_pulse_component(fname:str,
+                        gate_lbl:str,
+                        tg:float,
+                        omega_0:float,
+                        dt:float,
+                        func:Callable['...', float|complex],
+                        **kwargs:dict[str,float])->None:
+    if is_prebuilt(f'{gate_lbl}_{fname}', tg, omega_0, dt):
+        return None
+    else:
+        tlist = np.arange(0,tg,dt)
+        result_array = profile_pulse_component(func, tlist, **kwargs)
+        fname = build_npy_fname(f'{gate_lbl}_{fname}', tg, omega_0, dt)
+        np.save(fname,result_array)
+
+def save_pulse_components(pulse_generator:Pulse,
+                          gate_label:str,
+                          pulse_spec:dict[str,float],
+                          **kwargs):
+    pulse_components = kwargs['save_components']
+    pulse_generator_methods = inspect.getmembers(pulse_generator, 
+                                                 predicate=inspect.ismethod)
+    pulse_generator_methods = dict(pulse_generator_methods)
+    for component_method, component_method_kwargs in pulse_components.items():
+        if component_method_kwargs is None:
+            component_method_kwargs = {}
+        func:Callable['...', Any] = pulse_generator_methods[component_method]
+        tg = pulse_spec['tg']
+        omega_0 = pulse_spec['omega_0']
+        dt = pulse_spec['dt']
+        save_pulse_component(fname=component_method, 
+                             gate_lbl=gate_label,
+                             tg=tg,
+                             omega_0=omega_0,
+                             dt=dt,
+                             func=func,
+                             **component_method_kwargs
+                             )
 
 if __name__ == '__main__':
     pass
