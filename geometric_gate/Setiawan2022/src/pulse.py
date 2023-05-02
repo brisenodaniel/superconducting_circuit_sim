@@ -2,11 +2,14 @@
  as described in Method 2 of Setiawan et. al. 2022 in the literature folder
 """
 from __future__ import annotations
-from functools import partial, cache, cached_property, singledispatchmethod
+from functools import cache, cached_property, singledispatchmethod, singledispatch
 import numpy as np
-from typing import TypeAlias, Callable
+from typing import TypeAlias
 from collections import abc
 import qutip as qt
+import yaml
+import os
+import static_system
 from composite_systems import CompositeSystem
 from state_labeling import CompTensor, CompCoord, get_dressed_comp_states
 from dataclasses import dataclass
@@ -47,20 +50,6 @@ class StaticPulseAttr:
         self.w_mod:dict[str,float] = {'A': self.trans_freq('ee0','ge1'),
                  'B': self.trans_freq('gf0','ge1')}
         
-    # def _hashed_params(self, params:dict)->int:
-    #     key_hashes:list[int] = []
-    #     value_hashes:list[int] = []
-    #     for key, value in params.items():
-    #         key_hashes.append(hash(key))
-    #         if isinstance(value, dict):
-    #             value_hashes.append(self._hashed_params(value))
-    #         else:
-    #             value_hashes.append(hash(value))
-    #     key_value_hashes = zip(tuple(key_hashes),
-    #                             tuple(value_hashes))
-    #     key_value_hashes = tuple(key_value_hashes)
-    #     return hash(key_value_hashes)
-
     def __hash__(self):
         return self._id
        
@@ -75,6 +64,10 @@ class StaticPulseAttr:
     @property
     def comp_states(self)->CompTensor:
         return self._comp_states
+    
+    @property
+    def id(self)->int:
+        return self._id
 
     def trans_freq(self, k:int|str|tuple[int,3], l:int|str|tuple[int,3])->float:
         e_k = self.eigenen(k)
@@ -159,12 +152,18 @@ class Pulse:
                  circuit:CompositeSystem,
                  dt:float=0.01,
                  n_comp_states:int=5):
-        self.static_attr = StaticPulseAttr(pulse_params, circuit, n_comp_states)
-        self._ct = circuit
-        self._dt = dt
-        self._params = pulse_params
-        self.n_comp_states = n_comp_states
-        self._omega_0 = 2*np.pi*self._params['omega_0']/pulse_params['tg']
+        self.static_attr:StaticPulseAttr = StaticPulseAttr(pulse_params, circuit, n_comp_states)
+        self._ct:CompositeSystem = circuit
+        if 'dt' in pulse_params:
+            self._dt:float = pulse_params['dt']
+        else:
+            self._dt:float = dt
+        self._params:dict[str,dict[str,float]|float] = pulse_params
+        if 'n_comp_states' in pulse_params:
+            self.n_comp_states:int = pulse_params['n_comp_states']
+        else:
+            self.n_comp_states:int = n_comp_states
+        self._omega_0:float = 2*np.pi*self._params['omega_0']/pulse_params['tg']
 
 
     def __omega_A(self, t:float)->float:
@@ -359,7 +358,7 @@ class Pulse:
             phase_arg:float = np.trapz(w_mods, ts, self._dt)
             phase:complex = np.exp(-i*phase_arg)
             g_j:float = gs[flux]
-            summand:float = g_j*phase.real
+            summand:float = (g_j*phase).real
             sum_terms.append(summand)
         return sum(sum_terms)
     
@@ -391,5 +390,108 @@ class Pulse:
             self.__delta_ek(t, state, geo_phase) for t in tlist
         ]
         return np.array(res_lst)
+    
+########### The following section is used to add pulses to the 
+###########  `../pulses/` directory. To add a new pulse, write the 
+###########  parameters of the new pulse to `../pulses/pulses.yaml`
+###########  as specified in that file's documentation. Then, run 
+###########  this file as a script from this directory `$python pulse.py`
 
 
+# extract configuration parameters
+def get_params(path:str)->dict[str,float|dict[str,float]]:
+    with open(path,'r') as stream:
+        try:
+            params:dict = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+    return params
+
+#define default constants
+default_p_params:dict[str,float|dict[str,float]] = \
+    get_params('../config/pulse_parameters.yaml')
+default_tg:float = default_p_params['tg']
+default_amp:float = default_p_params['omega_0']
+
+
+def build_npy_fname(gate_lbl:str,
+                    tg:float=default_tg,
+                    amp:float=default_amp,
+                    dt:float=1e-2,
+                    include_dir:bool=True)->str:
+    fname = f'{gate_lbl}_{tg}ns_{amp}GHz_{dt}dt.npy'
+    if include_dir:
+        fname = '../output/pulses/' + fname
+    return fname
+
+#define funcs
+def is_prebuilt(gate_label:str|int,
+                 tg:str|int=default_tg, 
+                 amp:float|int=default_amp,
+                 dt=1e-2)->bool:
+    prebuilt_pulses = os.listdir('../output/pulses')
+    fname:str = build_npy_fname(gate_label, tg, amp, dt, include_dir=False)
+    #fname:str = f'{geo_phase}_{tg}ns_{dt}dt_{amp}GHz_pulse.npy'
+    return fname in prebuilt_pulses 
+
+
+def build_pulse(gate_label:str,
+                geo_phase:float,
+                circuit:CompositeSystem,
+                tg:float=default_tg,
+                amp:float=default_amp,
+                dt:float=0.01)->np.ndarray[float]:
+    fname = build_npy_fname(gate_label, tg, amp, dt)
+
+    if is_prebuilt(gate_label, tg, amp, dt):
+        return np.load(fname)
+    else:
+        pulse_params:dict[str,float|dict[str,float]] = {
+            **default_p_params,
+            'tg':tg,
+            'omega_0':amp
+        }
+        tlist = np.arange(0,tg,dt)
+        pulse_generator:Pulse = Pulse(pulse_params=pulse_params,
+                    circuit=circuit,
+                    dt=dt)
+        pulse_spec = {gate_label:{
+            'geo_phase': geo_phase,
+            'tg': tg,
+            'omega_0': amp,
+            'dt': dt}}
+        write_pulse_spec(pulse_spec)
+        return pulse_generator.build_pulse(tlist, geo_phase,fname)
+    
+def write_pulse_spec(pulse_spec:dict[str,dict[str,float]])->None:
+    current_specs = get_params('../config/pulses.yaml')
+    updated_specs = {**current_specs, **pulse_spec}
+    with open('../config/pulses.yaml', 'w') as yfile:
+        try:
+            yaml.safe_dump(updated_specs, yfile)
+        except yaml.YAMLError as exc:
+            print(exc)
+
+def build_pulses(pulses_params:list[dict[str,float|str]]|None=None)->None:
+    """function checks that all pulses specified in \
+    `../config/pulses.yaml` are written to the `../output/pulses`
+    directory as a .npy file. If an entry in pulses.yaml is
+    found that does not have a corresponding .npy file, that 
+    pulse will be generated and it's .npy file written.
+    """
+    if pulses_params is None:
+        with open('../config/pulses.yaml','r') as stream:
+            try:
+                pulse_specs = yaml.safe_load(stream)
+            except yaml.YAMLError as exc:
+                print(exc)
+        for gate_lbl, spec in pulse_specs.items():
+            build_pulse(gate_label=gate_lbl, **spec)
+    else:
+        return list(
+            [build_pulse(**pulse_params) for pulse_params in pulses_params]
+        )
+
+if __name__ == '__main__':
+    pass
+   # build_pulses()
