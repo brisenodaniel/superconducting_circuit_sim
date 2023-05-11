@@ -42,6 +42,15 @@ def save_pulse(pulse:np.ndarray[float],
     fname = build_pulse_path(gate_lbl, tg, omega_0, dt, dir, other_spec)
     np.save(fname, pulse)
 
+def load_pulse(gate_lbl:str,
+               tg:float,
+               omega_0:float,
+               dt:float,
+               dir:str='../output/pulses',
+               other_spec:list[tuple[str,Any]]=[])->np.ndarray[float]:
+    fname = build_pulse_path(gate_lbl, tg, omega_0, dt, dir, other_spec)
+    return np.load(fname)
+
 def is_pulse_cached(gate_lbl:str,
                       tg:float,
                       omega_0:float,

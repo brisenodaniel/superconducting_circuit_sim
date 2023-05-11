@@ -94,9 +94,21 @@ def run_pulses_in_config(default_s0:str='ggg')->dict[str,tuple[T,dict[str,float]
                 init_states = [init_states]
         gate_params = default_config
         gate_params.update(set_params)
+        gate_spec = {spec_lbl: gate_params[spec_lbl]\
+                    for spec_lbl in ['tg','omega_0','dt']}
+        #add x and y vector s0
+        sx = (1/np.sqrt(2))*(qt.basis(5,0) + qt.basis(5,1))
+        sy = (1/np.sqrt(2))*(qt.basis(5,0)+ (1.j)*qt.basis(5,1))
+        xgg = qt.tensor(sx,qt.basis(5,0), qt.basis(5,0))
+        xeg = qt.tensor(sx, qt.basis(5,1), qt.basis(5,0))
+        ygg = qt.tensor(sy, qt.basis(5,0), qt.basis(5,0))
+        yeg = qt.tensor(sy, qt.basis(5,1), qt.basis(5,0))
+        results[f'{gate_lbl}_xgg--s0'] = (run_pulse(gate_lbl=gate_lbl, s0=xgg, save_config=False, **gate_params),
+                                          gate_spec)
+        results[f'{gate_lbl}_xeg--s0'] = (run_pulse(gate_lbl=gate_lbl, s0=xeg, save_config=False, **gate_params),
+                                          gate_spec)
         for s0 in init_states:
-            gate_spec = {spec_lbl: gate_params[spec_lbl]\
-                        for spec_lbl in ['tg','omega_0','dt']}
+           
             phi0 = get_state(s0)
             results[f'{gate_lbl}_{s0}-s0'] =(run_pulse(gate_lbl=gate_lbl, s0=phi0, save_config=False, **gate_params),
                                 gate_spec)
