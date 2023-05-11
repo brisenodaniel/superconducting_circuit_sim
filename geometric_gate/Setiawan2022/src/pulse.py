@@ -98,7 +98,8 @@ class StaticPulseAttr:
         if isinstance(state_idx, int):
             return self._eigenstates[state_idx]
         else:
-            return self._comp_states[state_idx]
+            k,l,m = state_idx
+            return self._comp_states[k,l,m]
     
     
     def state_idx(self, state:str|tuple[int,3]|Qobj|int)->int:
@@ -106,7 +107,8 @@ class StaticPulseAttr:
         if isinstance(idx, str):
             idx:tuple[int,3] = self.__str_to_tuple(state)
         if isinstance(state, abc.Iterable):
-            idx:int = self._comp_coord[idx]
+            n,m,k = state
+            idx:int = self._comp_coord[n,m,k]
         elif isinstance(idx, Qobj):
             idx:int = np.array([qt.isequal(idx,eig) \
                             for eig in self._eigenstates]).nonzero()[0][0]
@@ -232,7 +234,7 @@ class Pulse:
         derivs:list[tuple[float,6]] = [
             (6*2**5, -15*2**4, 10*2**3, 5, 4, 3),
             (960, -960, 240, 4, 3, 2),
-            (3840, -2280, 480, 3, 2, 1)
+            (3840, -2880, 480, 3, 2, 1)
         ]
         return self.__p(t, *derivs[d])
     
