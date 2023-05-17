@@ -21,3 +21,5 @@ interaction: # Parameters relevant to interaction hamiltonian
  g_AC: 0.63
  g_BC: 0.6
  g_AB: 0.04
+ global:
+   nlev: 5

@@ -1,39 +1,60 @@
-# Given a circuit and a pulse config, generates the pulse
-# and simulates the action of the pulse on a circuit. From
-# simulated trajectories constructs the gate unitary in the 
-# qubit subspace
+#!/usr/bin/env python
+
+from __future__ import annotations
 import qutip as qt
 import numpy as np
-import file_io 
-from numpy import sqrt
-from composite_systems import CompositeSystem
+import file_io
+import hashing
+import simulation_setup
+from simulation_setup import PulseDict, CircuitParams
+from simulation_setup import PulseParams, PulseProfile
+from simulation_setup import PulseConfig
+from dataclasses import dataclass, field
 from pulse import Pulse, StaticPulseAttr
-from state_labeling import CompCoord, CompTensor
-from typing import TypeAlias, TypeVar, Any 
+from static_system import build_bare_system
+from composite_systems import CompositeSystem, Qobj
+from state_labeling import get_dressed_comp_states
+from typing import TypeAlias, TypeVar, Any, Generic
 
-dummy_res = qt.mesolve(qt.qeye(2), qt.basis(2,0),[0,1])
-Qobj:TypeAlias = qt.Qobj
-result:TypeAlias = qt.solver.Result
+GateDict: TypeAlias = dict[str, str | PulseDict | CircuitParams | bool | list[str]]
 
-def profile_gate(gate_lbl:str,
-                 geo_phase:float,
-                 tg:float,
-                 omega_0:float,
-                 dt:float,
-                 circuit:CompositeSystem,
-                 psi_0:Qobj,
-                 init_states: list[str|list[tuple[str,float]]]=[],
-                 profile_pulse_components:dict[str,dict[str,complex]]|None=None,
-                 **kwargs)->tuple[result,Qobj]:
-    #add initial states needed to compute unitary and see phase changes to init_states
-    mandatory_init_states = ['ggg','egg','geg','eeg',
-                             [('ggg',1/sqrt(2)),('egg', 1/sqrt(2))], # +1 eigenstate of sigmax on q1, q2=g
-                             [('geg', 1/sqrt(3)),('eeg', 1/sqrt(2))], # +1 eigenstate of sigmax on q1, q2=e
-                             [('ggg',1/sqrt(2)), ('egg',1.j/sqrt(2))], # +1 eigenstate of sigmay on q1, q2=g
-                             [('geg', 1/sqrt(2)),('eeg', 1.j/sqrt(2))] # +1 eigenstate of sigmay on q1, q2=e
-                             ]
-    init_states += mandatory_init_states
-    #create pulse object and obtain pulse
-    pulse_generator = Pulse(kwargs,)
-    
+@dataclass
+class GateProfile(Generic[CircuitParams, PulseConfig, PulseParams]):
+    """Simple container class for gate data."""
 
+    def __init__(self,
+                 name: str,
+                 pulse_profile: PulseProfile,
+                 gate_unitary: Qobj | None = None,
+                 gate_circuit: CompositeSystem | None = None,
+                 gate_circuit_config: CircuitParams | None = None,
+                 trajectories: dict[str, qt.solver.Result] = {},
+                 fidelity: float | None = None) -> GateProfile:
+        self.name: str = name
+        self.pulse: np.ndarray[float] = pulse_profile.pulse
+        self.pulse_profile: PulseProfile = pulse_profile
+        self.unitary: Qobj | None = gate_unitary
+        if gate_circuit is None:
+            self.gate_circuit: Qobj = pulse_profile.circuit
+        else:
+            self.gate_circuit: Qobj = gate_circuit
+        if gate_circuit_config is None:
+            self.gate_circuit_config: CircuitParams =\
+                pulse_profile.pulse_config.circuit_config
+        else:
+            self.gate_circuit_config: CircuitParams = gate_circuit_config
+        self.trajectories: dict[str, qt.solver.Result] = trajectories
+        self.fidelity: float = fidelity
+
+    def as_dict(self) -> GateDict:
+        desc: GateDict = {}  # init descriptor dictionary
+        desc['name'] = self.name
+        desc['pulse_config'] = self.pulse_profile.as_dict()
+        desc['computed_unitary'] = self.gate_unitary is not None
+        desc['circuit_config'] = self.gate_circuit_config
+        desc['trajectories'] = [init_state for init_state in self.trajectories]
+        desc['fidelity'] = self.fidelity
+        return desc
+
+    def __hash__(self) -> int:
+        return hashing.hash_dict(self.as_dict())

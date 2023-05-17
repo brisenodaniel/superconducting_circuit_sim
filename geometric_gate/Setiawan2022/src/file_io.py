@@ -1,188 +1,165 @@
-
 import yaml
 from os import mkdir
 from qutip import Qobj, qsave, qload
 from os.path import isdir, isfile
 import numpy as np
 from typing import Any, TypeVar, TypeAlias
+from gate import GateProfile, PulseProfile, PulseConfig
 
 T = TypeVar('T')
+PulseDict = TypeVar('PulseDict')
+GateDict = TypeVar('GateDict')
+DataObj = TypeVar('DataObj', PulseConfig, PulseProfile, GateProfile)
 
-def build_pulse_fname(gate_lbl:str,
-                      tg:float,
-                      omega_0:float,
-                      dt:float,
-                      other_spec:list[tuple[str,Any]]=[])->str:
-    fname = f'{gate_lbl}_{tg}ns_{omega_0}GHz_{dt}dt'
-    for lbl, val in other_spec:
-        if lbl=='':
-            fname += f'_{val}'
-        else:
-            fname += f'_{val}-{lbl}'
-    return fname
+#filename generators
 
-def build_pulse_path(gate_lbl:str,
-                     tg:float,
-                     omega_0:float,
-                     dt:float,
-                     dir:str='../output/pulses',
-                     other_spec:list[tuple[str,Any]]=[])->str:
-    if not dir[-1] == '/':
-        dir += '/'
-    fname = build_pulse_fname(gate_lbl, tg, omega_0, dt, other_spec)
-    return dir + fname
+def build_pulse_fname(pulse_config: PulseConfig | PulseProfile,
+                      pulse_array: np.ndarray[float] | None = None) -> str:
+    # if pulse_array is not provided, pulse_config must be of type PulseProfile
+    if pulse_array is None:
+        pulse_array = pulse_config.pulse
+    return  f'{pulse_config.name}-{hash(pulse_config)}'
 
-def save_pulse(pulse:np.ndarray[float],
-               gate_lbl:str,
-               tg:float,
-               omega_0:float,
-               dt:float,
-               dir:str='../output/pulses',
-               other_spec:list[tuple[str,Any]]=[])->None:
-    fname = build_pulse_path(gate_lbl, tg, omega_0, dt, dir, other_spec)
-    np.save(fname, pulse)
+def build_pulse_component_fname(pulse_desc: PulseConfig | PulseProfile,
+                                component_name: str) -> str:
+    return f'{pulse_desc.name}-{component_name}-{hash(pulse_desc)}'
 
-def load_pulse(gate_lbl:str,
-               tg:float,
-               omega_0:float,
-               dt:float,
-               dir:str='../output/pulses',
-               other_spec:list[tuple[str,Any]]=[])->np.ndarray[float]:
-    fname = build_pulse_path(gate_lbl, tg, omega_0, dt, dir, other_spec)
-    return np.load(fname)
+def build_gate_fname(gate: Gate) -> str:
+    return f'{gate.name}-{hash(gate)}'
 
-def is_pulse_cached(gate_lbl:str,
-                      tg:float,
-                      omega_0:float,
-                      dt:float,
-                      dir:str='../output/pulses',
-                      other_spec:list[tuple[str,Any]]=[])->bool:
-    fname = build_pulse_path(gate_lbl, tg, omega_0, dt, dir, other_spec)
-    return isfile(fname)
+######## File Writing
 
-def build_qu_fname(gate_lbl:str, 
-                   init_state:str,
-                   tg:float, 
-                   omega_0:float, 
-                   dt:float,
-                   other_spec:tuple[tuple[str,Any]]={})->str:
-    fname = f'{gate_lbl}_{init_state}-s0_{tg}ns_{omega_0}GHz_{dt}dt'
-    for lbl, val in other_spec:
-        if lbl=='':
-            fname += f'_{val}'
-        else:
-            fname += f'_{val}-{lbl}'
-    return fname
+def cache_pulse(pulse: PulseConfig | PulseProfile,
+                pulse_array: np.ndarray[float] | None = None) -> None:
+    # if pulse_array is None, pulse must be of type PulseProfile
+    fname = build_pulse_fname(pulse, pulse_array)
+    save_desc(pulse, fname, 'pulse')
+    np.save(fname, pulse_array)
 
-def build_qu_path(gate_lbl:str,
-                  init_state:str,
-                  tg:float,
-                  omega_0:float,
-                  dt:float,
-                  dir:str='../output/trajectories/',
-                  other_spec:list[tuple[str,Any]]=[])->str:
-    if not dir[-1]=='/':
-        dir += '/'
-    fname:str = build_qu_fname(gate_lbl,
-                               init_state,
-                               tg,
-                               omega_0,
-                               dt,
-                               other_spec)
-    return dir + fname
+def cache_pulse_component(pulse: PulseConfig | PulseProfile,
+                          comp_name: str,
+                          component_array: np.ndarray[float] | None = None) -> None:
+    if component_array is None:
+        component_array = pulse.profiled_components[comp_name]
+    fname = build_pulse_component_fname(pulse, comp_name)
+    save_component_desc(pulse.name, comp_name, fname)
+    np.save(fname, component_array)
+
+def cache_gate(gate: GateProfile) -> None:
+    fname = build_gate_fname(gate)
+    save_desc(gate, fname, mode='Gate')
+    unitary = gate.unitary
+    trajectories = gate.trajectories
+    data: dict[str, Qobj | dict[str, np.ndarray[complex]]] = \
+        {'unitary': unitary, 'trajectories': trajectories}
+    qsave(data, f'../output/sim_results/{fname}')
+
+############# File logging
+
+def save_component_desc(pulse_name: str, component_name: str, fname: str)\
+    -> None:
+    cache = get_cache_description('pulse')
+    cache[pulse_name]['save_components'][component_name]['file'] = fname
+    with open('../output/pulses/cache_desc.yaml', 'w') as yaml_file:
+        yaml.dump(cache, yaml_file)
+
+def save_desc(target: DataObj, fname: str, mode: str = 'pulse') -> None:
+    assert mode in ['pulse', 'Pulse', 'gate', 'Gate', 'sim_results'],\
+        f'{mode} not a valid mode parameter'
+    directory = ''
+    if mode in ['pulse', 'Pulse']:
+        directory = '../output/pulses/'
+    elif mode in ['gate', 'Gate', 'sim_results']:
+        directory = '../output/sim_results/'
+    desc = target.as_dict()
+    desc['file'] = fname
+    cache = get_cache_description(mode)
+    name = desc.pop['name']
+    cache[name] = desc
+    with open(directory+'cache_desc.yaml', 'w') as yaml_file:
+        yaml.dump(cache, yaml_file)
 
 
-def build_qu_folder_name(gate_lbl:str,
-                         tg:float,
-                         omega_0:float,
-                         dt:float,
-                         path_prefix:str='../output/trajectories/',
-                         other_spec:list[tuple[str,Any]]=[])->str:
-    if path_prefix[-1] != '/':
-        path_prefix += '/'
-    folname = f'{gate_lbl}_{tg}ns_{omega_0}GHz_{dt}dt'
-    for lbl, val in other_spec:
-        if lbl=='':
-            folname+= f'_{val}'
-        else:
-            folname += f'_{val}-{lbl}'
-    return path_prefix+folname 
+############ File Reading
 
-def build_unitary_fname(gate_lbl:str,
-                            tg:float,
-                            omega_0:float,
-                            dt:float,
-                            other_spec:list[tuple[str,Any]]=[])->str:
-    return build_qu_folder_name(gate_lbl+'_Unitary', tg, omega_0,
-                                dt, path_prefix='', other_spec=other_spec)
 
-def save_gate(sim_result:tuple[dict[str,T], Qobj],
-              gate_lbl:float,
-              tg:float,
-              omega_0:float,
-              dt:float,
-              other_spec:list[tuple[str,Any]])->None:
-    folname = build_qu_folder_name(gate_lbl, tg, omega_0, 
-                                   dt, other_spec=other_spec)
-    if not isdir(folname):
-        mkdir(folname)
-    trajectories, U = sim_result 
-    #save unitary
-    Ufname = build_unitary_fname(gate_lbl, tg, omega_0, dt, other_spec)
-    qsave(folname+'/'+Ufname)
-    #save trajectories
-    for s0, traj in trajectories.items():
-        save_trajectory(s0,traj, gate_lbl,
-                        tg, omega_0, dt, path_prefix=folname,
-                        other_spec=other_spec)
-        
-def save_trajectory(s0:str,
-                    traj:T,
-                    gate_lbl:float,
-                    tg:float,
-                    omega_0:float,
-                    dt:float,
-                    path_prefix:str='',
-                    other_spec:list[tuple[str,Any]]=[])->None:
-    fpath = build_qu_path(gate_lbl, s0, tg, omega_0, 
-                          dt, dir=path_prefix, other_spec=other_spec)
-    qsave(fpath, traj)
 
-def is_trajectory_cached(init_state:str, gate_lbl:float, tg:float,
-                         omega_0:float, dt:float, folname:str|None=None,
-                         other_spec:list[tuple[str,Any]]=[])->bool:
-    if folname is None:
-        folname = build_qu_folder_name(gate_lbl, tg, omega_0, dt,
-                                       other_spec=other_spec)
-    fpath = build_qu_path(gate_lbl, init_state, tg, omega_0, dt, folname,
-                          other_spec=other_spec)
-    return isfile(fpath)
+def load_pulse(pulse_config: PulseConfig) -> np.ndarray[float]:
+    cache = get_cache_description('pulse')
+    pulse_name: str = pulse_config.name
+    assert pulse_name in cache, \
+        f'pulse {pulse_name} has not been saved in ../output/pulses'
+    fname:str = cache[pulse_name]['fname']
+    return np.load(f'../output/pulses/{fname}')
 
-def is_unitary_cached(gate_lbl:float, tg:float, omega_0:float, dt:float,
-                      folname:str|None=None, other_spec:list[tuple[str,Any]]=[]):
-    if folname is None:
-        folname = build_qu_folder_name(gate_lbl, tg, omega_0, dt,
-                                       other_spec=other_spec)
-    fname = build_unitary_fname(gate_lbl, tg, omega_0, dt, other_spec)
-    fpath = folname + '/' + fname 
-    return isfile(fpath)
-    
+def load_pulse_component(pulse_config: PulseConfig, component_name: str)\
+    -> np.ndarray[complex | float]:
+    cache: dict[str, PulseDict] = get_cache_description('pulse')
+    pulse_name: str = pulse_config.name
+    assert pulse_name in cache, \
+        f'pulse {pulse_name} has not been saved in ../output/pulses'
+    pulse_components: dict[str, str] = cache[pulse_name]
+    assert component_name in pulse_components, \
+        f'component {component_name} has not been profiled for {pulse_name}'
+    fname: str = pulse_components[component_name]['fname']
+    return np.load(f'../output/pulses/{fname}')
+
+def load_gate(gate_name) -> dict[str, Qobj | dict[str, np.ndarray[complex]]]:
+    cache = get_cache_description('Gate')
+    assert gate_name in cache, \
+        f'{gate_name} has not been cached'
+    fname = '../output/sim_results/' + cache[gate_name]['file']
+    return qload(fname)
+
+#def load_pulse(gate_lbl:str,
+               #tg:float,
+               #omega_0:float,
+               #dt:float,
+               #dir:str='../output/pulses',
+               #**other_spec)->np.ndarray[float]:
+    #fname = build_pulse_path(gate_lbl, tg, omega_0, dt, dir,**other_spec)
+    #return np.load(fname)
+
+
 def get_params(path:str)->dict[str,float|dict[str,float]]:
-    with open(path,'r') as stream:
+    with open(path, 'r') as stream:
         try:
-            params:dict = yaml.safe_load(stream)
+            params: dict = yaml.safe_load(stream)
         except yaml.YAMLError as exc:
             print(exc)
     return params
 
+
 def get_ct_params()->dict[str,float|dict[str,float]]:
     return get_params('../config/circuit_parameters.yaml')
+
 
 def get_pulse_defaults()->dict[str,float|dict[str,float]]:
     return get_params('../config/pulse_parameters.yaml')
 
+
 def get_pulse_specs()->dict[str,float|dict[str,float]]:
     return get_params('../config/pulses.yaml')
+
+
+def get_cache_description(cache_lbl: str | None = None) -> dict[str, Pulse] | None:
+    directory: str = ''
+    if cache_lbl in ['pulse', 'Pulse', None]:
+        directory = '../output/pulses'
+    elif cache_lbl in ['gate', 'Gate', 'sim_results']:
+        directory = '../output/sim_results'
+    else:
+        return None
+    fname = directory + '/cache_desc.yaml'
+    if is_file(fname):
+        return get_params(fname)
+    else:
+        return None
+
+# Coupler params g vary
+# implement relaxation and dissapation
+# Ej  may vary in transmon coupler by 5%
+# T1, T2 80ms, vary by up to 50%, 40ms - 80ms
 
 def is_file(path:str)->bool:
     return isfile(path)
