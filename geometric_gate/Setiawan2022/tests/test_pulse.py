@@ -215,16 +215,14 @@ def test_pulse_constr()->None:
 #test only public methods in pulse
 def test_pulse_delta_wC()->None:
     pulse:Pulse = Pulse(pulse_params, ct)
-    tg:float = pulse_params['tg']
-    tlist:np.ndarray[float] = np.linspace(0, tg, 10)
+    tlist:np.ndarray[float] = np.linspace(0, 1, 10)
     for t in tlist:
         pulse.delta_wC(t, np.pi/2)
 
 
 def test_pulse_vectorized_delta_wC()->None:
     pulse:Pulse = Pulse(pulse_params, ct)
-    tg:float = pulse_params['tg']
-    tlist:np.ndarray[float] = np.linspace(0, tg, 10)
+    tlist:np.ndarray[float] = np.linspace(0, 1, 10)
     results = pulse.delta_wC(tlist, np.pi/2)
         
 

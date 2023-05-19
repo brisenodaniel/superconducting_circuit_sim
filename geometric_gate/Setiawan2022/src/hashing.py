@@ -11,10 +11,13 @@ def hash_iterable(target: Iterable) -> int:
     for x in target:
         if isinstance(x, Iterable):
             hash_list.append(hash_iterable(x))
+        elif isinstance(x, dict):
+            hash_list.append(hash_dict(x))
         else:
             hash_list.append(hash(x))
     hash_tuple = tuple(hash_list)
     return hash(hash_tuple)
+
 
 def hash_dict(target: dict[str, Any]) -> int:
     hash_list = []
