@@ -6,6 +6,7 @@ from __future__ import annotations
 import qutip as qt
 import numpy as np
 import warnings
+from functools import cache
 from subsystems import Subsystem
 from typing import TypeAlias, Callable, TypeVar
 
@@ -14,18 +15,41 @@ Qobj: TypeAlias = qt.Qobj
 j: complex = complex(0,1)
 
 class CompositeSystem:
-   
+    class_idx:int = 0
     def __init__(self, 
                  subsystems:dict[str:Subsystem],
                  idxs:dict[str:int], 
                  H_int:Qobj|None=None,
-                 tol:float = 1e-9)->None:
-      self.subsystems:dict[str:Subsystem] = subsystems
-      self._H_int:Qobj = H_int
-      self.lbl_to_idx:dict[str:int] = idxs 
-      self.idx_to_lbl:list = self.build_idx_to_lbl()
-      self._tol = tol
-      self.H:Qobj = self.build_hamiltonian()
+                 tol:float = 1e-9,
+                 immutable:bool=False)->CompositeSystem:
+        self._immutable=immutable # note, self._immutable and self._class_idx must
+        if immutable:             # be first instance variables set in constructor
+            self._class_idx = CompositeSystem.class_idx
+            CompositeSystem.class_idx += 1
+        self.subsystems:dict[str:Subsystem] = subsystems
+        self._H_int:Qobj = H_int
+        self.lbl_to_idx:dict[str:int] = idxs 
+        self.idx_to_lbl:list = self.build_idx_to_lbl()
+        self._tol = tol
+        self.H:Qobj = qt.qeye(1) #dummy hamiltionian so __hash__ doesn't throw a fit during initialization
+        self.H:Qobj = self.build_hamiltonian()
+        
+    @property 
+    def tol(self)->float:
+        return self._tol
+    
+    @property
+    def immutable(self)->bool:
+        return self._immutable
+    
+    @property
+    def object_id(self)->int:
+        return self.__hash__()
+    
+    def freeze(self)->None:
+        self._immutable = True 
+        CompositeSystem.class_idx +=1 
+        self._class_idx = CompositeSystem.class_idx
 
     def build_hamiltonian(self)->None:
         H:int|Qobj = 0
@@ -80,9 +104,29 @@ class CompositeSystem:
         if self._H_int is not None:
             new_sys.add_interaction_term(self.H_int)
         return new_sys
-        
-
+    
     def get_raised_op(self, subsys:str, op:str|list[str], op_spec:Callable['...',Qobj]|None=None)->Qobj:
+        """Method raises the desired subsystem operator `self.subsystems[subsys][op]`\
+            to the product space acting on `self.H`. This is a wrapper for self.__get_raised_ops which \
+            casts all parameters to hashable types.
+
+        Args:
+            subsys (str): Label for the subsystem on which the raised operator should act
+            op (str | list[str]): Label for the operator acting on the desired subsystem, or list of labels for \
+                operators to combine using `op_spec`.
+            op_spec (Callable[...,Qobj], optional): Function taking in the same number of operators as `op`, in the same order,\
+            and returning a new Qobj. If `op` is not a list, this parameter will be ignored.
+
+        Returns:
+            Qobj: An operator of the form Id_1 x Id_2 x ... x op_j x ... Id_k, where Id_i is the identity \
+                matrix acting on the i'th subsystem in self.lbl_to_idx, and op_j acts on the j'th subsystem in self.lbl_to_idx.
+        """
+        if isinstance(op, list):
+            op = tuple(op)
+        return self.__get_raised_op(subsys, op, op_spec)
+
+    @cache
+    def __get_raised_op(self, subsys:str, op:str|tuple[str], op_spec:Callable['...',Qobj]|None=None)->Qobj:
         """Method raises the desired subsystem operator `self.subsystems[subsys][op]`\
             to the product space acting on `self.H`
 
@@ -106,7 +150,7 @@ class CompositeSystem:
             nlev = sys.nlev
             oper_list[idx] = qt.qeye(nlev)
         # replace only the operator at subsys_idx with operator we would like to promote
-        if isinstance(op, list):
+        if isinstance(op, tuple):
            arg_ops:list[Qobj] = [self.subsystems[subsys][lbl] for lbl in op]
            subsys_op = op_spec(*arg_ops)
         else:
@@ -130,6 +174,23 @@ class CompositeSystem:
        if self.lbl_to_idx != other.lbl_to_idx: return False
        if self.subsystems != other.subsystems: return False
        return True
+    
+    def _hashable_subsys(self)->tuple[tuple[int]]:
+        subsys_hashes = []
+        for lbl, sys in self.subsystems.items():
+            subsys_hashes.append(hash(sys))
+        return tuple(subsys_hashes)
+    
+    def __hash__(self):
+        if self._immutable:
+            return self._class_idx
+        return hash(
+            ((x for x in self.H.full()),
+             (hash(sys) for sys in self.subsystems.values()))
+             )
+    
+
+        
        
 
     

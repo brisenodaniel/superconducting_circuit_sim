@@ -1,0 +1,13 @@
+---
+# Pulse parameters for geometric pulse Method 2 in Setiawan et.al. 2022
+# Parameters taken from Setiawan et. al. 2022 in the literature folder
+# All quantities in GHz unless otherwise indicated (note: NOT radian frequency)
+A: # Pulse parameters for fluxonium A control line
+ w_mod: 0.84
+B: # Pulse parameters for fluxonium B control line
+ w_mod: 2.43
+#global pulse params
+tg: 130 #ns
+omega_0: 1.135 #units of GHz/ns, needs to be multiplied by 2pi*tg before use
+dt: 0.01
+n_comp_states: 5

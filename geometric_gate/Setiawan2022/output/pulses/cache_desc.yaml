@@ -1,0 +1,52 @@
+CZ:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.01
+  file: CZ.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  s0:
+  - ggg
+  - egg
+  - geg
+  - eeg
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-_Pulse__delta_wmod.npy
+      geo_phase: 3.141592653589793
+    _Pulse__g_ac:
+      file: CZ-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.3
+  target_unitary: CZ
+  tg: 130
