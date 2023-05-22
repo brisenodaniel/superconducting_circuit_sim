@@ -18,7 +18,7 @@ DataObj = TypeVar("DataObj", PulseConfig, PulseProfile, GateProfile)
 DataDict = TypeVar("DataDict", PulseDict, GateDict)
 # filename generators
 
-################# Setup Paths
+# Setup Paths
 project_root = Path(__file__).parents[1]
 # setup config path
 config_dir = os.path.join(project_root, "config")
@@ -26,29 +26,33 @@ config_dir = os.path.join(project_root, "config")
 output_dir = os.path.join(project_root, "output")
 
 
-############ filename setup
+# filename setup
 def add_path(fname: str, dir_label: str) -> str:
     assert dir_label in [
         "config",
         "output",
         "pulse",
+        "Pulse",
         "pulses",
         "gate",
+        "Gate",
         "sim_results",
     ], f'dir_label must be "config" or "output", got "{dir_label}"'
     paths = {
         "config": config_dir,
         "output": output_dir,
         "pulse": os.path.join(output_dir, "pulses"),
+        "Pulse": os.path.join(output_dir, "pulses"),
         "pulses": os.path.join(output_dir, "pulses"),
         "gate": os.path.join(output_dir, "sim_results"),
+        "Gate": os.path.join(output_dir, "sim_results"),
         "sim_results": os.path.join(output_dir, "sim_results"),
     }
     return os.path.join(paths[dir_label], fname)
 
 
 def build_pulse_fname(pulse_config: PulseConfig | PulseProfile) -> str:
-    return f"{pulse_config.name}-{hash(pulse_config)}.npy"
+    return f"{pulse_config.name}.npy"
 
 
 def build_pulse_path(pulse_config: PulseConfig | PulseProfile) -> str:
@@ -59,7 +63,7 @@ def build_pulse_path(pulse_config: PulseConfig | PulseProfile) -> str:
 def build_pulse_component_fname(
     pulse_desc: PulseConfig | PulseProfile, component_name: str
 ) -> str:
-    return f"{pulse_desc.name}-{component_name}-{hash(pulse_desc)}.npy"
+    return f"{pulse_desc.name}-{component_name}.npy"
 
 
 def build_pulse_component_path(
@@ -70,7 +74,7 @@ def build_pulse_component_path(
 
 
 def build_gate_fname(gate: GateProfile) -> str:
-    return f"{gate.name}-{hash(gate)}.qu"
+    return f"{gate.name}.qu"
 
 
 def build_gate_path(gate: GateProfile) -> str:
@@ -78,7 +82,7 @@ def build_gate_path(gate: GateProfile) -> str:
     return add_path(fname, "gate")
 
 
-######## File Writing
+# File Writing
 
 
 def cache_pulse(
@@ -114,18 +118,18 @@ def cache_gate(gate: GateProfile) -> None:
     # "unitary": unitary,
     # "trajectories": trajectories,
     # }
-    ## qutip annoyingly always appends .qu to filenames, even if it
-    ## already ends in .qu, so we truncate the extension
+    # qutip annoyingly always appends .qu to filenames, even if it
+    # already ends in .qu, so we truncate the extension
     if fpath[-3:] == ".qu":
         fpath = fpath[:-3]
     qsave(gate, fpath)
 
 
-############# File logging
+# File logging
 
 
 def save_component_desc(pulse: PulseProfile, component_name: str, fname: str)\
-    -> None:
+        -> None:
     pulse_name: str = pulse.name
     pulse_desc = pulse.as_noNone_dict()
     component_desc: dict[str, float | complex] =\
@@ -145,7 +149,9 @@ def save_component_desc(pulse: PulseProfile, component_name: str, fname: str)\
 def save_desc(target: DataObj, fname: str, mode: str = "pulse") -> None:
     assert mode in [
         "pulse",
+        "Pulse",
         "gate",
+        "Gate",
         "sim_results",
     ], f"{mode} not a valid mode parameter"
     cache_path = add_path("cache_desc.yaml", mode)
@@ -158,7 +164,7 @@ def save_desc(target: DataObj, fname: str, mode: str = "pulse") -> None:
         yaml.dump(cache, yaml_file)
 
 
-############ File Reading
+# File Reading
 
 
 def load_pulse(pulse_config: PulseConfig) -> np.ndarray[float]:
@@ -172,6 +178,14 @@ def load_pulse(pulse_config: PulseConfig) -> np.ndarray[float]:
     if fpath[-4:] != ".npy":
         fpath = fpath + ".npy"
     return np.load(fpath)
+
+
+def load_unitary(Uname: str) -> Qobj:
+    fpath = os.path.join(project_root,
+                         'config',
+                         'target_unitaries',
+                         f'{Uname}')
+    return qload(fpath)
 
 
 def load_pulse_component(
@@ -196,7 +210,7 @@ def load_pulse_component(
     return np.load(fpath, allow_pickle=True)
 
 
-def load_gate(gate_name) -> dict[str, Qobj | dict[str, np.ndarray[complex]]]:
+def load_gate(gate_name) -> GateProfile:
     cache = get_cache_description("gate")
     assert gate_name in cache, f"{gate_name} has not been cached"
     fname: str = cache[gate_name]["file"]
@@ -236,6 +250,8 @@ def get_cache_description(cache_lbl: str = "pulse") -> dict[str, DataDict]:
     assert cache_lbl in [
         "pulse",
         "gate",
+        "Gate",
+        "Pulse",
         "sim_results",
     ], f'`cache_lbl` must be "pulse", "gate", or "sim_results", got {cache_lbl}'
     fpath = add_path("cache_desc.yaml", cache_lbl)
@@ -260,7 +276,7 @@ def tidy_cache(cache_dirty: dict) -> dict:
     return cache
 
 
-######################### Existence Checking
+# Existence Checking
 
 
 def pulse_cached(pulse_desc: PulseConfig | PulseProfile) -> bool:
@@ -272,10 +288,29 @@ def pulse_cached(pulse_desc: PulseConfig | PulseProfile) -> bool:
     cache: dict[str, PulseDict] = get_cache_description("pulse")
     if name in cache:
         cached_desc: PulseDict = cache[name]
-        matched_params: list[bool] = [desc[lbl] == cached_desc[lbl] for lbl in desc]
+        matched_params: list[bool] = [
+            desc[lbl] == cached_desc[lbl] for lbl in desc]
         return all(matched_params)
     else:
         return False
+
+
+def gate_cached(gate_description: GateDict | GateProfile) -> bool:
+    if isinstance(gate_description, dict):
+        gate_desc: dict = gate_description.copy()
+    else:
+        gate_desc = gate_description.as_dict()
+    gate_name = gate_desc['name']
+    cache = get_cache_description('gate')
+    if gate_name in cache:
+        cached_desc = cache[gate_name]
+        if 'file' in cached_desc:
+            identity_labels = ['circuit_config',
+                               'pulse_config']
+            return all([
+                cached_desc[lbl] == gate_desc[lbl]
+                for lbl in identity_labels
+            ])
 
 
 def is_file(path: str) -> bool:

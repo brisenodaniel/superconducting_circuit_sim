@@ -5,7 +5,7 @@
 import yaml
 import numpy as np
 import qutip as qt
-DEBUG = True
+DEBUG = False
 # package imports
 
 # module imports
@@ -43,8 +43,7 @@ if 1:  # hacky, but prevent blacken from moving this to top of file
     from file_io import get_params
 
 # import circuit and pulse parameters for handrolling
-ct_params = get_params(ct_path)
-breakpoint()
+ct_params = get_params(ct_path)['pulse_gen_ct']
 pulse_defaults = get_params(pulse_defaults_path)
 gate_params = get_params(gate_param_path)
 
@@ -55,7 +54,8 @@ def test_collect_sim_params_from_configs():
 
 def test_setup_circuit():
     config = sim_setup.collect_sim_params_from_configs()
-    ct: CompositeSystem = sim_setup.setup_circuit(config.ct_params)
+    ct: CompositeSystem = sim_setup.setup_circuit(
+        config.ct_params['pulse_gen_ct'])
     ct_handrolled = build_static_system(ct_params)
     assert (
         ct == ct_handrolled
@@ -67,7 +67,7 @@ def test_setup_pulse_params():
     cz_pulse_config = config.pulse_config_dict["CZ"]
     default_pulse_config = config.default_pulse_params
     name = "CZ"
-    ct_params = config.ct_params
+    ct_params = config.ct_params['pulse_gen_ct']
     sim_setup.setup_pulse_params(
         name, cz_pulse_config, default_pulse_config, ct_params)
 
@@ -75,16 +75,17 @@ def test_setup_pulse_params():
 def test_setup_pulse_param_dict():
     config = sim_setup.collect_sim_params_from_configs()
     sim_setup.setup_pulse_param_dict(
-        config.pulse_config_dict, config.default_pulse_params, config.ct_params
+        config.pulse_config_dict, config.default_pulse_params, config.ct_params['pulse_gen_ct']
     )
 
 
 def test_get_pulse_profile():
     config = sim_setup.collect_sim_params_from_configs()
     pulse_params = sim_setup.setup_pulse_param_dict(
-        config.pulse_config_dict, config.default_pulse_params, config.ct_params
+        config.pulse_config_dict, config.default_pulse_params, config.ct_params['pulse_gen_ct']
     )
-    ct: CompositeSystem = sim_setup.setup_circuit(config.ct_params)
+    ct: CompositeSystem = sim_setup.setup_circuit(
+        config.ct_params['pulse_gen_ct'])
     sim_setup.get_pulse_profile(pulse_params["CZ"], ct)
 
 

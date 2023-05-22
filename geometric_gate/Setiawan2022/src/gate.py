@@ -9,7 +9,8 @@ from math import sqrt
 from warnings import warn
 from simulation_setup import PulseDict, CircuitParams
 from simulation_setup import PulseParams, PulseProfile
-from simulation_setup import PulseConfig
+from simulation_setup import PulseConfig, Config
+import simulation_setup as setup_sim
 from dataclasses import dataclass, field
 from pulse import Pulse, StaticPulseAttr
 from static_system import build_bare_system
@@ -31,6 +32,7 @@ class GateProfile:
         name: str,
         pulse_profile: PulseProfile,
         gate_unitary: Qobj | None = None,
+        gate_2q_unitary: Qobj | None = None,
         two_q_unitary: Qobj | None = None,
         circuit: CompositeSystem | None = None,
         circuit_config: CircuitParams | None = None,
@@ -40,7 +42,8 @@ class GateProfile:
         self.name: str = name
         self.pulse: np.ndarray[float] = pulse_profile.pulse
         self.pulse_profile: PulseProfile = pulse_profile
-        self.unitary: Qobj | None = gate_unitary
+        self.target_unitary: str = pulse_profile.pulse_config.target_unitary
+        self.gate_unitary: Qobj | None = gate_unitary
         self.two_q_unitary: Qobj | None = two_q_unitary
         if circuit is None:
             self.circuit: Qobj = pulse_profile.circuit
@@ -65,24 +68,69 @@ class GateProfile:
         desc: GateDict = {}  # init descriptor dictionary
         desc["name"] = self.name
         desc["pulse_config"] = self.pulse_profile.as_dict()
-        desc["computed_unitary"] = self.gate_unitary is not None
+        desc["unitary_cached"] = self.gate_unitary is not None
+        desc["two_q_unitary_cached"] = self.two_q_unitary is not None
         desc["circuit_config"] = self.circuit_config
-        desc["trajectories"] = [init_state for init_state in self.trajectories]
+        desc["trajectories"] = [
+            init_state for init_state in self.trajectories.keys()]
         desc["fidelity"] = self.fidelity
         return desc
+
+    def as_noNone_dict(self) -> GateDict:
+        return file_io.tidy_cache(self.as_dict())
 
     def __hash__(self) -> int:
         return hashing.hash_dict(self.as_dict())
 
 
+def drive_op(circuit: CompositeSystem) -> Qobj:
+    n_C: Qobj = circuit.get_raised_op("C", ["a"], lambda a: a.dag() * a)
+    return n_C
+
+
+def run_sim_from_configs(
+    drive_op: Callable["...", Qobj] = drive_op,
+    n_comp_states: int = 2,
+    cache_gates: bool = True,
+) -> dict[str, GateProfile]:
+    config: Config
+    pulse_dict: dict[str, PulseProfile]
+    config, pulse_dict = sim_setup.setup_sim_from_configs()
+    return run_sim(config, pulse_dict, drive_op, n_comp_states, cache_gates)
+
+
+def run_sim(
+    config: Config,
+    pulse_profiles: dict[str, PulseProfile],
+    drive_op: Callable["...", Qobj] = drive_op,
+    n_comp_states: int = 2,
+    cache_gates: bool = True,
+) -> dict[str, GateProfile]:
+    circuit_configs: dict[str, dict[str, dict[str, float]]] = config.ct_params
+    gate_dict: dict[str, GateProfile] = {}  # init return dict
+    for ct_name, ct_config in circuit_configs.items():
+        for pulse_name, profile in pulse_profiles.items():
+            gate_name: str = f"{pulse_name}-{ct_name}"
+            gate_dict[gate_name] = profile_gate(
+                gate_name,
+                profile,
+                drive_op=drive_op,
+                circuit_config=ct_config,
+                n_comp_states=n_comp_states,
+                cache_gate=True,
+            )
+    return gate_dict
+
+
 def profile_gate(
     name,
     pulse_profile,
-    drive_op: Qobj | Callable["...", Qobj],
+    drive_op: Qobj | Callable["...", Qobj] = drive_op,
     empty_gate_profile: GateProfile | None = None,
     circuit: CompositeSystem | None = None,
     circuit_config: CircuitParams | None = None,
-    n_comp_states: int = 3,
+    n_comp_states: int = 2,
+    cache_gate: bool = True,
 ):
     gate_profile: GateProfile = assemble_empty_profile(
         name,
@@ -91,56 +139,63 @@ def profile_gate(
         circuit_config=circuit_config,
         gate_profile=empty_gate_profile,
     )
+    # check if gate has been pre-computed
+    if file_io.gate_cached(gate_profile):
+        return file_io.load_gate(gate_profile.name)
+    # else, compute gate profile
     comp_states: CompTensor
     comp_coord: CompCoord
     comp_states, comp_coord = get_dressed_comp_states(
         gate_profile.circuit, n_comp_states
     )
     gate_profile.trajectories = get_trajectories(
-        pulse_profile, gate_profile.circuit, drive_op, n_comp_states, comp_states
+        pulse_profile=pulse_profile,
+        circuit=gate_profile.circuit,
+        comp_states=comp_states,
+        drive_op=drive_op,
     )
 
-    gate_profile.unitary, gate_profile.two_q_unitary = compute_unitary(
-        gate_profile.trajectories, comp_states, comp_coord
+    gate_profile.gate_unitary, gate_profile.two_q_unitary = compute_unitary(
+        gate_profile.trajectories, comp_states, comp_coord, gate_profile.circuit.H.dims
     )
+    ideal_unitary = file_io.load_unitary(
+        pulse_profile.pulse_config.target_unitary)
+    gate_profile.fidelity = compute_fidelity(
+        gate_profile.two_q_unitary, ideal_unitary)
+    if cache_gate:
+        file_io.cache_gate(gate_profile)
 
 
 def compute_fidelity(U: Qobj, U_g: Qobj) -> float:
+    # implements eq (14)
     s0 = qt.qeye(2)
-    sigmas: list[Qobj] = [qt.sigamz(), qt.sigmax(),
-                          qt.sigmay(), s0]
+    sigmas: list[Qobj] = [qt.sigmaz(), qt.sigmax(), qt.sigmay(), s0]
     fidelity_sum: float = 0
     for si in sigmas:
         for sj in sigmas:
             if not (si == sj == s0):
-
-    return (1/4) + (1/80) * sum(
-        [(U_g * qt.tensor(si, sj) * U_g.dag() *
-          U * qt.tensor(si, sj)).tr()
-         for si in sigmas
-         for sj in sigmas
-         if not (si == sj == s0)]
-    )
+                fidelity_sum += _fidelity_summand(U, U_g, si, sj)
+    return (1 / 4) + (1 / 80) * fidelity_sum
 
 
 def _fidelity_summand(U: Qobj, U_g: Qobj, si: Qobj, sj: Qobj) -> float:
+    # summand in eq (14)
     two_qubit_sigma = qt.tensor(si, sj)
-    return (U_g * two_qubit_sigma * U_g.dag()
-            * U * two_qubit_sigma).tr()
+    return (U_g * two_qubit_sigma * U_g.dag() * U * two_qubit_sigma * U.dag()).tr()
 
 
 def compute_unitary(
     trajectories: dict[str, Qobj],
-    circuit: CompositeSystem,
     comp_states: CompTensor,
     comp_coord: CompCoord,
+    hamiltonian_dims: list[int] = [[5, 5, 5], [5, 5, 5]],
 ) -> tuple[Qobj, Qobj]:
-    dims: list[list[int, int, int], list[int, int, int]] = circuit.H.dims
+    dims: list[list[int, int, int], list[int, int, int]] = hamiltonian_dims
     matrix_dims: list[int, int] = [np.prod(dims[0]), np.prod(dims[1])]
     U_arr: np.ndarray[complex] = np.zeros(shape=matrix_dims, dtype=complex)
     U_qs_arr = np.zeros(shape=[4, 4], dtype=complex)
-    basis: dict[str, str] = {"ggg": '00', 'geg': '01',
-                             'egg': '10', 'eeg': '11'}
+    basis: dict[str, str] = {"ggg": "00",
+                             "geg": "01", "egg": "10", "eeg": "11"}
     for bra, bra_bin in basis.items():
         for ket, ket_bin in basis.items():
             # compute matrix element indices in full hilbert space
@@ -152,15 +207,15 @@ def compute_unitary(
             bra_qs_idx = int(bra_bin, 2)  # convert binary index to int
             ket_qs_idx = int(ket_bin, 2)
             bra_vector = comp_states[i_bra, j_bra, k_bra]
-            ket_vector = trajectories[ket]
-            matrix_elem = bra_vector.dag() * ket_vector
+            ket_vector = trajectories[ket].states[-1]
+            matrix_elem = (bra_vector.dag() * ket_vector).tr()
             U_arr[bra_idx][ket_idx] = matrix_elem
             U_qs_arr[bra_qs_idx][ket_qs_idx] = matrix_elem
     U: Qobj = qt.Qobj(U_arr, dims=dims)
     U_qs: Qobj = qt.Qobj(U_qs_arr, dims=[[2, 2], [2, 2]])
     # correct trivial phase to (along diagonal) [0,0,0,phi]
     U = trivial_z(U, comp_coord)
-    U_qs = trivial_z(U)
+    U_qs = trivial_z(U_qs)
     return U, U_qs
 
 
@@ -173,15 +228,17 @@ def trivial_z(U: Qobj, comp_state_idx: CompCoord | None = None) -> Qobj:
 
 def _trivial_z_qs(U: Qobj) -> Qobj:
     # set global phase to phase of 00
-    U = U * np.exp(-1.j*np.angle(U[0, 0]))
+    U = U * np.exp(-1.0j * np.angle(U[0, 0]))
     # get phase of middle two diagonal elements
     phi_1_1 = np.angle(U[1, 1])
     phi_2_2 = np.angle(U[2, 2])
     # assemble trivial z unitary
-    diag = [1,
-            np.exp(-1.j*phi_1_1),
-            np.exp(-1.j*phi_2_2),
-            np.exp(-1.j*(phi_1_1 + phi_2_2))]
+    diag = [
+        1,
+        np.exp(-1.0j * phi_1_1),
+        np.exp(-1.0j * phi_2_2),
+        np.exp(-1.0j * (phi_1_1 + phi_2_2)),
+    ]
     triv_Z = np.diag(diag)
     triv_Z = qt.Qobj(triv_Z, dims=[[2, 2], [2, 2]])
     return triv_Z * U
@@ -190,12 +247,12 @@ def _trivial_z_qs(U: Qobj) -> Qobj:
 def _trivial_z_full_hlbrtspc(U: Qobj, comp_state_idx: CompCoord) -> Qobj:
     # set global phase to phase of comp state 000
     i0: int = comp_state_idx[0, 0, 0]
-    phi_000: complex = np.angle(U[i0, i0, i0])
-    U: Qobj = U * np.exp(-1.j*phi_000)
+    phi_00: complex = np.angle(U[i0, i0])
+    U: Qobj = U * np.exp(-1.0j * phi_00)
     # assemble trivial z unitary
     dims: tuple[tuple[int, int, int], tuple[int, int, int]] = U.dims
     matrix_dims: tuple[int, int] = [np.prod(dims[0]), np.prod(dims[1])]
-    diag = np.repeat(1, matrix_dims[0])
+    diag = np.repeat(1 + 0.0j, matrix_dims[0])
     triv_Z: np.ndarray[complex] = np.diag(diag)
     # collect indices
     i1: int = comp_state_idx[0, 1, 0]
@@ -206,9 +263,9 @@ def _trivial_z_full_hlbrtspc(U: Qobj, comp_state_idx: CompCoord) -> Qobj:
     phi_22 = np.angle(U[i2, i2])
     # assemble matrix
     triv_Z[i0, i0] = 1
-    triv_Z[i1, i1] = np.exp(-1.j*phi_11)
-    triv_Z[i2, i2] = np.exp(-1.j*phi_22)
-    triv_Z[i3, i3] = np.exp(-1.j*(phi_11 + phi_22))
+    triv_Z[i1, i1] = np.exp(-1.0j * phi_11)
+    triv_Z[i2, i2] = np.exp(-1.0j * phi_22)
+    triv_Z[i3, i3] = np.exp(-1.0j * (phi_11 + phi_22))
     triv_Z = qt.Qobj(triv_Z, dims=dims)
     return triv_Z * U
 
@@ -216,13 +273,13 @@ def _trivial_z_full_hlbrtspc(U: Qobj, comp_state_idx: CompCoord) -> Qobj:
 def get_trajectories(
     pulse_profile: PulseProfile,
     circuit: CompositeSystem,
-    drive_op: Qobj | Callable["...", Qobj],
-    n_comp_states: int = 3,
+    comp_states: CompTensor,
+    drive_op: Qobj | Callable["...", Qobj] = drive_op,
 ) -> dict[str, qt.solver.Result]:
     H: list[Qobj | list[Qobj, np.ndarray[float]]] = assemble_sim_hamiltonian(
         circuit, pulse_profile, drive_op
     )
-    init_states = assemble_init_states(pulse_profile, circuit, n_comp_states)
+    init_states = assemble_init_states(pulse_profile, circuit, comp_states)
     pulse_params: PulseDict = pulse_profile.pulse_config.pulse_params
     return {
         state_lbl: evolve_state(state, H, pulse_params)
@@ -236,7 +293,8 @@ def evolve_state(
     # setup evolution timesteps
     tg: float = pulse_params["tg"]
     dt: float = pulse_params["dt"]
-    tlist: np.ndarray[float] = np.arange(0, tg, dt)
+    t_ramp: float = pulse_params["t_ramp"]
+    tlist: np.ndarray[float] = np.arange(0, tg + 2 * t_ramp, dt)
     return qt.mesolve(H, state, tlist)
 
 
@@ -267,7 +325,6 @@ def spec_list_to_state_dict(
     comp_states: CompTensor,
 ) -> dict[str, Qobj]:
     state_vectors: dict[str, Qobj] = {}  # initialize return dict
-    comp_states: CompTensor  # Get computational eigenstates from circuit
     for spec in states:
         if isinstance(spec, str):
             state_vectors[spec] = spec_to_state(spec, comp_states)
@@ -282,9 +339,10 @@ def spec_list_to_state_dict(
 def spec_to_state(
     state_recipe: str | tuple[str, dict[str, complex]], comp_states: CompTensor
 ) -> Qobj:
-    assert isinstance(state_recipe, str | list | tuple | dict),\
-        f'first parameter must be of type str, list, tuple or dict, \
-        got {type(state_recipe)}'
+    assert isinstance(
+        state_recipe, str | list | tuple | dict
+    ), f"first parameter must be of type str, list, tuple or dict, \
+        got {type(state_recipe)}"
     if isinstance(state_recipe, str):
         return str_to_state(state_recipe, comp_states)
     elif isinstance(state_recipe, tuple | list):

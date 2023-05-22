@@ -43,6 +43,7 @@ class PulseConfig(Generic[PulseParams]):
     name: str
     circuit_config: CircuitParams | None = None
     save_components: dict[str, dict[str, Any]] = field(default_factory={})
+    target_unitary: str = 'CZ'
 
     def as_dict(self) -> PulseDict:
         desc: PulseDict = {}  # init descriptor dictionary
@@ -51,6 +52,7 @@ class PulseConfig(Generic[PulseParams]):
         desc['geo_phase'] = self.geo_phase
         desc['circuit_config'] = self.circuit_config
         desc['save_components'] = self.save_components
+        desc['target_unitary'] = self.target_unitary
         return desc
 
     def as_noNone_dict(self) -> PulseDict:
@@ -151,10 +153,10 @@ def collect_sim_params_from_configs() -> Config:
     circuit_parameters.yaml, pulses.yaml, and pulse_parameters.yaml,
     respectively.
     """
-    ct_params = file_io.get_ct_params()
+    circuits = file_io.get_ct_params()
     pulse_defaults = file_io.get_pulse_defaults()
     pulse_collection_params = file_io.get_pulse_specs()
-    return Config(ct_params=ct_params,
+    return Config(ct_params=circuits,
                   default_pulse_params=pulse_defaults,
                   pulse_config_dict=pulse_collection_params)
 
@@ -162,8 +164,8 @@ def collect_sim_params_from_configs() -> Config:
 def setup_sim(sim_config: Config) -> dict[str, PulseProfile]:
     pulse_configs = setup_pulse_param_dict(sim_config.pulse_config_dict,
                                            sim_config.default_pulse_params,
-                                           sim_config.ct_params)
-    circuit = setup_circuit(sim_config.ct_params)
+                                           sim_config.ct_params['pulse_gen_ct'])
+    circuit = setup_circuit(sim_config.ct_params['pulse_gen_ct'])
     pulse_profiles = get_pulse_profile_dict(pulse_configs, circuit)
     return pulse_profiles
 
@@ -217,6 +219,10 @@ def setup_pulse_params(gate_name: str,
         save_components = non_default_params.pop('save_components')
     else:
         save_components = None
+    if 'target_unitary' in non_default_params:
+        target_unitary = non_default_params.pop('target_unitary')
+    else:
+        target_unitary = 'CZ'
     params = default_params.copy()
     params.update(non_default_params)
     # params = non_default_params.copy()
@@ -233,7 +239,8 @@ def setup_pulse_params(gate_name: str,
                                save_components=save_components,
                                name=gate_name,
                                geo_phase=phase,
-                               circuit_config=circuit_config)
+                               circuit_config=circuit_config,
+                               target_unitary=target_unitary)
     return pulse_config
 
 
@@ -293,9 +300,11 @@ def get_pulse(pulse_config: PulseConfig, pulse_builder: Pulse | None = None,
         pulse_builder = Pulse(pulse_config.pulse_params, circuit)
     dt = pulse_config.pulse_params['dt']
     tg = pulse_config.pulse_params['tg']
+    t_ramp = pulse_config.pulse_params['t_ramp']
     tlist = np.arange(0, tg, dt)
+    tlist_ramp = np.arange(0, t_ramp, dt)
     geo_phase = pulse_config.geo_phase
-    return pulse_builder.build_pulse(tlist, geo_phase)
+    return pulse_builder.build_pulse(tlist, geo_phase, tlist_ramp)
 
 
 def get_component(pulse_config: PulseConfig,
@@ -364,5 +373,5 @@ def component_cached(cached_pulse_configs: dict[str, PulseParams],
             if component_name in cached_components:
                 if 'file' in cached_components[component_name]:
                     cached_components[component_name].pop('file')
-                return component_args == cached_components[component_name]
+                    return component_args == cached_components[component_name]
     return False

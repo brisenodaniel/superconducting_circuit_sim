@@ -93,7 +93,8 @@ class StaticPulseAttr:
             len(state_lbl) == 3
         ), f"Expected state label length 3, got {len(state_lbl)}"
         idx = [0, 0, 0]
-        char_to_int: dict[str, int] = {"g": 0, "e": 1, "f": 2, "0": 0, "1": 1, "2": 2}
+        char_to_int: dict[str, int] = {
+            "g": 0, "e": 1, "f": 2, "0": 0, "1": 1, "2": 2}
         for i, char in enumerate(state_lbl):
             idx[i] = char_to_int[char]
         return tuple(idx)
@@ -165,7 +166,7 @@ class StaticPulseAttr:
         return self.trans_freq(s1, s2) + pm * w_mod
 
 
-################### begin pulse def
+# begin pulse def
 class Pulse:
     def __init__(
         self,
@@ -187,7 +188,8 @@ class Pulse:
             self.n_comp_states: int = pulse_params["n_comp_states"]
         else:
             self.n_comp_states: int = n_comp_states
-        self._omega_0: float = 2 * np.pi * self._params["omega_0"] / pulse_params["tg"]
+        self._omega_0: float = 2 * np.pi * \
+            self._params["omega_0"] / pulse_params["tg"]
 
     def __omega_A(self, t: float) -> float:
         theta = self.__theta(t, 0)
@@ -231,12 +233,14 @@ class Pulse:
 
     def __theta_interval_1(self, t: float, d: int) -> float:
         tg = self._params["tg"]
-        derivs: list[float] = [np.pi / 2, np.pi / (2 * tg), np.pi / (2 * tg**2)]
+        derivs: list[float] = [np.pi / 2,
+                               np.pi / (2 * tg), np.pi / (2 * tg**2)]
         return derivs[d] * self.__polynom(t / tg, d=d)
 
     def __theta_interval_2(self, t: float, d: int) -> float:
         tg = self._params["tg"]
-        derivs: list[float] = [(np.pi / 2), (np.pi / (2 * tg)), (np.pi / (2 * tg**2))]
+        derivs: list[float] = [
+            (np.pi / 2), (np.pi / (2 * tg)), (np.pi / (2 * tg**2))]
         if d == 0:
             return derivs[d] * (1 - self.__polynom(t / tg - 1 / 2, d=d))
         else:
@@ -251,14 +255,9 @@ class Pulse:
         ]
         return self.__p(t, *derivs[d])
 
-    def __p(self,
-            x: float,
-            c1: float,
-            c2: float,
-            c3: float,
-            e1: float,
-            e2: float,
-            e3: float) -> float:
+    def __p(
+        self, x: float, c1: float, c2: float, c3: float, e1: float, e2: float, e3: float
+    ) -> float:
         return c1 * x**e1 + c2 * x**e2 + c3 * x**e3
 
     @cache
@@ -268,8 +267,7 @@ class Pulse:
         gf0_idx: int = self.static_attr.state_idx("gf0")
         return {
             "A": self.__omega_A(t) / (self.__adag_a[ge1_idx, ee0_idx]),
-            "B": self.__omega_B(t, geo_phase) /
-            (self.__adag_a[ge1_idx, gf0_idx]),
+            "B": self.__omega_B(t, geo_phase) / (self.__adag_a[ge1_idx, gf0_idx]),
         }
 
     @cached_property
@@ -338,7 +336,8 @@ class Pulse:
         profiling. Returns operator a.dag()*a in eigenbasis where a is the QHO destruction operator
         acting on the transmon coupler
         """
-        adag_a: Qobj = self._ct.get_raised_op("C", ["a"], lambda a: a.dag() * a)
+        adag_a: Qobj = self._ct.get_raised_op(
+            "C", ["a"], lambda a: a.dag() * a)
         eigenbasis: np.array[Qobj] = self._ct.H.eigenstates()[1]
         adag_a = adag_a.transform(eigenbasis)
         return adag_a
@@ -392,10 +391,28 @@ class Pulse:
     def __wc(self, tlist: abc.Iterable, geo_phase: float) -> np.ndarray[float]:
         return np.array([self.delta_wC(t, geo_phase) for t in tlist])
 
-    def build_pulse(
-        self, tlist: abc.Iterable[float], geo_phase: float, fname=None, as_txt=False
-    ) -> np.ndarray[float]:
+    def build_ramp(self,
+                   tlist_ramp: abs.Iterable[float],
+                   p_0: float,
+                   p_f: float) -> np.ndarray[float]:
+        t_ramp = tlist_ramp[-1]
+        ramp_up = p_0 * (1 - np.cos(tlist_ramp*np.pi/(2*t_ramp)))
+        ramp_down = p_f * np.cos(tlist_ramp*np.pi/(2*t_ramp))
+        return ramp_up, ramp_down
+
+    def build_pulse(self,
+                    tlist: abc.Iterable[float],
+                    geo_phase: float,
+                    t_ramp: abc.Iterable[float],
+                    fname=None,
+                    as_txt=False
+                    ) -> np.ndarray[float]:
         pulse = self.delta_wC(tlist, geo_phase)
+        ramp_up: np.ndarray[float]
+        ramp_down: np.ndarray[float]
+        ramp_up, ramp_down = self.build_ramp(t_ramp, pulse[0], pulse[-1])
+        breakpoint()
+        pulse = np.concatenate((ramp_up, pulse, ramp_down))
         if fname is not None:
             if as_txt:
                 np.savetxt(fname, pulse)
@@ -403,7 +420,7 @@ class Pulse:
                 np.save(fname, pulse)
         return pulse
 
-    ############ Diagnostic functions
+    # Diagnostic functions
     def get_integrand_func(
         self, tlist: np.ndarray[int], state: str, geo_phase: float
     ) -> np.ndarray[float]:
@@ -411,11 +428,11 @@ class Pulse:
         return np.array(res_lst)
 
 
-########### The following section is used to add pulses to the
-###########  `../pulses/` directory. To add a new pulse, write the
-###########  parameters of the new pulse to `../pulses/pulses.yaml`
-###########  as specified in that file's documentation. Then, run
-###########  this file as a script from this directory `$python pulse.py`
+# The following section is used to add pulses to the
+# `../pulses/` directory. To add a new pulse, write the
+# parameters of the new pulse to `../pulses/pulses.yaml`
+# as specified in that file's documentation. Then, run
+# this file as a script from this directory `$python pulse.py`
 
 
 # extract configuration parameters
@@ -493,7 +510,8 @@ def build_pulse(
             pulse_params=pulse_params, circuit=circuit, dt=dt
         )
         pulse_spec = {
-            gate_label: {"geo_phase": geo_phase, "tg": tg, "omega_0": omega_0, "dt": dt}
+            gate_label: {"geo_phase": geo_phase,
+                         "tg": tg, "omega_0": omega_0, "dt": dt}
         }
         if save_spec:
             write_pulse_spec(pulse_spec)
