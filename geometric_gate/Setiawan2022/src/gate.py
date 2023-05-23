@@ -5,18 +5,17 @@ import numpy as np
 import file_io
 import hashing
 import simulation_setup as sim_setup
+import multiprocessing
 from math import sqrt
 from warnings import warn
 from simulation_setup import PulseDict, CircuitParams
-from simulation_setup import PulseParams, PulseProfile
-from simulation_setup import PulseConfig, Config
-import simulation_setup as setup_sim
-from dataclasses import dataclass, field
-from pulse import Pulse, StaticPulseAttr
+from simulation_setup import PulseProfile
+from simulation_setup import Config
+from dataclasses import dataclass
 from static_system import build_bare_system
 from composite_systems import CompositeSystem, Qobj
 from state_labeling import get_dressed_comp_states, CompCoord, CompTensor
-from typing import TypeAlias, Generic, Callable
+from typing import TypeAlias, Callable
 
 Qobj: TypeAlias = qt.Qobj
 GateDict: TypeAlias = dict[str, str |
@@ -92,11 +91,20 @@ def run_sim_from_configs(
     drive_op: Callable["...", Qobj] = drive_op,
     n_comp_states: int = 2,
     cache_gates: bool = True,
+    use_pulse_cache: bool = True,
+    use_gate_cache: bool = True,
+    multiprocess: bool = False
 ) -> dict[str, GateProfile]:
     config: Config
     pulse_dict: dict[str, PulseProfile]
-    config, pulse_dict = sim_setup.setup_sim_from_configs()
-    return run_sim(config, pulse_dict, drive_op, n_comp_states, cache_gates)
+    config, pulse_dict = sim_setup.setup_sim_from_configs(
+        use_pulse_cache=use_pulse_cache, multiprocess=multiprocess)
+    if multiprocess:
+        run_sim_multiprocess(config, pulse_dict, drive_op, n_comp_states,
+                             cache_gates, use_gate_cache)
+    else:
+        return run_sim(config, pulse_dict, drive_op, n_comp_states, cache_gates,
+                       use_gate_cache=use_gate_cache)
 
 
 def run_sim(
@@ -105,6 +113,7 @@ def run_sim(
     drive_op: Callable["...", Qobj] = drive_op,
     n_comp_states: int = 2,
     cache_gates: bool = True,
+    use_gate_cache: bool = True,
 ) -> dict[str, GateProfile]:
     circuit_configs: dict[str, dict[str, dict[str, float]]] = config.ct_params
     gate_dict: dict[str, GateProfile] = {}  # init return dict
@@ -117,9 +126,42 @@ def run_sim(
                 drive_op=drive_op,
                 circuit_config=ct_config,
                 n_comp_states=n_comp_states,
-                cache_gate=True,
+                cache_gate=cache_gates,
+                use_gate_cache=use_gate_cache
             )
     return gate_dict
+
+
+def run_sim_multiprocess(
+    config: Config,
+    pulse_profiles: dict[str, PulseProfile],
+    drive_op: Callable["...", Qobj] = drive_op,
+    n_comp_states: int = 2,
+    cache_gates: bool = True,
+    use_gate_cache: bool = True,
+) -> dict[str, GateProfile]:
+    n_cpu = multiprocessing.cpu_count()
+    n_workers = n_cpu - 1
+    circuit_configs: dict[str, dict[str, dict[str, float]]] = config.ct_params
+    param_list = list(
+        [(f'{pulse_name}-{ct_name}',
+          profile,
+          drive_op,
+          None,
+          None,
+          ct_config,
+          n_comp_states,
+          False,
+          use_gate_cache) for ct_name, ct_config in circuit_configs.items()
+         for pulse_name, profile in pulse_profiles.items()]
+    )
+    with multiprocessing.Pool(n_workers) as p:
+        gates = p.starmap(profile_gate, param_list)
+        gate_dict = {}
+        for gate_profile in gates:
+            file_io.cache_gate(gate_profile)
+            gate_dict[gate_profile.name] = gate_profile
+        return gate_dict
 
 
 def profile_gate(
@@ -131,6 +173,7 @@ def profile_gate(
     circuit_config: CircuitParams | None = None,
     n_comp_states: int = 2,
     cache_gate: bool = True,
+    use_gate_cache: bool = True
 ):
     gate_profile: GateProfile = assemble_empty_profile(
         name,
@@ -140,8 +183,9 @@ def profile_gate(
         gate_profile=empty_gate_profile,
     )
     # check if gate has been pre-computed
-    if file_io.gate_cached(gate_profile):
-        return file_io.load_gate(gate_profile.name)
+    if use_gate_cache:
+        if file_io.gate_cached(gate_profile):
+            return file_io.load_gate(gate_profile.name)
     # else, compute gate profile
     comp_states: CompTensor
     comp_coord: CompCoord
@@ -294,7 +338,7 @@ def evolve_state(
     tg: float = pulse_params["tg"]
     dt: float = pulse_params["dt"]
     t_ramp: float = pulse_params["t_ramp"]
-    tlist: np.ndarray[float] = np.arange(0, tg + 2 * t_ramp, dt)
+    tlist: np.ndarray[float] = np.arange(0, tg + 2 * t_ramp, dt)[1:]
     return qt.mesolve(H, state, tlist)
 
 

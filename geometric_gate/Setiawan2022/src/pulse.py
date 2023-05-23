@@ -205,7 +205,7 @@ class Pulse:
     def __omega_A(self, t: np.ndarray[float]) -> np.ndarray[float]:
         ramp_up_t = t[t < self._t_ramp]
         ramp_down_t = t[self._tg + self._t_ramp < t]
-        pulse_t = t[(self._t_ramp <= t) and (t <= self._tg + self._t_ramp)]
+        pulse_t = t[(self._t_ramp <= t) & (t <= self._tg + self._t_ramp)]
         t_ = pulse_t - self._t_ramp
 
         ramp_up = np.zeros(shape=ramp_up_t.shape, dtype=float)
@@ -225,8 +225,8 @@ class Pulse:
     def __omega_B(self, t: np.ndarray[float], geo_phase: float) -> np.ndarray[complex]:
         ramp_up_t = t[t < self._t_ramp]
         ramp_down_t = t[self._tg + self._t_ramp < t] - \
-            (self._t_g + self._t_ramp)
-        pulse_t = t[(self._t_ramp <= t) and (t <= self._tg + self._t_ramp)]
+            (self._tg + self._t_ramp)
+        pulse_t = t[(self._t_ramp <= t) & (t <= self._tg + self._t_ramp)]
         t_ = pulse_t - self._t_ramp
         theta = self.__theta(t_, 0)
         dtheta = self.__theta(t_, 1)
@@ -374,6 +374,13 @@ class Pulse:
         profiling. Returns full numpy matrix for operator a.dag()*a in eigenbasis where a is the QHO destruction operator
         acting on the transmon coupler
         """
+        return self.__adag_a.full()
+
+    def __delta_wmod(self, g_ac: dict[str, np.ndarray[complex | float]]
+                     ) -> dict[str, np.ndarray[float]]:
+        delta_ge1: np.ndarray[float] = self.__delta_ek(g_ac, "ge1")
+        delta_ee0: np.ndarray[float] = self.__delta_ek(g_ac, 'ee0')
+        delta_gf0: np.ndarray[float] = self.__delta_ek(g_ac, 'gf0')
         return {"A": delta_ge1 - delta_ee0, "B": delta_ge1 - delta_gf0}
 
     def __w_mod(self,
@@ -383,17 +390,15 @@ class Pulse:
         return {'A': self.static_attr.w_mod['A'] + deltas['A'],
                 'B': self.static_attr.w_mod['B'] + deltas['B']}
 
-    def delta_wC(self, t: np.ndarray[float], geo_phase: float) -> float:
-        d_wC: float = 0
-        gs: dict[str, np.ndarray[float]] = self.__g_ac(t, geo_phase)
-        w_mods: dict[str, np.ndarray[float]] = self.__wmod(gs)
+    def delta_wC(self, tlist: np.ndarray[float], geo_phase: float) -> float:
+        d_wC: np.ndarray[float] | int = 0
+        gs: dict[str, np.ndarray[float]] = self.__g_ac(tlist, geo_phase)
+        w_mods: dict[str, np.ndarray[float]] = self.__w_mod(gs)
         for flux in ["A", "B"]:
-            exp_arg = 1.j * cumulative_trapezoid(w_mods[flux], t)
+            exp_arg = 1.j * cumulative_trapezoid(w_mods[flux], tlist)
             exp_val = np.exp(exp_arg)
-            exp_term = gs[flux] * exp_val
-            d_wC += np.sum(
-                np.real(exp_term)
-            )
+            exp_term = gs[flux][1:] * exp_val
+            d_wC += np.real(exp_term)
         return d_wC
 
     def build_pulse(self, tlist: np.ndarray[float], geo_phase: float

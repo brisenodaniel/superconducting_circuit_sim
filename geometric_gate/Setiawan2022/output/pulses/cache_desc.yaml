@@ -38,7 +38,6 @@ CZ:
   save_components:
     _Pulse__delta_wmod:
       file: CZ-_Pulse__delta_wmod.npy
-      geo_phase: 3.141592653589793
     _Pulse__g_ac:
       file: CZ-_Pulse__g_ac.npy
       geo_phase: 3.141592653589793

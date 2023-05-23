@@ -29,12 +29,11 @@
 # configuration in ./pulse_parameters.yaml, except for s0 which will be set to 'ggg'
 
 CZ:
-  dt: 0.01
+  dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   tg: 130
   t_ramp: 1.3
-  target_unitary: CZ
   s0:
    - ggg
    - egg
@@ -45,7 +44,9 @@ CZ:
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
     _Pulse__delta_wmod:
-      geo_phase: 3.141592653589793
+      preprocess_t:
+        _Pulse__g_ac:
+          geo_phase: 3.141592653589793
     _Pulse__g_ac:
       geo_phase: 3.141592653589793
 

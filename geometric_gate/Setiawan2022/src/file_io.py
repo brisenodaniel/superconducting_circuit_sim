@@ -86,12 +86,17 @@ def build_gate_path(gate: GateProfile) -> str:
 
 
 def cache_pulse(
-    pulse: PulseConfig | PulseProfile, pulse_array: np.ndarray[float] | None = None
+    pulse: PulseConfig | PulseProfile,
+        pulse_array: np.ndarray[float] | None = None,
+        multiprocess: bool = False
 ) -> None:
     # if pulse_array is None, pulse must be of type PulseProfile
     fpath = build_pulse_path(pulse)
     fname = build_pulse_fname(pulse)
-    save_desc(pulse, fname, "pulse")
+    if multiprocess:
+        save_desc_multiprocess(pulse, fname, "pulse")
+    else:
+        save_desc(pulse, fname, "pulse")
     np.save(fpath, pulse_array)
 
 
@@ -99,19 +104,27 @@ def cache_pulse_component(
     pulse: PulseConfig | PulseProfile,
     comp_name: str,
     component_array: np.ndarray[float] | None = None,
+    multiprocess: bool = False
 ) -> None:
     if component_array is None:
         component_array = pulse.profiled_components[comp_name]
     fname = build_pulse_component_fname(pulse, comp_name)
     fpath = build_pulse_component_path(pulse, comp_name)
-    save_component_desc(pulse, comp_name, fname)
+    if multiprocess:
+        save_component_desc_multiprocess(pulse, comp_name, fname)
+    else:
+        save_component_desc(pulse, comp_name, fname)
     np.save(fpath, component_array)
 
 
-def cache_gate(gate: GateProfile) -> None:
+def cache_gate(gate: GateProfile,
+               multiprocess: bool = False) -> None:
     fpath = build_gate_path(gate)
     fname = build_gate_fname(gate)
-    save_desc(gate, fname, mode="Gate")
+    if multiprocess:
+        save_desc_multiprocess(gate, fname, mode='Gate')
+    else:
+        save_desc(gate, fname, mode="Gate")
     # unitary = gate.unitary
     # trajectories = gate.trajectories
     # data: dict[str, Qobj | dict[str, np.ndarray[complex]]] = {
@@ -146,6 +159,72 @@ def save_component_desc(pulse: PulseProfile, component_name: str, fname: str)\
         yaml.dump(cache, yaml_file)
 
 
+def save_component_desc_multiprocess(
+        pulse: PulseProfile,
+        component_name: str,
+        fname: str) -> None:
+    pulse_name: str = pulse.name
+    pulse_desc = pulse.as_noNone_dict()
+    component_desc: dict[str, float | complex] =\
+        pulse_desc['save_components'][component_name]
+    if fname[-4:] != ".npy":
+        fname = fname + ".npy"
+    component_desc['file'] = fname
+    yaml_name = add_path(f'{pulse_name}-{component_name}-mpc.yaml',
+                         'pulses')
+    with open(yaml_name, "w") as yaml_file:
+        yaml.dump({pulse_name: {
+            component_name: component_desc
+        }}, yaml_file)
+
+
+def pool_component_desc():
+    dir = os.path.join(project_root, 'output', 'pulses')
+    cached_files = os.listdir(dir)
+    cache = get_cache_description('pulses')
+    for file in cached_files:
+        if file[-8:] == 'mpc.yaml':
+            file_path = os.path.join(project_root,
+                                     'output',
+                                     'pulses',
+                                     file)
+            with open(file_path, 'r') as yaml_file:
+                desc = yaml.safe_load(yaml_file)
+                pulse_name = list(desc.keys())[0]
+                comp_name = list(desc[pulse_name].keys())[0]
+                comp_desc = desc[pulse_name][comp_name]
+                if 'save_components' not in cache[pulse_name]:
+                    cache[pulse_name]['save_components'] = {}
+                cache[pulse_name]['save_components'][comp_name] = \
+                    comp_desc
+            os.remove(file_path)
+    cache_path = add_path(project_root, 'pulses', 'cache_desc.yaml')
+    with open(cache_path, 'w') as yaml_file:
+        yaml.dump(cache, yaml_file)
+
+
+def pool_desc(mode: str):
+    mode_dict = {'gate': 'sim_results',
+                 'pulse': 'pulses'}
+    dir = os.path.join(project_root, 'output', mode_dict[mode])
+    cached_files = os.listdir(dir)
+    pool = {}
+    for file in cached_files:
+        if file[-7:] == 'mp.yaml':
+            file_path = os.path.join(project_root, 'output',
+                                     mode_dict[mode], file)
+            with open(file_path, 'r') as yamlfile:
+                pool.update(yaml.safe_load(yamlfile))
+            os.remove(file_path)
+
+    cache = get_cache_description(mode)
+    for name, desc in pool.items():
+        cache[name] = desc
+    cache_path = add_path("cache_desc.yaml", mode)
+    with open(cache_path, 'w') as yamlfile:
+        yaml.dump(cache, yamlfile)
+
+
 def save_desc(target: DataObj, fname: str, mode: str = "pulse") -> None:
     assert mode in [
         "pulse",
@@ -163,6 +242,24 @@ def save_desc(target: DataObj, fname: str, mode: str = "pulse") -> None:
     with open(cache_path, "w") as yaml_file:
         yaml.dump(cache, yaml_file)
 
+
+def save_desc_multiprocess(target: DataObj,
+                           fname: str,
+                           mode: str = 'pulse') -> None:
+    assert mode in [
+        "pulse",
+        "Pulse",
+        "gate",
+        "Gate",
+        "sim_results",
+    ], f"{mode} not a valid mode parameter"
+    cache_path = add_path("cache_desc.yaml", mode)
+    desc = target.as_noNone_dict()
+    desc["file"] = fname
+    name = desc.pop("name")
+    yaml_name = add_path(f'{name}-mp.yaml', mode)
+    with open(yaml_name, "w") as yaml_file:
+        yaml.dump({name: desc}, yaml_file)
 
 # File Reading
 
