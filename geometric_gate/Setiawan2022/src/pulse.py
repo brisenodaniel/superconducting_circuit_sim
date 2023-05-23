@@ -4,6 +4,7 @@
 from __future__ import annotations
 from functools import cache, cached_property, singledispatchmethod, singledispatch
 import numpy as np
+from scipy.integrate import cumulative_trapezoid
 from typing import TypeAlias, Callable, Any
 from collections import abc
 import qutip as qt
@@ -172,17 +173,27 @@ class Pulse:
         self,
         pulse_params: dict[dict[float]],
         circuit: CompositeSystem,
-        dt: float = 0.01,
+        dt: float | None = None,
+        t_ramp: float | None = None,
+        tg: float | None = None,
         n_comp_states: int = 5,
     ):
         self.static_attr: StaticPulseAttr = StaticPulseAttr(
             pulse_params, circuit, n_comp_states
         )
         self._ct: CompositeSystem = circuit
-        if "dt" in pulse_params:
+        if dt is None:
             self._dt: float = pulse_params["dt"]
         else:
             self._dt: float = dt
+        if t_ramp is not None:
+            self._t_ramp = t_ramp
+        else:
+            self._t_ramp = pulse_params["t_ramp"]
+        if tg is None:
+            self._tg = pulse_params["tg"]
+        else:
+            self._tg = tg
         self._params: dict[str, dict[str, float] | float] = pulse_params
         if "n_comp_states" in pulse_params:
             self.n_comp_states: int = pulse_params["n_comp_states"]
@@ -191,53 +202,69 @@ class Pulse:
         self._omega_0: float = 2 * np.pi * \
             self._params["omega_0"] / pulse_params["tg"]
 
-    def __omega_A(self, t: float) -> float:
-        theta = self.__theta(t, 0)
-        dtheta = self.__theta(t, 1)
-        d2theta = self.__theta(t, 2)
+    def __omega_A(self, t: np.ndarray[float]) -> np.ndarray[float]:
+        ramp_up_t = t[t < self._t_ramp]
+        ramp_down_t = t[self._tg + self._t_ramp < t]
+        pulse_t = t[(self._t_ramp <= t) and (t <= self._tg + self._t_ramp)]
+        t_ = pulse_t - self._t_ramp
+
+        ramp_up = np.zeros(shape=ramp_up_t.shape, dtype=float)
+        ramp_down = np.zeros(shape=ramp_down_t.shape, dtype=float)
+
+        theta = self.__theta(t_, 0)
+        dtheta = self.__theta(t_, 1)
+        d2theta = self.__theta(t_, 2)
         pulse_env = np.sin(theta) + 4 * np.cos(theta) * d2theta / (
             self._omega_0**2 + 4 * dtheta**2
         )
-        # pulse_env = np.sin(self.__theta(t,0)) +\
-        #                 4*np.cos(self.__theta(t,0))*self.__theta(t,2)\
-        #                 /(self._omega_0**2 + 4*self.__theta(t,1)**2)
-        return self._omega_0 * pulse_env
+        omega_A: np.ndarray[float] = np.concatenate(
+            (ramp_up, self._omega_0 * pulse_env, ramp_down)
+        )
+        return omega_A
 
-    def __omega_B(self, t: float, geo_phase: float) -> complex:
-        i = complex(0, 1)
-        theta = self.__theta(t, 0)
-        dtheta = self.__theta(t, 1)
-        d2theta = self.__theta(t, 2)
-        phase = np.exp(i * self.__phase_arg(t, geo_phase))
-        # pulse_env = np.cos(self.__theta(t,0)) - \
-        #   4*np.sin(self.__theta(t,0))*self.__theta(t,2)\
-        #   /(self._omega_0**2 + 4*self.__theta(t,1)**2)
+    def __omega_B(self, t: np.ndarray[float], geo_phase: float) -> np.ndarray[complex]:
+        ramp_up_t = t[t < self._t_ramp]
+        ramp_down_t = t[self._tg + self._t_ramp < t] - \
+            (self._t_g + self._t_ramp)
+        pulse_t = t[(self._t_ramp <= t) and (t <= self._tg + self._t_ramp)]
+        t_ = pulse_t - self._t_ramp
+        theta = self.__theta(t_, 0)
+        dtheta = self.__theta(t_, 1)
+        d2theta = self.__theta(t_, 2)
+        phase = np.exp(1.0j * self.__phase_arg(t_, geo_phase))
         pulse_env = np.cos(theta) - 4 * np.sin(theta) * d2theta / (
             self._omega_0**2 + 4 * dtheta**2
         )
-        return self._omega_0 * phase * pulse_env
+        omega_B: np.ndarray[float] = self._omega_0 * phase * pulse_env
+        ramp_up: np.ndarray[float] = omega_B[0] * (
+            1 - np.cos(ramp_up_t * np.pi / (self._t_ramp * 2))
+        )
+        ramp_down: np.ndarray[float] = omega_B[-1] * (
+            np.cos(ramp_down_t * np.pi / (self._t_ramp * 2))
+        )
+        return np.concatenate((ramp_up, omega_B, ramp_down))
 
-    def __phase_arg(self, t: float, geo_phase: float) -> float:
+    def __phase_arg(self, t: np.ndarray[float], geo_phase: float) -> float:
         tg = self._params["tg"]
         return geo_phase * np.heaviside(t - tg / 2, 1)
 
-    def __theta(self, t: float, deriv: int = 0) -> float:
+    def __theta(self, t: np.ndarray[float], deriv: int = 0) -> float:
         # implements eq A2
         tg = self._params["tg"]
-        if 0 <= t <= tg / 2:
-            return self.__theta_interval_1(t, deriv)
-        if tg / 2 < t <= tg:
-            return self.__theta_interval_2(t, deriv)
-        else:
-            return 0
+        interval_1 = t[t <= tg / 2]
+        interval_2 = t[(tg / 2 < t) & (t <= tg)]
+        theta_interval_1 = self.__theta_interval_1(interval_1, deriv)
+        theta_interval_2 = self.__theta_interval_2(interval_2, deriv)
+        thetas = np.concatenate((theta_interval_1, theta_interval_2))
+        return thetas
 
-    def __theta_interval_1(self, t: float, d: int) -> float:
+    def __theta_interval_1(self, t: np.ndarray[float], d: int) -> float:
         tg = self._params["tg"]
         derivs: list[float] = [np.pi / 2,
                                np.pi / (2 * tg), np.pi / (2 * tg**2)]
         return derivs[d] * self.__polynom(t / tg, d=d)
 
-    def __theta_interval_2(self, t: float, d: int) -> float:
+    def __theta_interval_2(self, t: np.ndarray[float], d: int) -> float:
         tg = self._params["tg"]
         derivs: list[float] = [
             (np.pi / 2), (np.pi / (2 * tg)), (np.pi / (2 * tg**2))]
@@ -260,8 +287,7 @@ class Pulse:
     ) -> float:
         return c1 * x**e1 + c2 * x**e2 + c3 * x**e3
 
-    @cache
-    def __g_ac(self, t: float, geo_phase: float) -> dict[str, float]:
+    def __g_ac(self, t: np.ndarray[float], geo_phase: float) -> dict[str, float]:
         ge1_idx: int = self.static_attr.state_idx("ge1")
         ee0_idx: int = self.static_attr.state_idx("ee0")
         gf0_idx: int = self.static_attr.state_idx("gf0")
@@ -282,8 +308,10 @@ class Pulse:
 
     # @cache
     def __delta_ek(
-        self, t: float, state: tuple[int, 3] | str, geo_phase: float
-    ) -> float:
+        self,
+        g_ac: dict[str, np.ndarray[float | complex]],
+        state: tuple[int, 3] | str,
+    ) -> np.ndarray[float]:
         # implements eq C2b
         leakage_states: list[int] = list(range(self.highest_leakage_st + 1))
         sum_c2b = 0
@@ -291,14 +319,13 @@ class Pulse:
             for flux_lbl in ["A", "B"]:
                 for sgn in [-1, 1]:
                     sum_c2b += self.__C2b__summand(
-                        t, geo_phase, state, l, flux_lbl, sgn
+                        g_ac[flux_lbl], state, l, flux_lbl, sgn
                     )
         return sum_c2b
 
     def __C2b__summand(
         self,
-        t: float,
-        geo_phase,
+        g_ac: np.ndarray[float | complex],
         k: tuple[int, 3] | str | int,
         l: int,
         flux_lbl: str,
@@ -326,7 +353,6 @@ class Pulse:
             self._adag_a_as_matrix
         )  # see next function definition for explanation of adag_a
         k_adaga_l: complex = adag_a[k_idx][l]
-        g_ac: float = self.__g_ac(t, geo_phase)[flux_lbl]
         numerator: float = (g_ac * k_adaga_l).conjugate() * (g_ac * k_adaga_l)
         return numerator / denominator
 
@@ -348,84 +374,39 @@ class Pulse:
         profiling. Returns full numpy matrix for operator a.dag()*a in eigenbasis where a is the QHO destruction operator
         acting on the transmon coupler
         """
-        return self.__adag_a.full()
-
-    def __delta_wmod(self, t: float, geo_phase: float) -> dict[str, float]:
-        delta_ge1: float = self.__delta_ek(t, "ge1", geo_phase)
-        delta_ee0: float = self.__delta_ek(t, "ee0", geo_phase)
-        delta_gf0: float = self.__delta_ek(t, "gf0", geo_phase)
         return {"A": delta_ge1 - delta_ee0, "B": delta_ge1 - delta_gf0}
 
-    @singledispatchmethod
-    @cache
-    def __w_mod(self, t: float, geo_phase: float, sys: str) -> float:
-        assert sys in ["A", "B"], f"`sys` param must be A or B, got {sys}"
-        deltas: dict[str, float] = self.__delta_wmod(t, geo_phase)
-        w_a = self.static_attr.w_mod["A"]
-        w_b = self.static_attr.w_mod["B"]
-        if sys == "A":
-            return w_a + deltas["A"]
-        else:
-            return w_b + deltas["B"]
+    def __w_mod(self,
+                g_ac: dict[str, np.ndarray[complex | float]]
+                ) -> dict[str, np.ndarray[float]]:
+        deltas: dict[str, np.ndarray[float]] = self.__delta_wmod(g_ac)
+        return {'A': self.static_attr.w_mod['A'] + deltas['A'],
+                'B': self.static_attr.w_mod['B'] + deltas['B']}
 
-    @__w_mod.register
-    def __(self, tlist: abc.Iterable, geo_phase: float, sys: str) -> np.ndarray[float]:
-        return np.array([self.__w_mod(t, geo_phase, sys) for t in tlist])
-
-    @singledispatchmethod
-    def delta_wC(self, t: float, geo_phase: float) -> float:
-        i = complex(0, 1)
-        sum_terms: list[float] = []
-        gs: dict[str, float] = self.__g_ac(t, geo_phase)
+    def delta_wC(self, t: np.ndarray[float], geo_phase: float) -> float:
+        d_wC: float = 0
+        gs: dict[str, np.ndarray[float]] = self.__g_ac(t, geo_phase)
+        w_mods: dict[str, np.ndarray[float]] = self.__wmod(gs)
         for flux in ["A", "B"]:
-            ts: np.ndarray[float] = np.arange(0, t, self._dt)
-            w_mods: np.ndarray[float] = self.__w_mod(ts, geo_phase, flux)
-            phase_arg: float = np.trapz(w_mods, ts, self._dt)
-            phase: complex = np.exp(-i * phase_arg)
-            g_j: float = gs[flux]
-            summand: float = (g_j * phase).real
-            sum_terms.append(summand)
-        return sum(sum_terms)
+            exp_arg = 1.j * cumulative_trapezoid(w_mods[flux], t)
+            exp_val = np.exp(exp_arg)
+            exp_term = gs[flux] * exp_val
+            d_wC += np.sum(
+                np.real(exp_term)
+            )
+        return d_wC
 
-    @delta_wC.register
-    def __wc(self, tlist: abc.Iterable, geo_phase: float) -> np.ndarray[float]:
-        return np.array([self.delta_wC(t, geo_phase) for t in tlist])
-
-    def build_ramp(self,
-                   tlist_ramp: abs.Iterable[float],
-                   p_0: float,
-                   p_f: float) -> np.ndarray[float]:
-        t_ramp = tlist_ramp[-1]
-        ramp_up = p_0 * (1 - np.cos(tlist_ramp*np.pi/(2*t_ramp)))
-        ramp_down = p_f * np.cos(tlist_ramp*np.pi/(2*t_ramp))
-        return ramp_up, ramp_down
-
-    def build_pulse(self,
-                    tlist: abc.Iterable[float],
-                    geo_phase: float,
-                    t_ramp: abc.Iterable[float],
-                    fname=None,
-                    as_txt=False
+    def build_pulse(self, tlist: np.ndarray[float], geo_phase: float
                     ) -> np.ndarray[float]:
-        pulse = self.delta_wC(tlist, geo_phase)
-        ramp_up: np.ndarray[float]
-        ramp_down: np.ndarray[float]
-        ramp_up, ramp_down = self.build_ramp(t_ramp, pulse[0], pulse[-1])
-        breakpoint()
-        pulse = np.concatenate((ramp_up, pulse, ramp_down))
-        if fname is not None:
-            if as_txt:
-                np.savetxt(fname, pulse)
-            else:
-                np.save(fname, pulse)
-        return pulse
+        # alias for delta_wC
+        return self.delta_wC(tlist, geo_phase)
 
     # Diagnostic functions
     def get_integrand_func(
         self, tlist: np.ndarray[int], state: str, geo_phase: float
     ) -> np.ndarray[float]:
-        res_lst = [self.__delta_ek(t, state, geo_phase) for t in tlist]
-        return np.array(res_lst)
+        res_lst = self.__delta_ek(tlist, state, geo_phase)
+        return res_lst
 
 
 # The following section is used to add pulses to the
