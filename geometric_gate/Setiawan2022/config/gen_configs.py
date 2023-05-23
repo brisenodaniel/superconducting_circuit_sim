@@ -33,6 +33,7 @@ import numpy as np
 
 
 def make_czs():
+
     base_configs: dict[str, float | dict[str, float]] =\
         {'dt': 0.001,
          'geo_phase': np.pi,
@@ -49,11 +50,12 @@ def make_czs():
          }}
     pulse_configs = {'CZ': base_configs}
     tg_list = np.arange(140, 150, 1)
+    tg_list = list(tg_list)
     for tg in tg_list:
-        t_ramp = tg * 0.01
+        t_ramp = float(tg * 0.01)
         name = f'CZ-{tg}ns_tg-{t_ramp}ns_tramp'
         custom_config = base_configs.copy()
-        custom_config['tg'] = tg
+        custom_config['tg'] = float(tg)
         custom_config['t_ramp'] = t_ramp
         pulse_configs[name] = custom_config
     return pulse_configs
@@ -66,4 +68,4 @@ if __name__ == '__main__':
         saved_configs = yaml.safe_load(config_file)
     saved_configs.update(configs)
     with open('pulses.yaml', 'w') as config_file:
-        yaml.dump(config_file, saved_configs)
+        yaml.dump(saved_configs, config_file)
