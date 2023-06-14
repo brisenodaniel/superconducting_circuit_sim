@@ -30,6 +30,7 @@ import numpy as np
 
 # If any of the optional parameters are not provided, they will be taken from the default
 # configuration in ./pulse_parameters.yaml, except for s0 which will be set to 'ggg'
+import copy
 
 
 def make_czs():
@@ -42,19 +43,18 @@ def make_czs():
          't_ramp': 1.3,
          'save_components': {
              '_Pulse__omega_A': {},
-             '_Pulse__omega_B': {},
+             '_Pulse__omega_B': {'geo_phase': np.pi},
              '_Pulse__delta_wmod': {'preprocess_t':
                                     {'_Pulse__g_ac':
                                      {'geo_phase': np.pi}}},
              '_Pulse__g_ac': {'geo_phase': np.pi}
          }}
     pulse_configs = {'CZ': base_configs}
-    tg_list = np.arange(140, 150, 1)
-    tg_list = list(tg_list)
+    tg_list = np.arange(10, 500, 5)
     for tg in tg_list:
         t_ramp = float(tg * 0.01)
         name = f'CZ-{tg}ns_tg-{t_ramp}ns_tramp'
-        custom_config = base_configs.copy()
+        custom_config = copy.deepcopy(base_configs)
         custom_config['tg'] = float(tg)
         custom_config['t_ramp'] = t_ramp
         pulse_configs[name] = custom_config

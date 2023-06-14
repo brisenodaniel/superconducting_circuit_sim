@@ -16,6 +16,7 @@ from static_system import build_bare_system
 from composite_systems import CompositeSystem, Qobj
 from state_labeling import get_dressed_comp_states, CompCoord, CompTensor
 from typing import TypeAlias, Callable
+from functools import reduce
 
 Qobj: TypeAlias = qt.Qobj
 GateDict: TypeAlias = dict[str, str |
@@ -93,18 +94,26 @@ def run_sim_from_configs(
     cache_gates: bool = True,
     use_pulse_cache: bool = True,
     use_gate_cache: bool = True,
-    multiprocess: bool = False
-) -> dict[str, GateProfile]:
+    multiprocess: bool = False,
+) -> None:
     config: Config
     pulse_dict: dict[str, PulseProfile]
     config, pulse_dict = sim_setup.setup_sim_from_configs(
-        use_pulse_cache=use_pulse_cache, multiprocess=multiprocess)
+        use_pulse_cache=use_pulse_cache, multiprocess=multiprocess
+    )
     if multiprocess:
-        run_sim_multiprocess(config, pulse_dict, drive_op, n_comp_states,
-                             cache_gates, use_gate_cache)
+        run_sim_multiprocess(
+            config, pulse_dict, drive_op, n_comp_states, cache_gates, use_gate_cache
+        )
     else:
-        return run_sim(config, pulse_dict, drive_op, n_comp_states, cache_gates,
-                       use_gate_cache=use_gate_cache)
+        run_sim(
+            config,
+            pulse_dict,
+            drive_op,
+            n_comp_states,
+            cache_gates,
+            use_gate_cache=use_gate_cache,
+        )
 
 
 def run_sim(
@@ -114,22 +123,21 @@ def run_sim(
     n_comp_states: int = 2,
     cache_gates: bool = True,
     use_gate_cache: bool = True,
-) -> dict[str, GateProfile]:
+) -> None:
     circuit_configs: dict[str, dict[str, dict[str, float]]] = config.ct_params
-    gate_dict: dict[str, GateProfile] = {}  # init return dict
     for ct_name, ct_config in circuit_configs.items():
         for pulse_name, profile in pulse_profiles.items():
             gate_name: str = f"{pulse_name}-{ct_name}"
-            gate_dict[gate_name] = profile_gate(
+            gate_profile = profile_gate(
                 gate_name,
                 profile,
                 drive_op=drive_op,
                 circuit_config=ct_config,
                 n_comp_states=n_comp_states,
-                cache_gate=cache_gates,
-                use_gate_cache=use_gate_cache
+                cache_gate=True,
+                use_gate_cache=use_gate_cache,
             )
-    return gate_dict
+            del gate_profile
 
 
 def run_sim_multiprocess(
@@ -144,24 +152,26 @@ def run_sim_multiprocess(
     n_workers = n_cpu - 1
     circuit_configs: dict[str, dict[str, dict[str, float]]] = config.ct_params
     param_list = list(
-        [(f'{pulse_name}-{ct_name}',
-          profile,
-          drive_op,
-          None,
-          None,
-          ct_config,
-          n_comp_states,
-          False,
-          use_gate_cache) for ct_name, ct_config in circuit_configs.items()
-         for pulse_name, profile in pulse_profiles.items()]
+        [
+            (
+                f"{pulse_name}-{ct_name}",
+                profile,
+                drive_op,
+                None,
+                None,
+                ct_config,
+                n_comp_states,
+                False,
+                use_gate_cache,
+                True,
+            )
+            for ct_name, ct_config in circuit_configs.items()
+            for pulse_name, profile in pulse_profiles.items()
+        ]
     )
     with multiprocessing.Pool(n_workers) as p:
-        gates = p.starmap(profile_gate, param_list)
-        gate_dict = {}
-        for gate_profile in gates:
-            file_io.cache_gate(gate_profile)
-            gate_dict[gate_profile.name] = gate_profile
-        return gate_dict
+        p.starmap(profile_gate, param_list)
+        file_io.pool_desc()
 
 
 def profile_gate(
@@ -173,7 +183,8 @@ def profile_gate(
     circuit_config: CircuitParams | None = None,
     n_comp_states: int = 2,
     cache_gate: bool = True,
-    use_gate_cache: bool = True
+    use_gate_cache: bool = True,
+    multiprocess: bool = True,
 ):
     gate_profile: GateProfile = assemble_empty_profile(
         name,
@@ -205,21 +216,92 @@ def profile_gate(
     ideal_unitary = file_io.load_unitary(
         pulse_profile.pulse_config.target_unitary)
     gate_profile.fidelity = compute_fidelity(
-        gate_profile.two_q_unitary, ideal_unitary)
+        ideal_unitary,
+        gate_profile.two_q_unitary,
+        gate_profile.circuit.H,
+        comp_coord)
     if cache_gate:
-        file_io.cache_gate(gate_profile)
+        file_io.cache_gate(gate_profile, multiprocess)
+    if multiprocess:
+        del gate_profile
+        del pulse_profile
+        del circuit
+        del circuit_config
+    else:
+        return gate_profile
 
 
-def compute_fidelity(U: Qobj, U_g: Qobj) -> float:
+def compute_fidelity(U_ideal: Qobj,
+                     U_g: Qobj,
+                     H: Qobj | None = None,
+                     comp_coord: CompCoord | None = None) -> float:
     # implements eq (14)
     s0 = qt.qeye(2)
     sigmas: list[Qobj] = [qt.sigmaz(), qt.sigmax(), qt.sigmay(), s0]
     fidelity_sum: float = 0
+    # if H is not None:
+    # assert comp_coord is not None,\
+    # 'If parameter `H` is provided,\
+    # `comp_coord` must be provided as well'
+    # U: Qobj = transform_op_to_dressed_basis(U_ideal, H, comp_coord)
+    # else:
+    U: Qobj = U_ideal.copy()
     for si in sigmas:
         for sj in sigmas:
             if not (si == sj == s0):
                 fidelity_sum += _fidelity_summand(U, U_g, si, sj)
     return (1 / 4) + (1 / 80) * fidelity_sum
+
+
+def transform_op_to_dressed_basis(U: Qobj,
+                                  H: Qobj,
+                                  comp_coord: CompCoord) -> Qobj:
+    basis: np.ndarray[complex] = H.eigenstates()[1]
+    hlbrtspc_dims: list[list[int]] = basis[0].dims
+    # cast operator dimensions of the full bare basis
+    U_full: Qobj = cast_op_to_space(U, "composite", comp_coord, hlbrtspc_dims)
+    # transform to dressed basis
+    U_full = U_full.transform(basis)
+    # cast back to two qubit subspace
+    U_qs = cast_op_to_space(U_full, "qubit", comp_coord)
+    return U_qs
+
+
+def cast_op_to_space(
+    op: Qobj, space: str, comp_coord: CompCoord, new_dims: list[int] = [5, 5, 5]
+) -> Qobj:
+    assert space in [
+        "qubit",
+        "composite",
+    ], f'`space` param must be "qubit" or "composite", got {space}'
+    basis: dict[str, str] = {"ggg": "00",
+                             "geg": "01", "egg": "10", "eeg": "11"}
+    if space == "qubit":
+        matrix_shape = [4, 4]
+        new_dims = [2, 2]
+    else:
+        dims = np.array(new_dims).ravel()
+        dims = np.prod(dims)
+        matrix_shape = [dims, dims]
+    U_arr = np.zeros(shape=matrix_shape, dtype=complex)
+    for bra_lbl, bra_bin in basis.items():
+        for ket_lbl, ket_bin in basis.items():
+            # get computational state eigenstate idices
+            ket_i, ket_j, ket_k = str_to_tuple(
+                ket_lbl
+            )  # cast labels to index [i,j,k] of computational state |ijk>
+            bra_i, bra_j, bra_k = str_to_tuple(bra_lbl)
+            ket_eig_idx: int = comp_coord[ket_i, ket_j, ket_k]
+            bra_eig_idx: int = comp_coord[bra_i, bra_j, bra_k]
+            # get qubit subspace indices
+            ket_qs_idx: int = int(ket_bin, 2)
+            bra_qs_idx: int = int(bra_bin, 2)
+            # populate new array
+            if space == "qubit":
+                U_arr[bra_qs_idx, ket_qs_idx] = op[bra_eig_idx, ket_eig_idx]
+            else:
+                U_arr[bra_eig_idx, ket_eig_idx] = op[bra_qs_idx, ket_qs_idx]
+    return qt.Qobj(U_arr, dims=[new_dims, new_dims])
 
 
 def _fidelity_summand(U: Qobj, U_g: Qobj, si: Qobj, sj: Qobj) -> float:
@@ -251,7 +333,7 @@ def compute_unitary(
             bra_qs_idx = int(bra_bin, 2)  # convert binary index to int
             ket_qs_idx = int(ket_bin, 2)
             bra_vector = comp_states[i_bra, j_bra, k_bra]
-            ket_vector = trajectories[ket].states[-1]
+            ket_vector = trajectories[ket][-1]
             matrix_elem = (bra_vector.dag() * ket_vector).tr()
             U_arr[bra_idx][ket_idx] = matrix_elem
             U_qs_arr[bra_qs_idx][ket_qs_idx] = matrix_elem
@@ -339,7 +421,11 @@ def evolve_state(
     dt: float = pulse_params["dt"]
     t_ramp: float = pulse_params["t_ramp"]
     tlist: np.ndarray[float] = np.arange(0, tg + 2 * t_ramp, dt)[1:]
-    return qt.mesolve(H, state, tlist)
+    try:
+        return qt.mesolve(H, state, tlist).states
+    except ValueError as exc:
+        print(exc)
+        breakpoint()
 
 
 def assemble_init_states(
@@ -349,11 +435,7 @@ def assemble_init_states(
         "ggg",
         "egg",
         "geg",
-        "eeg",
-        ("+xg", {"egg": 1 / sqrt(2), "ggg": 1 / sqrt(2)}),
-        ("+yg", {"egg": 1.0j / sqrt(2), "ggg": 1 / sqrt(2)}),
-        ("+xe", {"eeg": 1 / sqrt(2), "geg": 1 / sqrt(2)}),
-        ("+ye", {"eeg": 1.0j / sqrt(2), "geg": 1 / sqrt(2)}),
+        "eeg"
     ]
     init_states = default_states
     if "s0" in pulse_profile.pulse_config.pulse_params:

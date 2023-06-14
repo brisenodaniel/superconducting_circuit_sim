@@ -89,6 +89,9 @@ class PulseProfile(Generic[PulseParams]):
     def as_dict(self) -> PulseDict:
         return self.pulse_config.as_dict()
 
+    def as_noNone_dict(self) -> PulseDict:
+        return file_io.tidy_cache(self.as_dict())
+
     def __hash__(self) -> int:
         return hash((tuple(self.pulse), self.pulse_config.__hash__()))
 
@@ -166,7 +169,10 @@ def collect_sim_params_from_configs() -> Config:
 
 
 def setup_sim(
-    sim_config: Config, use_pulse_cache: bool = True, multiprocess: bool = False
+    sim_config: Config,
+    cache_results: bool = True,
+    use_pulse_cache: bool = True,
+    multiprocess: bool = False,
 ) -> dict[str, PulseProfile]:
     pulse_configs = setup_pulse_param_dict(
         sim_config.pulse_config_dict,
@@ -175,13 +181,16 @@ def setup_sim(
     )
     circuit = setup_circuit(sim_config.ct_params["pulse_gen_ct"])
     pulse_profiles = get_pulse_profile_dict(
-        pulse_configs, circuit, use_pulse_cache, multiprocess
+        pulse_configs, circuit, cache_results, use_pulse_cache, multiprocess
     )
     return pulse_profiles
 
 
 def setup_sim_from_configs(
-    pulse_lbls: list[str] = [], use_pulse_cache: bool = True, multiprocess: bool = False
+    pulse_lbls: list[str] = [],
+    cache_results: bool = True,
+    use_pulse_cache: bool = True,
+    multiprocess: bool = False,
 ) -> tuple[Config, dict[str, PulseProfile]]:
     config: Config = collect_sim_params_from_configs()
     # if pulse_lbls is nonempty, only setup sim for pulses with labels
@@ -190,7 +199,7 @@ def setup_sim_from_configs(
         for lbl in config.pulse_config_dict:
             if lbl not in pulse_lbls:
                 config.pulse_config_dict.pop(lbl)
-    return config, setup_sim(config, use_pulse_cache, multiprocess)
+    return config, setup_sim(config, cache_results, use_pulse_cache, multiprocess)
 
 
 def setup_circuit(ct_params: CircuitParams) -> CompositeSystem:
@@ -220,6 +229,7 @@ def setup_pulse_param_dict(
 def get_pulse_profile_dict(
     pulse_config_dict: dict[str, PulseConfig],
     circuit: CompositeSystem,
+    cache_results: bool = True,
     use_pulse_cache: bool = True,
     multiprocess: bool = False,
 ) -> dict[str, PulseProfile]:
@@ -230,7 +240,8 @@ def get_pulse_profile_dict(
     else:
         return {
             gate_name: get_pulse_profile(
-                pulse_config, circuit, use_pulse_cache)
+                pulse_config, circuit, cache_results, use_pulse_cache
+            )
             for gate_name, pulse_config in pulse_config_dict.items()
         }
 
@@ -243,21 +254,31 @@ def get_pulse_profile_dict_multiprocess(
     n_cpu = multiprocessing.cpu_count()
     n_workers = n_cpu - 1
 
-    def get_pulse_profile_worker(pulse_config, circuit, use_pulse_cache):
-        return pulse_config.name, get_pulse_profile(
-            pulse_config, circuit, use_pulse_cache=use_pulse_cache,
-            cache_results=False
-        )
     with multiprocessing.Pool(n_workers) as p:
-        args = list([(config, circuit, use_pulse_cache)
-                    for config in pulse_config_dict.values()])
-        profile_tuples = p.starmap(get_pulse_profile_worker,
-                                   args)
-        for _, profile in profile_tuples:
-            file_io.cache_pulse(profile)
-            for comp_name, comp_val in profile.profiled_components.items():
-                file_io.cache_pulse_component(profile, comp_name, comp_val)
-        return dict(profile_tuples)
+        args = list(
+            [
+                (config, circuit, use_pulse_cache)
+                for config in pulse_config_dict.values()
+            ]
+        )
+        p.starmap(get_pulse_profile_worker, args)
+        file_io.pool_desc(mode="pulse")
+        file_io.pool_component_desc()
+    return get_pulse_profile_dict(
+        pulse_config_dict, circuit, use_pulse_cache=True, multiprocess=False
+    )
+
+
+def get_pulse_profile_worker(pulse_config, circuit, use_pulse_cache):
+    pulse_profile = get_pulse_profile(
+        pulse_config, circuit, use_pulse_cache=use_pulse_cache, cache_results=False
+    )
+    file_io.cache_pulse(pulse_profile, multiprocess=True)
+    for comp_name, comp_val in pulse_profile.profiled_components.items():
+        file_io.cache_pulse_component(
+            pulse_profile, comp_name, comp_val, multiprocess=True
+        )
+    del pulse_profile
 
 
 def setup_pulse_params(

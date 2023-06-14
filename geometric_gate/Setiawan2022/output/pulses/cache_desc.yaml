@@ -25,16 +25,11 @@ CZ:
       g_AB: 0.04
       g_AC: 0.63
       g_BC: 0.6
-  dt: 0.01
+  dt: 0.001
   file: CZ.npy
   geo_phase: 3.141592653589793
   n_comp_states: 5
   omega_0: 1.135
-  s0:
-  - ggg
-  - egg
-  - geg
-  - eeg
   save_components:
     _Pulse__delta_wmod:
       file: CZ-_Pulse__delta_wmod.npy
@@ -49,3 +44,4879 @@ CZ:
   t_ramp: 1.3
   target_unitary: CZ
   tg: 130
+CZ-100ns_tg-1.0ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-100ns_tg-1.0ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-100ns_tg-1.0ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-100ns_tg-1.0ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-100ns_tg-1.0ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-100ns_tg-1.0ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.0
+  target_unitary: CZ
+  tg: 100.0
+CZ-105ns_tg-1.05ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-105ns_tg-1.05ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-105ns_tg-1.05ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-105ns_tg-1.05ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-105ns_tg-1.05ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-105ns_tg-1.05ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.05
+  target_unitary: CZ
+  tg: 105.0
+CZ-10ns_tg-0.1ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-10ns_tg-0.1ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-10ns_tg-0.1ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-10ns_tg-0.1ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-10ns_tg-0.1ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-10ns_tg-0.1ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.1
+  target_unitary: CZ
+  tg: 10.0
+CZ-110ns_tg-1.1ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-110ns_tg-1.1ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-110ns_tg-1.1ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-110ns_tg-1.1ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-110ns_tg-1.1ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-110ns_tg-1.1ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.1
+  target_unitary: CZ
+  tg: 110.0
+CZ-115ns_tg-1.1500000000000001ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-115ns_tg-1.1500000000000001ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-115ns_tg-1.1500000000000001ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-115ns_tg-1.1500000000000001ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-115ns_tg-1.1500000000000001ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-115ns_tg-1.1500000000000001ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.1500000000000001
+  target_unitary: CZ
+  tg: 115.0
+CZ-120ns_tg-1.2ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-120ns_tg-1.2ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-120ns_tg-1.2ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-120ns_tg-1.2ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-120ns_tg-1.2ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-120ns_tg-1.2ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  target_unitary: CZ
+  tg: 120.0
+CZ-125ns_tg-1.25ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-125ns_tg-1.25ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-125ns_tg-1.25ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-125ns_tg-1.25ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-125ns_tg-1.25ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-125ns_tg-1.25ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.25
+  target_unitary: CZ
+  tg: 125.0
+CZ-130ns_tg-1.3ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-130ns_tg-1.3ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-130ns_tg-1.3ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-130ns_tg-1.3ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-130ns_tg-1.3ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-130ns_tg-1.3ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.3
+  target_unitary: CZ
+  tg: 130.0
+CZ-135ns_tg-1.35ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-135ns_tg-1.35ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-135ns_tg-1.35ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-135ns_tg-1.35ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-135ns_tg-1.35ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-135ns_tg-1.35ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.35
+  target_unitary: CZ
+  tg: 135.0
+CZ-140ns_tg-1.4000000000000001ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-140ns_tg-1.4000000000000001ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-140ns_tg-1.4000000000000001ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-140ns_tg-1.4000000000000001ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-140ns_tg-1.4000000000000001ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-140ns_tg-1.4000000000000001ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.4000000000000001
+  target_unitary: CZ
+  tg: 140.0
+CZ-141ns_tg-1.41ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-141ns_tg-1.41ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-141ns_tg-1.41ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-141ns_tg-1.41ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-141ns_tg-1.41ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-141ns_tg-1.41ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.41
+  target_unitary: CZ
+  tg: 141.0
+CZ-142ns_tg-1.42ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-142ns_tg-1.42ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-142ns_tg-1.42ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-142ns_tg-1.42ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-142ns_tg-1.42ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-142ns_tg-1.42ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.42
+  target_unitary: CZ
+  tg: 142.0
+CZ-143ns_tg-1.43ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-143ns_tg-1.43ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-143ns_tg-1.43ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-143ns_tg-1.43ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-143ns_tg-1.43ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-143ns_tg-1.43ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.43
+  target_unitary: CZ
+  tg: 143.0
+CZ-144ns_tg-1.44ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-144ns_tg-1.44ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-144ns_tg-1.44ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-144ns_tg-1.44ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-144ns_tg-1.44ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-144ns_tg-1.44ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.44
+  target_unitary: CZ
+  tg: 144.0
+CZ-145ns_tg-1.45ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-145ns_tg-1.45ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-145ns_tg-1.45ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-145ns_tg-1.45ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-145ns_tg-1.45ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-145ns_tg-1.45ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.45
+  target_unitary: CZ
+  tg: 145.0
+CZ-146ns_tg-1.46ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-146ns_tg-1.46ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-146ns_tg-1.46ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-146ns_tg-1.46ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-146ns_tg-1.46ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-146ns_tg-1.46ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.46
+  target_unitary: CZ
+  tg: 146.0
+CZ-147ns_tg-1.47ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-147ns_tg-1.47ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-147ns_tg-1.47ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-147ns_tg-1.47ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-147ns_tg-1.47ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-147ns_tg-1.47ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.47
+  target_unitary: CZ
+  tg: 147.0
+CZ-148ns_tg-1.48ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-148ns_tg-1.48ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-148ns_tg-1.48ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-148ns_tg-1.48ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-148ns_tg-1.48ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-148ns_tg-1.48ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.48
+  target_unitary: CZ
+  tg: 148.0
+CZ-149ns_tg-1.49ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-149ns_tg-1.49ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-149ns_tg-1.49ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-149ns_tg-1.49ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-149ns_tg-1.49ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-149ns_tg-1.49ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.49
+  target_unitary: CZ
+  tg: 149.0
+CZ-150ns_tg-1.5ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-150ns_tg-1.5ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-150ns_tg-1.5ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-150ns_tg-1.5ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-150ns_tg-1.5ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-150ns_tg-1.5ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.5
+  target_unitary: CZ
+  tg: 150.0
+CZ-155ns_tg-1.55ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-155ns_tg-1.55ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-155ns_tg-1.55ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-155ns_tg-1.55ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-155ns_tg-1.55ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-155ns_tg-1.55ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.55
+  target_unitary: CZ
+  tg: 155.0
+CZ-15ns_tg-0.15ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-15ns_tg-0.15ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-15ns_tg-0.15ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-15ns_tg-0.15ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-15ns_tg-0.15ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-15ns_tg-0.15ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.15
+  target_unitary: CZ
+  tg: 15.0
+CZ-160ns_tg-1.6ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-160ns_tg-1.6ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-160ns_tg-1.6ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-160ns_tg-1.6ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-160ns_tg-1.6ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-160ns_tg-1.6ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.6
+  target_unitary: CZ
+  tg: 160.0
+CZ-165ns_tg-1.6500000000000001ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-165ns_tg-1.6500000000000001ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-165ns_tg-1.6500000000000001ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-165ns_tg-1.6500000000000001ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-165ns_tg-1.6500000000000001ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-165ns_tg-1.6500000000000001ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.6500000000000001
+  target_unitary: CZ
+  tg: 165.0
+CZ-170ns_tg-1.7ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-170ns_tg-1.7ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-170ns_tg-1.7ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-170ns_tg-1.7ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-170ns_tg-1.7ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-170ns_tg-1.7ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.7
+  target_unitary: CZ
+  tg: 170.0
+CZ-175ns_tg-1.75ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-175ns_tg-1.75ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-175ns_tg-1.75ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-175ns_tg-1.75ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-175ns_tg-1.75ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-175ns_tg-1.75ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.75
+  target_unitary: CZ
+  tg: 175.0
+CZ-180ns_tg-1.8ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-180ns_tg-1.8ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-180ns_tg-1.8ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-180ns_tg-1.8ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-180ns_tg-1.8ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-180ns_tg-1.8ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.8
+  target_unitary: CZ
+  tg: 180.0
+CZ-185ns_tg-1.85ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-185ns_tg-1.85ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-185ns_tg-1.85ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-185ns_tg-1.85ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-185ns_tg-1.85ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-185ns_tg-1.85ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.85
+  target_unitary: CZ
+  tg: 185.0
+CZ-190ns_tg-1.9000000000000001ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-190ns_tg-1.9000000000000001ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-190ns_tg-1.9000000000000001ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-190ns_tg-1.9000000000000001ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-190ns_tg-1.9000000000000001ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-190ns_tg-1.9000000000000001ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.9000000000000001
+  target_unitary: CZ
+  tg: 190.0
+CZ-195ns_tg-1.95ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-195ns_tg-1.95ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-195ns_tg-1.95ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-195ns_tg-1.95ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-195ns_tg-1.95ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-195ns_tg-1.95ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 1.95
+  target_unitary: CZ
+  tg: 195.0
+CZ-200ns_tg-2.0ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-200ns_tg-2.0ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-200ns_tg-2.0ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-200ns_tg-2.0ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-200ns_tg-2.0ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-200ns_tg-2.0ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.0
+  target_unitary: CZ
+  tg: 200.0
+CZ-205ns_tg-2.05ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-205ns_tg-2.05ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-205ns_tg-2.05ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-205ns_tg-2.05ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-205ns_tg-2.05ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-205ns_tg-2.05ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.05
+  target_unitary: CZ
+  tg: 205.0
+CZ-20ns_tg-0.2ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-20ns_tg-0.2ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-20ns_tg-0.2ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-20ns_tg-0.2ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-20ns_tg-0.2ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-20ns_tg-0.2ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.2
+  target_unitary: CZ
+  tg: 20.0
+CZ-210ns_tg-2.1ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-210ns_tg-2.1ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-210ns_tg-2.1ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-210ns_tg-2.1ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-210ns_tg-2.1ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-210ns_tg-2.1ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.1
+  target_unitary: CZ
+  tg: 210.0
+CZ-215ns_tg-2.15ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-215ns_tg-2.15ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-215ns_tg-2.15ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-215ns_tg-2.15ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-215ns_tg-2.15ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-215ns_tg-2.15ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.15
+  target_unitary: CZ
+  tg: 215.0
+CZ-220ns_tg-2.2ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-220ns_tg-2.2ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-220ns_tg-2.2ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-220ns_tg-2.2ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-220ns_tg-2.2ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-220ns_tg-2.2ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.2
+  target_unitary: CZ
+  tg: 220.0
+CZ-225ns_tg-2.25ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-225ns_tg-2.25ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-225ns_tg-2.25ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-225ns_tg-2.25ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-225ns_tg-2.25ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-225ns_tg-2.25ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.25
+  target_unitary: CZ
+  tg: 225.0
+CZ-230ns_tg-2.3000000000000003ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-230ns_tg-2.3000000000000003ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-230ns_tg-2.3000000000000003ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-230ns_tg-2.3000000000000003ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-230ns_tg-2.3000000000000003ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-230ns_tg-2.3000000000000003ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.3000000000000003
+  target_unitary: CZ
+  tg: 230.0
+CZ-235ns_tg-2.35ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-235ns_tg-2.35ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-235ns_tg-2.35ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-235ns_tg-2.35ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-235ns_tg-2.35ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-235ns_tg-2.35ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.35
+  target_unitary: CZ
+  tg: 235.0
+CZ-240ns_tg-2.4ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-240ns_tg-2.4ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-240ns_tg-2.4ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-240ns_tg-2.4ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-240ns_tg-2.4ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-240ns_tg-2.4ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.4
+  target_unitary: CZ
+  tg: 240.0
+CZ-245ns_tg-2.45ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-245ns_tg-2.45ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-245ns_tg-2.45ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-245ns_tg-2.45ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-245ns_tg-2.45ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-245ns_tg-2.45ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.45
+  target_unitary: CZ
+  tg: 245.0
+CZ-250ns_tg-2.5ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-250ns_tg-2.5ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-250ns_tg-2.5ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-250ns_tg-2.5ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-250ns_tg-2.5ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-250ns_tg-2.5ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.5
+  target_unitary: CZ
+  tg: 250.0
+CZ-255ns_tg-2.5500000000000003ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-255ns_tg-2.5500000000000003ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-255ns_tg-2.5500000000000003ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-255ns_tg-2.5500000000000003ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-255ns_tg-2.5500000000000003ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-255ns_tg-2.5500000000000003ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.5500000000000003
+  target_unitary: CZ
+  tg: 255.0
+CZ-25ns_tg-0.25ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-25ns_tg-0.25ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-25ns_tg-0.25ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-25ns_tg-0.25ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-25ns_tg-0.25ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-25ns_tg-0.25ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.25
+  target_unitary: CZ
+  tg: 25.0
+CZ-260ns_tg-2.6ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-260ns_tg-2.6ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-260ns_tg-2.6ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-260ns_tg-2.6ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-260ns_tg-2.6ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-260ns_tg-2.6ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.6
+  target_unitary: CZ
+  tg: 260.0
+CZ-265ns_tg-2.65ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-265ns_tg-2.65ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-265ns_tg-2.65ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-265ns_tg-2.65ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-265ns_tg-2.65ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-265ns_tg-2.65ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.65
+  target_unitary: CZ
+  tg: 265.0
+CZ-270ns_tg-2.7ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-270ns_tg-2.7ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-270ns_tg-2.7ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-270ns_tg-2.7ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-270ns_tg-2.7ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-270ns_tg-2.7ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.7
+  target_unitary: CZ
+  tg: 270.0
+CZ-275ns_tg-2.75ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-275ns_tg-2.75ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-275ns_tg-2.75ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-275ns_tg-2.75ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-275ns_tg-2.75ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-275ns_tg-2.75ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.75
+  target_unitary: CZ
+  tg: 275.0
+CZ-280ns_tg-2.8000000000000003ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-280ns_tg-2.8000000000000003ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-280ns_tg-2.8000000000000003ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-280ns_tg-2.8000000000000003ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-280ns_tg-2.8000000000000003ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-280ns_tg-2.8000000000000003ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.8000000000000003
+  target_unitary: CZ
+  tg: 280.0
+CZ-285ns_tg-2.85ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-285ns_tg-2.85ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-285ns_tg-2.85ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-285ns_tg-2.85ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-285ns_tg-2.85ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-285ns_tg-2.85ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.85
+  target_unitary: CZ
+  tg: 285.0
+CZ-290ns_tg-2.9ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-290ns_tg-2.9ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-290ns_tg-2.9ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-290ns_tg-2.9ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-290ns_tg-2.9ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-290ns_tg-2.9ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.9
+  target_unitary: CZ
+  tg: 290.0
+CZ-295ns_tg-2.95ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-295ns_tg-2.95ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-295ns_tg-2.95ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-295ns_tg-2.95ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-295ns_tg-2.95ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-295ns_tg-2.95ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 2.95
+  target_unitary: CZ
+  tg: 295.0
+CZ-300ns_tg-3.0ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-300ns_tg-3.0ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-300ns_tg-3.0ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-300ns_tg-3.0ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-300ns_tg-3.0ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-300ns_tg-3.0ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.0
+  target_unitary: CZ
+  tg: 300.0
+CZ-305ns_tg-3.0500000000000003ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-305ns_tg-3.0500000000000003ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-305ns_tg-3.0500000000000003ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-305ns_tg-3.0500000000000003ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-305ns_tg-3.0500000000000003ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-305ns_tg-3.0500000000000003ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.0500000000000003
+  target_unitary: CZ
+  tg: 305.0
+CZ-30ns_tg-0.3ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-30ns_tg-0.3ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-30ns_tg-0.3ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-30ns_tg-0.3ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-30ns_tg-0.3ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-30ns_tg-0.3ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.3
+  target_unitary: CZ
+  tg: 30.0
+CZ-310ns_tg-3.1ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-310ns_tg-3.1ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-310ns_tg-3.1ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-310ns_tg-3.1ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-310ns_tg-3.1ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-310ns_tg-3.1ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.1
+  target_unitary: CZ
+  tg: 310.0
+CZ-315ns_tg-3.15ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-315ns_tg-3.15ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-315ns_tg-3.15ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-315ns_tg-3.15ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-315ns_tg-3.15ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-315ns_tg-3.15ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.15
+  target_unitary: CZ
+  tg: 315.0
+CZ-320ns_tg-3.2ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-320ns_tg-3.2ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-320ns_tg-3.2ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-320ns_tg-3.2ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-320ns_tg-3.2ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-320ns_tg-3.2ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.2
+  target_unitary: CZ
+  tg: 320.0
+CZ-325ns_tg-3.25ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-325ns_tg-3.25ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-325ns_tg-3.25ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-325ns_tg-3.25ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-325ns_tg-3.25ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-325ns_tg-3.25ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.25
+  target_unitary: CZ
+  tg: 325.0
+CZ-330ns_tg-3.3000000000000003ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-330ns_tg-3.3000000000000003ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-330ns_tg-3.3000000000000003ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-330ns_tg-3.3000000000000003ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-330ns_tg-3.3000000000000003ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-330ns_tg-3.3000000000000003ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.3000000000000003
+  target_unitary: CZ
+  tg: 330.0
+CZ-335ns_tg-3.35ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-335ns_tg-3.35ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-335ns_tg-3.35ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-335ns_tg-3.35ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-335ns_tg-3.35ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-335ns_tg-3.35ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.35
+  target_unitary: CZ
+  tg: 335.0
+CZ-340ns_tg-3.4ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-340ns_tg-3.4ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-340ns_tg-3.4ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-340ns_tg-3.4ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-340ns_tg-3.4ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-340ns_tg-3.4ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.4
+  target_unitary: CZ
+  tg: 340.0
+CZ-345ns_tg-3.45ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-345ns_tg-3.45ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-345ns_tg-3.45ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-345ns_tg-3.45ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-345ns_tg-3.45ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-345ns_tg-3.45ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.45
+  target_unitary: CZ
+  tg: 345.0
+CZ-350ns_tg-3.5ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-350ns_tg-3.5ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-350ns_tg-3.5ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-350ns_tg-3.5ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-350ns_tg-3.5ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-350ns_tg-3.5ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.5
+  target_unitary: CZ
+  tg: 350.0
+CZ-355ns_tg-3.5500000000000003ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-355ns_tg-3.5500000000000003ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-355ns_tg-3.5500000000000003ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-355ns_tg-3.5500000000000003ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-355ns_tg-3.5500000000000003ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-355ns_tg-3.5500000000000003ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.5500000000000003
+  target_unitary: CZ
+  tg: 355.0
+CZ-35ns_tg-0.35000000000000003ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-35ns_tg-0.35000000000000003ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-35ns_tg-0.35000000000000003ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-35ns_tg-0.35000000000000003ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-35ns_tg-0.35000000000000003ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-35ns_tg-0.35000000000000003ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.35000000000000003
+  target_unitary: CZ
+  tg: 35.0
+CZ-360ns_tg-3.6ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-360ns_tg-3.6ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-360ns_tg-3.6ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-360ns_tg-3.6ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-360ns_tg-3.6ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-360ns_tg-3.6ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.6
+  target_unitary: CZ
+  tg: 360.0
+CZ-365ns_tg-3.65ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-365ns_tg-3.65ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-365ns_tg-3.65ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-365ns_tg-3.65ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-365ns_tg-3.65ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-365ns_tg-3.65ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.65
+  target_unitary: CZ
+  tg: 365.0
+CZ-370ns_tg-3.7ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-370ns_tg-3.7ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-370ns_tg-3.7ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-370ns_tg-3.7ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-370ns_tg-3.7ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-370ns_tg-3.7ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.7
+  target_unitary: CZ
+  tg: 370.0
+CZ-375ns_tg-3.75ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-375ns_tg-3.75ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-375ns_tg-3.75ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-375ns_tg-3.75ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-375ns_tg-3.75ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-375ns_tg-3.75ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.75
+  target_unitary: CZ
+  tg: 375.0
+CZ-380ns_tg-3.8000000000000003ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-380ns_tg-3.8000000000000003ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-380ns_tg-3.8000000000000003ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-380ns_tg-3.8000000000000003ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-380ns_tg-3.8000000000000003ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-380ns_tg-3.8000000000000003ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.8000000000000003
+  target_unitary: CZ
+  tg: 380.0
+CZ-385ns_tg-3.85ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-385ns_tg-3.85ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-385ns_tg-3.85ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-385ns_tg-3.85ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-385ns_tg-3.85ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-385ns_tg-3.85ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.85
+  target_unitary: CZ
+  tg: 385.0
+CZ-390ns_tg-3.9ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-390ns_tg-3.9ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-390ns_tg-3.9ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-390ns_tg-3.9ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-390ns_tg-3.9ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-390ns_tg-3.9ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.9
+  target_unitary: CZ
+  tg: 390.0
+CZ-395ns_tg-3.95ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-395ns_tg-3.95ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-395ns_tg-3.95ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-395ns_tg-3.95ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-395ns_tg-3.95ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-395ns_tg-3.95ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 3.95
+  target_unitary: CZ
+  tg: 395.0
+CZ-400ns_tg-4.0ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-400ns_tg-4.0ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-400ns_tg-4.0ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-400ns_tg-4.0ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-400ns_tg-4.0ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-400ns_tg-4.0ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.0
+  target_unitary: CZ
+  tg: 400.0
+CZ-405ns_tg-4.05ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-405ns_tg-4.05ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-405ns_tg-4.05ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-405ns_tg-4.05ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-405ns_tg-4.05ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-405ns_tg-4.05ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.05
+  target_unitary: CZ
+  tg: 405.0
+CZ-40ns_tg-0.4ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-40ns_tg-0.4ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-40ns_tg-0.4ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-40ns_tg-0.4ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-40ns_tg-0.4ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-40ns_tg-0.4ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.4
+  target_unitary: CZ
+  tg: 40.0
+CZ-410ns_tg-4.1ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-410ns_tg-4.1ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-410ns_tg-4.1ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-410ns_tg-4.1ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-410ns_tg-4.1ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-410ns_tg-4.1ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.1
+  target_unitary: CZ
+  tg: 410.0
+CZ-415ns_tg-4.15ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-415ns_tg-4.15ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-415ns_tg-4.15ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-415ns_tg-4.15ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-415ns_tg-4.15ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-415ns_tg-4.15ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.15
+  target_unitary: CZ
+  tg: 415.0
+CZ-420ns_tg-4.2ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-420ns_tg-4.2ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-420ns_tg-4.2ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-420ns_tg-4.2ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-420ns_tg-4.2ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-420ns_tg-4.2ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.2
+  target_unitary: CZ
+  tg: 420.0
+CZ-425ns_tg-4.25ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-425ns_tg-4.25ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-425ns_tg-4.25ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-425ns_tg-4.25ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-425ns_tg-4.25ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-425ns_tg-4.25ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.25
+  target_unitary: CZ
+  tg: 425.0
+CZ-430ns_tg-4.3ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-430ns_tg-4.3ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-430ns_tg-4.3ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-430ns_tg-4.3ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-430ns_tg-4.3ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-430ns_tg-4.3ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.3
+  target_unitary: CZ
+  tg: 430.0
+CZ-435ns_tg-4.3500000000000005ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-435ns_tg-4.3500000000000005ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-435ns_tg-4.3500000000000005ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-435ns_tg-4.3500000000000005ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-435ns_tg-4.3500000000000005ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-435ns_tg-4.3500000000000005ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.3500000000000005
+  target_unitary: CZ
+  tg: 435.0
+CZ-440ns_tg-4.4ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-440ns_tg-4.4ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-440ns_tg-4.4ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-440ns_tg-4.4ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-440ns_tg-4.4ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-440ns_tg-4.4ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.4
+  target_unitary: CZ
+  tg: 440.0
+CZ-445ns_tg-4.45ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-445ns_tg-4.45ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-445ns_tg-4.45ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-445ns_tg-4.45ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-445ns_tg-4.45ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-445ns_tg-4.45ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.45
+  target_unitary: CZ
+  tg: 445.0
+CZ-450ns_tg-4.5ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-450ns_tg-4.5ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-450ns_tg-4.5ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-450ns_tg-4.5ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-450ns_tg-4.5ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-450ns_tg-4.5ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.5
+  target_unitary: CZ
+  tg: 450.0
+CZ-455ns_tg-4.55ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-455ns_tg-4.55ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-455ns_tg-4.55ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-455ns_tg-4.55ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-455ns_tg-4.55ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-455ns_tg-4.55ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.55
+  target_unitary: CZ
+  tg: 455.0
+CZ-45ns_tg-0.45ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-45ns_tg-0.45ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-45ns_tg-0.45ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-45ns_tg-0.45ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-45ns_tg-0.45ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-45ns_tg-0.45ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.45
+  target_unitary: CZ
+  tg: 45.0
+CZ-460ns_tg-4.6000000000000005ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-460ns_tg-4.6000000000000005ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-460ns_tg-4.6000000000000005ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-460ns_tg-4.6000000000000005ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-460ns_tg-4.6000000000000005ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-460ns_tg-4.6000000000000005ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.6000000000000005
+  target_unitary: CZ
+  tg: 460.0
+CZ-465ns_tg-4.65ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-465ns_tg-4.65ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-465ns_tg-4.65ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-465ns_tg-4.65ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-465ns_tg-4.65ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-465ns_tg-4.65ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.65
+  target_unitary: CZ
+  tg: 465.0
+CZ-470ns_tg-4.7ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-470ns_tg-4.7ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-470ns_tg-4.7ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-470ns_tg-4.7ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-470ns_tg-4.7ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-470ns_tg-4.7ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.7
+  target_unitary: CZ
+  tg: 470.0
+CZ-475ns_tg-4.75ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-475ns_tg-4.75ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-475ns_tg-4.75ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-475ns_tg-4.75ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-475ns_tg-4.75ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-475ns_tg-4.75ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.75
+  target_unitary: CZ
+  tg: 475.0
+CZ-480ns_tg-4.8ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-480ns_tg-4.8ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-480ns_tg-4.8ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-480ns_tg-4.8ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-480ns_tg-4.8ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-480ns_tg-4.8ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.8
+  target_unitary: CZ
+  tg: 480.0
+CZ-485ns_tg-4.8500000000000005ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-485ns_tg-4.8500000000000005ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-485ns_tg-4.8500000000000005ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-485ns_tg-4.8500000000000005ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-485ns_tg-4.8500000000000005ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-485ns_tg-4.8500000000000005ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.8500000000000005
+  target_unitary: CZ
+  tg: 485.0
+CZ-490ns_tg-4.9ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-490ns_tg-4.9ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-490ns_tg-4.9ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-490ns_tg-4.9ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-490ns_tg-4.9ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-490ns_tg-4.9ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.9
+  target_unitary: CZ
+  tg: 490.0
+CZ-495ns_tg-4.95ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-495ns_tg-4.95ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-495ns_tg-4.95ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-495ns_tg-4.95ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-495ns_tg-4.95ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-495ns_tg-4.95ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 4.95
+  target_unitary: CZ
+  tg: 495.0
+CZ-50ns_tg-0.5ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-50ns_tg-0.5ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-50ns_tg-0.5ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-50ns_tg-0.5ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-50ns_tg-0.5ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-50ns_tg-0.5ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.5
+  target_unitary: CZ
+  tg: 50.0
+CZ-55ns_tg-0.55ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-55ns_tg-0.55ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-55ns_tg-0.55ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-55ns_tg-0.55ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-55ns_tg-0.55ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-55ns_tg-0.55ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.55
+  target_unitary: CZ
+  tg: 55.0
+CZ-60ns_tg-0.6ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-60ns_tg-0.6ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-60ns_tg-0.6ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-60ns_tg-0.6ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-60ns_tg-0.6ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-60ns_tg-0.6ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.6
+  target_unitary: CZ
+  tg: 60.0
+CZ-65ns_tg-0.65ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-65ns_tg-0.65ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-65ns_tg-0.65ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-65ns_tg-0.65ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-65ns_tg-0.65ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-65ns_tg-0.65ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.65
+  target_unitary: CZ
+  tg: 65.0
+CZ-70ns_tg-0.7000000000000001ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-70ns_tg-0.7000000000000001ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-70ns_tg-0.7000000000000001ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-70ns_tg-0.7000000000000001ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-70ns_tg-0.7000000000000001ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-70ns_tg-0.7000000000000001ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.7000000000000001
+  target_unitary: CZ
+  tg: 70.0
+CZ-75ns_tg-0.75ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-75ns_tg-0.75ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-75ns_tg-0.75ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-75ns_tg-0.75ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-75ns_tg-0.75ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-75ns_tg-0.75ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.75
+  target_unitary: CZ
+  tg: 75.0
+CZ-80ns_tg-0.8ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-80ns_tg-0.8ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-80ns_tg-0.8ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-80ns_tg-0.8ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-80ns_tg-0.8ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-80ns_tg-0.8ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.8
+  target_unitary: CZ
+  tg: 80.0
+CZ-85ns_tg-0.85ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-85ns_tg-0.85ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-85ns_tg-0.85ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-85ns_tg-0.85ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-85ns_tg-0.85ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-85ns_tg-0.85ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.85
+  target_unitary: CZ
+  tg: 85.0
+CZ-90ns_tg-0.9ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-90ns_tg-0.9ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-90ns_tg-0.9ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-90ns_tg-0.9ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-90ns_tg-0.9ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-90ns_tg-0.9ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.9
+  target_unitary: CZ
+  tg: 90.0
+CZ-95ns_tg-0.9500000000000001ns_tramp:
+  A:
+    w_mod: 0.84
+  B:
+    w_mod: 2.43
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  dt: 0.001
+  file: CZ-95ns_tg-0.9500000000000001ns_tramp.npy
+  geo_phase: 3.141592653589793
+  n_comp_states: 5
+  omega_0: 1.135
+  save_components:
+    _Pulse__delta_wmod:
+      file: CZ-95ns_tg-0.9500000000000001ns_tramp-_Pulse__delta_wmod.npy
+    _Pulse__g_ac:
+      file: CZ-95ns_tg-0.9500000000000001ns_tramp-_Pulse__g_ac.npy
+      geo_phase: 3.141592653589793
+    _Pulse__omega_A:
+      file: CZ-95ns_tg-0.9500000000000001ns_tramp-_Pulse__omega_A.npy
+    _Pulse__omega_B:
+      file: CZ-95ns_tg-0.9500000000000001ns_tramp-_Pulse__omega_B.npy
+      geo_phase: 3.141592653589793
+  t_ramp: 0.9500000000000001
+  target_unitary: CZ
+  tg: 95.0

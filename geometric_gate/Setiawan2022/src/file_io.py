@@ -198,7 +198,7 @@ def pool_component_desc():
                 cache[pulse_name]['save_components'][comp_name] = \
                     comp_desc
             os.remove(file_path)
-    cache_path = add_path(project_root, 'pulses', 'cache_desc.yaml')
+    cache_path = add_path('cache_desc.yaml', 'pulses')
     with open(cache_path, 'w') as yaml_file:
         yaml.dump(cache, yaml_file)
 
@@ -274,7 +274,7 @@ def load_pulse(pulse_config: PulseConfig) -> np.ndarray[float]:
     fpath: str = add_path(fname, "pulses")
     if fpath[-4:] != ".npy":
         fpath = fpath + ".npy"
-    return np.load(fpath)
+    return np.load(fpath, allow_pickle=True)
 
 
 def load_unitary(Uname: str) -> Qobj:
@@ -346,6 +346,7 @@ def get_pulse_specs() -> dict[str, float | dict[str, float]]:
 def get_cache_description(cache_lbl: str = "pulse") -> dict[str, DataDict]:
     assert cache_lbl in [
         "pulse",
+        "pulses",
         "gate",
         "Gate",
         "Pulse",
