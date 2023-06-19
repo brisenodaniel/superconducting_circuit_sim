@@ -216,10 +216,8 @@ def profile_gate(
     ideal_unitary = file_io.load_unitary(
         pulse_profile.pulse_config.target_unitary)
     gate_profile.fidelity = compute_fidelity(
-        ideal_unitary,
-        gate_profile.two_q_unitary,
-        gate_profile.circuit.H,
-        comp_coord)
+        ideal_unitary, gate_profile.two_q_unitary, gate_profile.circuit.H, comp_coord
+    )
     if cache_gate:
         file_io.cache_gate(gate_profile, multiprocess)
     if multiprocess:
@@ -231,10 +229,9 @@ def profile_gate(
         return gate_profile
 
 
-def compute_fidelity(U_ideal: Qobj,
-                     U_g: Qobj,
-                     H: Qobj | None = None,
-                     comp_coord: CompCoord | None = None) -> float:
+def compute_fidelity(
+    U_ideal: Qobj, U_g: Qobj, H: Qobj | None = None, comp_coord: CompCoord | None = None
+) -> float:
     # implements eq (14)
     s0 = qt.qeye(2)
     sigmas: list[Qobj] = [qt.sigmaz(), qt.sigmax(), qt.sigmay(), s0]
@@ -253,9 +250,7 @@ def compute_fidelity(U_ideal: Qobj,
     return (1 / 4) + (1 / 80) * fidelity_sum
 
 
-def transform_op_to_dressed_basis(U: Qobj,
-                                  H: Qobj,
-                                  comp_coord: CompCoord) -> Qobj:
+def transform_op_to_dressed_basis(U: Qobj, H: Qobj, comp_coord: CompCoord) -> Qobj:
     basis: np.ndarray[complex] = H.eigenstates()[1]
     hlbrtspc_dims: list[list[int]] = basis[0].dims
     # cast operator dimensions of the full bare basis
@@ -307,7 +302,11 @@ def cast_op_to_space(
 def _fidelity_summand(U: Qobj, U_g: Qobj, si: Qobj, sj: Qobj) -> float:
     # summand in eq (14)
     two_qubit_sigma = qt.tensor(si, sj)
-    return (U_g * two_qubit_sigma * U_g.dag() * U * two_qubit_sigma * U.dag()).tr()
+    summand = (U_g * two_qubit_sigma * U_g.dag() *
+               U * two_qubit_sigma * U.dag()).tr()
+    return (
+        summand.real
+    )  # this term should be real, but numerical precision error may lead to imaginary parts O(1e-15)
 
 
 def compute_unitary(
@@ -435,7 +434,7 @@ def assemble_init_states(
         "ggg",
         "egg",
         "geg",
-        "eeg"
+        "eeg",
     ]
     init_states = default_states
     if "s0" in pulse_profile.pulse_config.pulse_params:

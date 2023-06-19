@@ -50,9 +50,9 @@ def make_czs():
              '_Pulse__g_ac': {'geo_phase': np.pi}
          }}
     pulse_configs = {'CZ': base_configs}
-    tg_list = np.arange(10, 500, 5)
+    tg_list = np.arange(10, 1000, 5)
     for tg in tg_list:
-        t_ramp = float(tg * 0.01)
+        t_ramp = 1.2
         name = f'CZ-{tg}ns_tg-{t_ramp}ns_tramp'
         custom_config = copy.deepcopy(base_configs)
         custom_config['tg'] = float(tg)
