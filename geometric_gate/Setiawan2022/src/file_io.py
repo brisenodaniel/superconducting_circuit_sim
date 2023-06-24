@@ -253,7 +253,7 @@ def save_desc_multiprocess(target: DataObj,
         "Gate",
         "sim_results",
     ], f"{mode} not a valid mode parameter"
-    cache_path = add_path("cache_desc.yaml", mode)
+#    cache_path = add_path("cache_desc.yaml", mode)
     desc = target.as_noNone_dict()
     desc["file"] = fname
     name = desc.pop("name")
@@ -275,6 +275,14 @@ def load_pulse(pulse_config: PulseConfig) -> np.ndarray[float]:
     if fpath[-4:] != ".npy":
         fpath = fpath + ".npy"
     return np.load(fpath, allow_pickle=True)
+
+
+def load_unitary(Uname: str) -> Qobj:
+    fpath = os.path.join(project_root,
+                         'config',
+                         'target_unitaries',
+                         f'{Uname}')
+    return qload(fpath)
 
 
 def load_unitary(Uname: str) -> Qobj:

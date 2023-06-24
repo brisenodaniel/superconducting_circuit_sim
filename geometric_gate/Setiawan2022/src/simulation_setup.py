@@ -384,7 +384,7 @@ def get_pulse(
     t_ramp = pulse_config.pulse_params["t_ramp"]
     tlist = np.arange(0, tg + 2 * t_ramp, dt)
     geo_phase = pulse_config.geo_phase
-    return pulse_builder.build_pulse(tlist, geo_phase)
+    return pulse_builder.build_pulse(tlist, geo_phase, tlist_ramp)
 
 
 def get_component(

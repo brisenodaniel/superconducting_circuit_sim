@@ -440,7 +440,7 @@ try:
     )
     default_tg: float = default_p_params["tg"]
     default_amp: float = default_p_params["omega_0"]
-except FileNotFoundError as err:
+except FileNotFoundError:
     default_p_params = {}
     default_tg = 0
     default_amp = 0

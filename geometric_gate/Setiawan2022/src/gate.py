@@ -184,7 +184,7 @@ def profile_gate(
     n_comp_states: int = 2,
     cache_gate: bool = True,
     use_gate_cache: bool = True,
-    multiprocess: bool = True,
+    multiprocess: bool = False,
 ):
     gate_profile: GateProfile = assemble_empty_profile(
         name,
