@@ -1,0 +1,74 @@
+CZ-285ns_tg-2.85ns_tramp-pulse_gen_ct:
+  circuit_config:
+    A:
+      E_C: 1.8
+      E_J: 4.5
+      E_L: 1.5
+      phi_ext: 0.5
+      w: 11.24690169985146
+    B:
+      E_C: 1.1
+      E_J: 3.5
+      E_L: 1.0
+      phi_ext: 0.5
+      w: 5.403539364174444
+    C:
+      U: 0.005
+      w: 6.974335690969341
+    global:
+      nlev: 5
+    interaction:
+      g_AB: 0.04
+      g_AC: 0.63
+      g_BC: 0.6
+  fidelity: 0.8946513524992634
+  file: CZ-285ns_tg-2.85ns_tramp-pulse_gen_ct.qu
+  pulse_config:
+    A:
+      w_mod: 0.84
+    B:
+      w_mod: 2.43
+    circuit_config:
+      A:
+        E_C: 1.8
+        E_J: 4.5
+        E_L: 1.5
+        phi_ext: 0.5
+        w: 11.24690169985146
+      B:
+        E_C: 1.1
+        E_J: 3.5
+        E_L: 1.0
+        phi_ext: 0.5
+        w: 5.403539364174444
+      C:
+        U: 0.005
+        w: 6.974335690969341
+      global:
+        nlev: 5
+      interaction:
+        g_AB: 0.04
+        g_AC: 0.63
+        g_BC: 0.6
+    dt: 0.001
+    geo_phase: 3.141592653589793
+    n_comp_states: 5
+    name: CZ-285ns_tg-2.85ns_tramp
+    omega_0: 1.135
+    save_components:
+      _Pulse__delta_wmod: {}
+      _Pulse__g_ac:
+        geo_phase: 3.141592653589793
+      _Pulse__omega_A: {}
+      _Pulse__omega_B:
+        geo_phase: 3.141592653589793
+    t_ramp: 2.85
+    target_unitary: CZ
+    tg: 285.0
+  trajectories:
+  - ggg
+  - egg
+  - geg
+  - eeg
+  two_q_unitary_cached: true
+  unitary_cached: true

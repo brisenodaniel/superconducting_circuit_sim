@@ -2,19 +2,19 @@
 
 File contains methods which:
 
-    Given a quantum system constructor `constr_qsys` and a dictionary of 
-    constructor arguments `constr_args`, determines the minimum number of 
+    Given a quantum system constructor `constr_qsys` and a dictionary of
+    constructor arguments `constr_args`, determines the minimum number of
     energy levels to include in simulation to obtain stable bottom n
     eigenenergies of the quantum system.
 
     Given a dictionary of operators as returned by `constr_qsys`, diagonalizes
-    system hamiltonian and re-expresses all dictionary operators in hamiltonian 
+    system hamiltonian and re-expresses all dictionary operators in hamiltonian
     eigenbasis. Then, truncates the diagonalized hamiltonian and other operators
     to a given number of energy levels.
 
 Custom Datatypes:
     Qobj: Alias for qt.Qobj
-   
+
 
 Requirements:
     `constr_qsys` accepts argument `nlev` which determines the number of energy
@@ -34,15 +34,16 @@ from subsystems import Subsystem
 Qobj: TypeAlias = qt.Qobj
 Qsys: TypeAlias = Subsystem
 
-j: complex = complex(0,1)
+j: complex = complex(0, 1)
 
-def stabilize_nlev(constr_qsys:Callable['...', Subsystem], 
-                   constr_args:dict,
-                   stable_levels:int=3,
-                   tol:float=1e-9,
-                   min_nlev:int=None,
-                   max_nlev:int=None,
-                   n_stable_reps:int=5)->tuple[Subsystem, int]:
+
+def stabilize_nlev(constr_qsys: Callable['...', Subsystem],
+                   constr_args: dict,
+                   stable_levels: int = 5,
+                   tol: float = 1e-9,
+                   min_nlev: int = None,
+                   max_nlev: int = None,
+                   n_stable_reps: int = 5) -> tuple[Subsystem, int]:
     """Determines the minimum number of energy levels to consider to simulate\
     a given quantum system such that the relevant energy levels do not change\
     thier eigenenergies as the Hamiltonian considers higher energy states.
@@ -52,7 +53,7 @@ def stabilize_nlev(constr_qsys:Callable['...', Subsystem],
          Must accept a parameter `nlev` which determines the number of energy \
          levels modeled in Qsys.
         constr_args (dict): Named arguments to constr_qsys. Need not include `nlev`.
-        stable_levels (int, optional): Determines which energy levels are stabilized. 
+        stable_levels (int, optional): Determines which energy levels are stabilized.
          For a given value n, [0,1,2,...,n-1] levels will be stabilized. Defaults\
          to 5.
         tol (float, optional): Numerical error tolerance. If two eigenenergies e1 and e2 are such that |e1-e2|<=tol,\
@@ -72,33 +73,35 @@ def stabilize_nlev(constr_qsys:Callable['...', Subsystem],
         tuple[Subsystem, int]: (qsys, nlev), where nlev is the minimum number of energy levels modeled to achieve \
          stability of the eigenenergies, and qsys is the return value of `constr_qsys` with nlev energy levels.
     """
-    if min_nlev is None or min_nlev<stable_levels:
+    if min_nlev is None or min_nlev < stable_levels:
         min_nlev = stable_levels
-    assert max_nlev is None or min_nlev<max_nlev,\
-    f'Upper bound of simulated levels `max_nlev`:{max_nlev} is smaller than lower bound `min_nlev`:{min_nlev}'
-    assert max_nlev is None  or stable_levels<=max_nlev,\
-    'Upper bound of simulated levels `max_nlev`:{} is smaller than desired number of\
-        stable levels:{}'.format(max_nlev,stable_levels)
-    #set up loop variables
-    nlev:int = min_nlev
+    assert max_nlev is None or min_nlev < max_nlev,\
+        f'Upper bound of simulated levels `max_nlev`:{max_nlev} is smaller than lower bound `min_nlev`:{min_nlev}'
+    assert max_nlev is None or stable_levels <= max_nlev,\
+        'Upper bound of simulated levels `max_nlev`:{} is smaller than desired number of\
+        stable levels:{}'.format(max_nlev, stable_levels)
+    # set up loop variables
+    nlev: int = min_nlev
     constr_args['nlev'] = min_nlev
-    qsys:Qsys = constr_qsys(**constr_args)
-    stable_reps:int = 0
-    #loop until eigenenergies don't change over `n_stable_reps`
-    while stable_reps<n_stable_reps:
+    qsys: Qsys = constr_qsys(**constr_args)
+    stable_reps: int = 0
+    # loop until eigenenergies don't change over `n_stable_reps`
+    while stable_reps < n_stable_reps:
         constr_args['nlev'] += 1
-        new_qsys:Subsystem = constr_qsys(**constr_args)
-        energies_changed:bool = not has_equal_energies(qsys,
-                                                       new_qsys, 
-                                                       stable_levels,
-                                                       tol)
+        new_qsys: Subsystem = constr_qsys(**constr_args)
+        energies_changed: bool = not has_equal_energies(qsys,
+                                                        new_qsys,
+                                                        stable_levels,
+                                                        tol)
         if energies_changed:
             stable_reps = 0
             nlev = constr_args['nlev']
             qsys = new_qsys
-            if max_nlev is not None and nlev>max_nlev:
-                msg = "Maximum number of energy levels (nlev={}) exeeded.".format(max_nlev)
-                msg += "\nOptimization will terminate before eigenenergy of bottom {} levels is achieved.".format(stable_levels)
+            if max_nlev is not None and nlev > max_nlev:
+                msg = "Maximum number of energy levels (nlev={}) exeeded.".format(
+                    max_nlev)
+                msg += "\nOptimization will terminate before eigenenergy of bottom {} levels is achieved.".format(
+                    stable_levels)
                 msg += "\nTo fix, increase max_nlev parameter or set to None."
                 warnings.warn(msg)
                 nlev = max_nlev
@@ -109,11 +112,12 @@ def stabilize_nlev(constr_qsys:Callable['...', Subsystem],
             stable_reps += 1
     return qsys, nlev
 
-def get_energies_over_nlev(constr_qsys:Callable['...',Qsys],
-                           constr_args:dict,
-                           track_bottom_n_levels:int=3,
-                           min_nlev:int=None,
-                           max_nlev:int=30)->list[np.ndarray]:
+
+def get_energies_over_nlev(constr_qsys: Callable['...', Qsys],
+                           constr_args: dict,
+                           track_bottom_n_levels: int = 3,
+                           min_nlev: int = None,
+                           max_nlev: int = 30) -> list[np.ndarray]:
     """Function tracks eigenenergies of a system's hamiltonian as the number\
     of energy levels is varied between [min_nlev,max_nlev].
 
@@ -133,26 +137,28 @@ def get_energies_over_nlev(constr_qsys:Callable['...',Qsys],
     """
     if min_nlev is None:
         min_nlev = track_bottom_n_levels
-    assert track_bottom_n_levels<=min_nlev, \
-    'Lower bound of simulated levels `min_nlev`:{} is smaller than desired \
+    assert track_bottom_n_levels <= min_nlev, \
+        'Lower bound of simulated levels `min_nlev`:{} is smaller than desired \
         number of tracked levels:{}'.format(min_nlev, track_bottom_n_levels)
-    #set up loop variables
-    nlev:int = min_nlev
-    eigenenergies:list = []
-    while nlev<=max_nlev:
+    # set up loop variables
+    nlev: int = min_nlev
+    eigenenergies: list = []
+    while nlev <= max_nlev:
         constr_args['nlev'] = nlev
-        qsys:Qsys = constr_qsys(**constr_args)
-        energies:np.ndarray = qsys['H'].eigenenergies()[:track_bottom_n_levels]
+        qsys: Qsys = constr_qsys(**constr_args)
+        energies: np.ndarray = qsys['H'].eigenenergies()[
+            :track_bottom_n_levels]
         eigenenergies.append(energies)
-        nlev+=1
+        nlev += 1
     return eigenenergies
 
-def plot_energies_over_nlev(constr_qsys:Callable['...', Qsys],
-                            constr_args:dict,
-                            track_bottom_n_levels:int=3,
-                            min_nlev:int=None,
-                            max_nlev:int=30,
-                            print_to:str=None)->None:
+
+def plot_energies_over_nlev(constr_qsys: Callable['...', Qsys],
+                            constr_args: dict,
+                            track_bottom_n_levels: int = 3,
+                            min_nlev: int = None,
+                            max_nlev: int = 30,
+                            print_to: str = None) -> None:
     """Function plots eigenenergies of a system's hamiltonian as the number\
     of energy levels is varied between [min_nlev, max_nlev].
     Args:
@@ -172,28 +178,29 @@ def plot_energies_over_nlev(constr_qsys:Callable['...', Qsys],
     """
     if min_nlev is None:
         min_nlev = track_bottom_n_levels
-    params:dict = locals() # make copy of function parameters
+    params: dict = locals()  # make copy of function parameters
     del params['print_to']
-    eigenen:list[np.ndarray] = get_energies_over_nlev(**params)
-    eigenen:np.ndarray = np.array(eigenen)
+    eigenen: list[np.ndarray] = get_energies_over_nlev(**params)
+    eigenen: np.ndarray = np.array(eigenen)
     for level in range(track_bottom_n_levels):
-        en:np.array = eigenen[:,level]
+        en: np.array = eigenen[:, level]
         lbl = "{}".format(level)
-        plt.plot(range(min_nlev,max_nlev+1), en, label=lbl)
+        plt.plot(range(min_nlev, max_nlev+1), en, label=lbl)
         plt.legend()
-        plt.title('Eigenenergies of Bottom {} Levels Vs Tot.Simulated Levels'\
+        plt.title('Eigenenergies of Bottom {} Levels Vs Tot.Simulated Levels'
                   .format(track_bottom_n_levels))
         plt.ylabel('Eigenenergy')
         plt.xlabel('Total Simulated Levels')
     if print_to is not None:
         if '../plots/' not in print_to:
-            print_to = '../plots/'+ print_to
+            print_to = '../plots/' + print_to
         plt.savefig(print_to)
     else:
         plt.show()
     return None
 
-def is_diag(op:Qobj, tol:float=1e-9)->bool:
+
+def is_diag(op: Qobj, tol: float = 1e-9) -> bool:
     """Function determines if Qobj is diagonal
 
     Args:
@@ -206,13 +213,14 @@ def is_diag(op:Qobj, tol:float=1e-9)->bool:
         bool: True if `op` is diagonal, false otherwise
     """
     diags = op.diag()
-    diag_op = qt.qdiags(diags,0)
+    diag_op = qt.qdiags(diags, 0)
     return qt.isequal(diag_op, op, tol)
 
-def has_equal_energies(qsys_1:Qsys, 
-                       qsys_2:Qsys,
-                       stable_levels:int=None,
-                       tol:float=1e-9) -> bool:
+
+def has_equal_energies(qsys_1: Qsys,
+                       qsys_2: Qsys,
+                       stable_levels: int = None,
+                       tol: float = 1e-9) -> bool:
     """Function determines if two Qsys have hamiltonians with\
       equal eigenenergies for bottom `stable_levels` eigenstates.
 
@@ -231,16 +239,17 @@ def has_equal_energies(qsys_1:Qsys,
     """
     if stable_levels is None:
         stable_levels = qsys_1['H'].dims[0][0]
-    H1:Qobj = qsys_1['H']
-    H2:Qobj = qsys_2['H']
-    e1:np.ndarray = H1.eigenenergies()[:stable_levels]
-    e2:np.ndarray = H2.eigenenergies()[:stable_levels]
-    if tol==0:
-        return all(e1==e2)
+    H1: Qobj = qsys_1['H']
+    H2: Qobj = qsys_2['H']
+    e1: np.ndarray = H1.eigenenergies()[:stable_levels]
+    e2: np.ndarray = H2.eigenenergies()[:stable_levels]
+    if tol == 0:
+        return all(e1 == e2)
     else:
-        return all(abs(e1-e2)<=tol)
+        return all(abs(e1-e2) <= tol)
 
-def diagonalize_Qsys(qsys:Subsystem)->Subsystem:
+
+def diagonalize_Qsys(qsys: Subsystem) -> Subsystem:
     """Function finds the eigenbasis for the hamiltonian in qsys, and \
     transforms all operators in qsys to that eigenbasis
 
@@ -253,13 +262,14 @@ def diagonalize_Qsys(qsys:Subsystem)->Subsystem:
     """
     if is_diag(qsys['H']):
         return qsys
-    eigenbasis:np.ndarray[Qobj] = qsys['H'].eigenstates()[1]
-    diag_sys:Subsystem = qsys.transform(eigenbasis)
+    eigenbasis: np.ndarray[Qobj] = qsys['H'].eigenstates()[1]
+    diag_sys: Subsystem = qsys.transform(eigenbasis)
     return diag_sys
 
-def truncate_Qsys(qsys:Subsystem,
-                  truncate_to:int)->Subsystem:
-    #DUMMY FUNCTION TO NOT BREAK TESTS. Equivalent to new Subsystem class method
+
+def truncate_Qsys(qsys: Subsystem,
+                  truncate_to: int) -> Subsystem:
+    # DUMMY FUNCTION TO NOT BREAK TESTS. Equivalent to new Subsystem class method
     # Subsystem.truncate(). TODO: Remove this function and re-write corresponding tests
     """Function truncates all operators in qsys to an operator acting on a state with `nlev`
     energy levels. Truncates basis vectors in `eigenbasis` if provided.
@@ -302,16 +312,17 @@ def truncate_Qsys(qsys:Subsystem,
     #     _, eigenbasis = qsys['H'].eigenstates()
     # return qsys, eigenbasis
 
-def build_optimized_system(constr_qsys:Callable['...', Subsystem],
-                           constr_args:dict,
-                           stable_nlev:int=3,                           stabilize:bool=True,
-                           nlev:int=30,
-                           tol:float=1e-9,
-                           min_nlev:int|None=None,
-                           max_nlev:int|None=None,
-                           truncate_to:int|None=None,
-                           n_stable_reps:int=5
-                           )->Subsystem:
+
+def build_optimized_system(constr_qsys: Callable['...', Subsystem],
+                           constr_args: dict,
+                           stable_nlev: int = 3,                           stabilize: bool = True,
+                           nlev: int = 30,
+                           tol: float = 1e-9,
+                           min_nlev: int | None = None,
+                           max_nlev: int | None = None,
+                           truncate_to: int | None = None,
+                           n_stable_reps: int = 5
+                           ) -> Subsystem:
     """Function first builds the quantum system defined by `constr_qsys` with enough energy levels\
     to model dynamics of the bottom `stable_levels` eigenstates (ordered by increasing eigenenergy)\
     with minimal truncation error. Then, the stable system model is transformed into it's hamiltonian's\
@@ -323,9 +334,9 @@ def build_optimized_system(constr_qsys:Callable['...', Subsystem],
          must have key 'H'. Must accept a parameter `nlev` which determines the number of energy \
          levels modeled in Subsystem.
         constr_args (dict): Named arguments to constr_qsys. Need not include `nlev`.
-        stable_levels (int, optional): Determines which energy levels are stabilized. 
+        stable_levels (int, optional): Determines which energy levels are stabilized.
          For a given value n, [0,1,2,...,n-1] levels will be stabilized. Defaults\
-         to 5.    
+         to 5.
          min_nlev (int, optional): Minimum number of simulated levels to consider. Must be\
          greater than or equal to `stable_levels`. If not provided, will be set to the value of `stable levels`.
         max_nlev (int, optional): Maximum number of simulated levels to consider. If not \
@@ -347,25 +358,25 @@ def build_optimized_system(constr_qsys:Callable['...', Subsystem],
         truncate_to = stable_nlev
     if min_nlev is None:
         min_nlev = stable_nlev
-    assert truncate_to<=min_nlev,\
-    f'Parameter `truncate_to` must have value less than or equal to `min_nlev`.\n'+\
-    f' `truncate_to` has value {truncate_to}, `min_nlev` has {min_nlev}.\n' +\
-    f' If you did not provide `min_nlev` as a parameter, it was set to the value of parameter `stable_levels`.'
+    assert truncate_to <= min_nlev,\
+        f'Parameter `truncate_to` must have value less than or equal to `min_nlev`.\n' +\
+        f' `truncate_to` has value {truncate_to}, `min_nlev` has {min_nlev}.\n' +\
+        f' If you did not provide `min_nlev` as a parameter, it was set to the value of parameter `stable_levels`.'
     if stabilize:
-        qsys:Subsystem = stabilize_nlev(constr_qsys,
-                                        constr_args,
-                                        stable_nlev,
-                                        tol,
-                                        min_nlev,
-                                        max_nlev,
-                                        n_stable_reps)[0]
+        qsys: Subsystem = stabilize_nlev(constr_qsys,
+                                         constr_args,
+                                         stable_nlev,
+                                         tol,
+                                         min_nlev,
+                                         max_nlev,
+                                         n_stable_reps)[0]
     else:
-        assert truncate_to<=nlev,\
-        'Parameter `truncate_to` must have value less than or equal to `nlev` if `stabilize=False`.\n'\
-        +f'` Truncate_to` has value {truncate_to}, nlev has {nlev}.\n'\
-        +'If you did not set `truncate_to`, parameter was set to the value of stable_nlev'
+        assert truncate_to <= nlev,\
+            'Parameter `truncate_to` must have value less than or equal to `nlev` if `stabilize=False`.\n'\
+            + f'` Truncate_to` has value {truncate_to}, nlev has {nlev}.\n'\
+            + 'If you did not set `truncate_to`, parameter was set to the value of stable_nlev'
         constr_args['nlev'] = nlev
-        qsys:Subsystem = constr_qsys(**constr_args)
+        qsys: Subsystem = constr_qsys(**constr_args)
     qsys = diagonalize_Qsys(qsys)
     qsys = qsys.truncate(truncate_to)
     return qsys
