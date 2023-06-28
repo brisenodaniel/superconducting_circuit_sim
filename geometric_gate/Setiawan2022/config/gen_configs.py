@@ -44,16 +44,16 @@ def make_czs():
          'save_components': {
              '_Pulse__omega_A': {},
              '_Pulse__omega_B': {'geo_phase': np.pi},
-             '_Pulse__delta_wmod': {'preprocess_t':
-                                    {'_Pulse__g_ac':
-                                     {'geo_phase': np.pi}}},
-             '_Pulse__g_ac': {'geo_phase': np.pi}
+             #  '_Pulse__delta_wmod': {'preprocess_t':
+             #   {'_Pulse__g_ac':
+             #  {'geo_phase': np.pi}}},
+             #  '_Pulse__g_ac': {'geo_phase': np.pi}
          }}
     pulse_configs = {'CZ': base_configs}
     tg_list = np.arange(10, 1000, 5)
     for tg in tg_list:
         t_ramp = 1.2
-        name = f'CZ-{tg}ns_tg-{t_ramp}ns_tramp'
+        name = f'CZ-{tg}ns'
         custom_config = copy.deepcopy(base_configs)
         custom_config['tg'] = float(tg)
         custom_config['t_ramp'] = t_ramp
@@ -66,6 +66,8 @@ if __name__ == '__main__':
     saved_configs = {}
     with open('pulses.yaml', 'r') as config_file:
         saved_configs = yaml.safe_load(config_file)
+        if saved_configs is None:
+            saved_configs = {}
     saved_configs.update(configs)
     with open('pulses.yaml', 'w') as config_file:
         yaml.dump(saved_configs, config_file)

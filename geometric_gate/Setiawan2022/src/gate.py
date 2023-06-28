@@ -186,6 +186,7 @@ def profile_gate(
     use_gate_cache: bool = True,
     multiprocess: bool = False,
 ):
+    use_gate_cache = False
     gate_profile: GateProfile = assemble_empty_profile(
         name,
         pulse_profile,

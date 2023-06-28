@@ -3,1582 +3,1988 @@ CZ:
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
   t_ramp: 1.3
   tg: 130
-CZ-100ns_tg-1.0ns_tramp:
+CZ-100ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.0
+  t_ramp: 1.2
   tg: 100.0
-CZ-105ns_tg-1.05ns_tramp:
+CZ-105ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.05
+  t_ramp: 1.2
   tg: 105.0
-CZ-10ns_tg-0.1ns_tramp:
+CZ-10ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.1
+  t_ramp: 1.2
   tg: 10.0
-CZ-110ns_tg-1.1ns_tramp:
+CZ-110ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.1
+  t_ramp: 1.2
   tg: 110.0
-CZ-115ns_tg-1.1500000000000001ns_tramp:
+CZ-115ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.1500000000000001
+  t_ramp: 1.2
   tg: 115.0
-CZ-120ns_tg-1.2ns_tramp:
+CZ-120ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
   t_ramp: 1.2
   tg: 120.0
-CZ-125ns_tg-1.25ns_tramp:
+CZ-125ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.25
+  t_ramp: 1.2
   tg: 125.0
-CZ-130ns_tg-1.3ns_tramp:
+CZ-130ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.3
+  t_ramp: 1.2
   tg: 130.0
-CZ-135ns_tg-1.35ns_tramp:
+CZ-135ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.35
+  t_ramp: 1.2
   tg: 135.0
-CZ-140ns_tg-1.4000000000000001ns_tramp:
+CZ-140ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.4000000000000001
+  t_ramp: 1.2
   tg: 140.0
-CZ-145ns_tg-1.45ns_tramp:
+CZ-145ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.45
+  t_ramp: 1.2
   tg: 145.0
-CZ-150ns_tg-1.5ns_tramp:
+CZ-150ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.5
+  t_ramp: 1.2
   tg: 150.0
-CZ-155ns_tg-1.55ns_tramp:
+CZ-155ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.55
+  t_ramp: 1.2
   tg: 155.0
-CZ-15ns_tg-0.15ns_tramp:
+CZ-15ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.15
+  t_ramp: 1.2
   tg: 15.0
-CZ-160ns_tg-1.6ns_tramp:
+CZ-160ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.6
+  t_ramp: 1.2
   tg: 160.0
-CZ-165ns_tg-1.6500000000000001ns_tramp:
+CZ-165ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.6500000000000001
+  t_ramp: 1.2
   tg: 165.0
-CZ-170ns_tg-1.7ns_tramp:
+CZ-170ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.7
+  t_ramp: 1.2
   tg: 170.0
-CZ-175ns_tg-1.75ns_tramp:
+CZ-175ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.75
+  t_ramp: 1.2
   tg: 175.0
-CZ-180ns_tg-1.8ns_tramp:
+CZ-180ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.8
+  t_ramp: 1.2
   tg: 180.0
-CZ-185ns_tg-1.85ns_tramp:
+CZ-185ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.85
+  t_ramp: 1.2
   tg: 185.0
-CZ-190ns_tg-1.9000000000000001ns_tramp:
+CZ-190ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.9000000000000001
+  t_ramp: 1.2
   tg: 190.0
-CZ-195ns_tg-1.95ns_tramp:
+CZ-195ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 1.95
+  t_ramp: 1.2
   tg: 195.0
-CZ-200ns_tg-2.0ns_tramp:
+CZ-200ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.0
+  t_ramp: 1.2
   tg: 200.0
-CZ-205ns_tg-2.05ns_tramp:
+CZ-205ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.05
+  t_ramp: 1.2
   tg: 205.0
-CZ-20ns_tg-0.2ns_tramp:
+CZ-20ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.2
+  t_ramp: 1.2
   tg: 20.0
-CZ-210ns_tg-2.1ns_tramp:
+CZ-210ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.1
+  t_ramp: 1.2
   tg: 210.0
-CZ-215ns_tg-2.15ns_tramp:
+CZ-215ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.15
+  t_ramp: 1.2
   tg: 215.0
-CZ-220ns_tg-2.2ns_tramp:
+CZ-220ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.2
+  t_ramp: 1.2
   tg: 220.0
-CZ-225ns_tg-2.25ns_tramp:
+CZ-225ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.25
+  t_ramp: 1.2
   tg: 225.0
-CZ-230ns_tg-2.3000000000000003ns_tramp:
+CZ-230ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.3000000000000003
+  t_ramp: 1.2
   tg: 230.0
-CZ-235ns_tg-2.35ns_tramp:
+CZ-235ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.35
+  t_ramp: 1.2
   tg: 235.0
-CZ-240ns_tg-2.4ns_tramp:
+CZ-240ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.4
+  t_ramp: 1.2
   tg: 240.0
-CZ-245ns_tg-2.45ns_tramp:
+CZ-245ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.45
+  t_ramp: 1.2
   tg: 245.0
-CZ-250ns_tg-2.5ns_tramp:
+CZ-250ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.5
+  t_ramp: 1.2
   tg: 250.0
-CZ-255ns_tg-2.5500000000000003ns_tramp:
+CZ-255ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.5500000000000003
+  t_ramp: 1.2
   tg: 255.0
-CZ-25ns_tg-0.25ns_tramp:
+CZ-25ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.25
+  t_ramp: 1.2
   tg: 25.0
-CZ-260ns_tg-2.6ns_tramp:
+CZ-260ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.6
+  t_ramp: 1.2
   tg: 260.0
-CZ-265ns_tg-2.65ns_tramp:
+CZ-265ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.65
+  t_ramp: 1.2
   tg: 265.0
-CZ-270ns_tg-2.7ns_tramp:
+CZ-270ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.7
+  t_ramp: 1.2
   tg: 270.0
-CZ-275ns_tg-2.75ns_tramp:
+CZ-275ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.75
+  t_ramp: 1.2
   tg: 275.0
-CZ-280ns_tg-2.8000000000000003ns_tramp:
+CZ-280ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.8000000000000003
+  t_ramp: 1.2
   tg: 280.0
-CZ-285ns_tg-2.85ns_tramp:
+CZ-285ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.85
+  t_ramp: 1.2
   tg: 285.0
-CZ-290ns_tg-2.9ns_tramp:
+CZ-290ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.9
+  t_ramp: 1.2
   tg: 290.0
-CZ-295ns_tg-2.95ns_tramp:
+CZ-295ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 2.95
+  t_ramp: 1.2
   tg: 295.0
-CZ-300ns_tg-3.0ns_tramp:
+CZ-300ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.0
+  t_ramp: 1.2
   tg: 300.0
-CZ-305ns_tg-3.0500000000000003ns_tramp:
+CZ-305ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.0500000000000003
+  t_ramp: 1.2
   tg: 305.0
-CZ-30ns_tg-0.3ns_tramp:
+CZ-30ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.3
+  t_ramp: 1.2
   tg: 30.0
-CZ-310ns_tg-3.1ns_tramp:
+CZ-310ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.1
+  t_ramp: 1.2
   tg: 310.0
-CZ-315ns_tg-3.15ns_tramp:
+CZ-315ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.15
+  t_ramp: 1.2
   tg: 315.0
-CZ-320ns_tg-3.2ns_tramp:
+CZ-320ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.2
+  t_ramp: 1.2
   tg: 320.0
-CZ-325ns_tg-3.25ns_tramp:
+CZ-325ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.25
+  t_ramp: 1.2
   tg: 325.0
-CZ-330ns_tg-3.3000000000000003ns_tramp:
+CZ-330ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.3000000000000003
+  t_ramp: 1.2
   tg: 330.0
-CZ-335ns_tg-3.35ns_tramp:
+CZ-335ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.35
+  t_ramp: 1.2
   tg: 335.0
-CZ-340ns_tg-3.4ns_tramp:
+CZ-340ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.4
+  t_ramp: 1.2
   tg: 340.0
-CZ-345ns_tg-3.45ns_tramp:
+CZ-345ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.45
+  t_ramp: 1.2
   tg: 345.0
-CZ-350ns_tg-3.5ns_tramp:
+CZ-350ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.5
+  t_ramp: 1.2
   tg: 350.0
-CZ-355ns_tg-3.5500000000000003ns_tramp:
+CZ-355ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.5500000000000003
+  t_ramp: 1.2
   tg: 355.0
-CZ-35ns_tg-0.35000000000000003ns_tramp:
+CZ-35ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.35000000000000003
+  t_ramp: 1.2
   tg: 35.0
-CZ-360ns_tg-3.6ns_tramp:
+CZ-360ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.6
+  t_ramp: 1.2
   tg: 360.0
-CZ-365ns_tg-3.65ns_tramp:
+CZ-365ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.65
+  t_ramp: 1.2
   tg: 365.0
-CZ-370ns_tg-3.7ns_tramp:
+CZ-370ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.7
+  t_ramp: 1.2
   tg: 370.0
-CZ-375ns_tg-3.75ns_tramp:
+CZ-375ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.75
+  t_ramp: 1.2
   tg: 375.0
-CZ-380ns_tg-3.8000000000000003ns_tramp:
+CZ-380ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.8000000000000003
+  t_ramp: 1.2
   tg: 380.0
-CZ-385ns_tg-3.85ns_tramp:
+CZ-385ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.85
+  t_ramp: 1.2
   tg: 385.0
-CZ-390ns_tg-3.9ns_tramp:
+CZ-390ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.9
+  t_ramp: 1.2
   tg: 390.0
-CZ-395ns_tg-3.95ns_tramp:
+CZ-395ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 3.95
+  t_ramp: 1.2
   tg: 395.0
-CZ-400ns_tg-4.0ns_tramp:
+CZ-400ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.0
+  t_ramp: 1.2
   tg: 400.0
-CZ-405ns_tg-4.05ns_tramp:
+CZ-405ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.05
+  t_ramp: 1.2
   tg: 405.0
-CZ-40ns_tg-0.4ns_tramp:
+CZ-40ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.4
+  t_ramp: 1.2
   tg: 40.0
-CZ-410ns_tg-4.1ns_tramp:
+CZ-410ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.1
+  t_ramp: 1.2
   tg: 410.0
-CZ-415ns_tg-4.15ns_tramp:
+CZ-415ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.15
+  t_ramp: 1.2
   tg: 415.0
-CZ-420ns_tg-4.2ns_tramp:
+CZ-420ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.2
+  t_ramp: 1.2
   tg: 420.0
-CZ-425ns_tg-4.25ns_tramp:
+CZ-425ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.25
+  t_ramp: 1.2
   tg: 425.0
-CZ-430ns_tg-4.3ns_tramp:
+CZ-430ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.3
+  t_ramp: 1.2
   tg: 430.0
-CZ-435ns_tg-4.3500000000000005ns_tramp:
+CZ-435ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.3500000000000005
+  t_ramp: 1.2
   tg: 435.0
-CZ-440ns_tg-4.4ns_tramp:
+CZ-440ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.4
+  t_ramp: 1.2
   tg: 440.0
-CZ-445ns_tg-4.45ns_tramp:
+CZ-445ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.45
+  t_ramp: 1.2
   tg: 445.0
-CZ-450ns_tg-4.5ns_tramp:
+CZ-450ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.5
+  t_ramp: 1.2
   tg: 450.0
-CZ-455ns_tg-4.55ns_tramp:
+CZ-455ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.55
+  t_ramp: 1.2
   tg: 455.0
-CZ-45ns_tg-0.45ns_tramp:
+CZ-45ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.45
+  t_ramp: 1.2
   tg: 45.0
-CZ-460ns_tg-4.6000000000000005ns_tramp:
+CZ-460ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.6000000000000005
+  t_ramp: 1.2
   tg: 460.0
-CZ-465ns_tg-4.65ns_tramp:
+CZ-465ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.65
+  t_ramp: 1.2
   tg: 465.0
-CZ-470ns_tg-4.7ns_tramp:
+CZ-470ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.7
+  t_ramp: 1.2
   tg: 470.0
-CZ-475ns_tg-4.75ns_tramp:
+CZ-475ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.75
+  t_ramp: 1.2
   tg: 475.0
-CZ-480ns_tg-4.8ns_tramp:
+CZ-480ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.8
+  t_ramp: 1.2
   tg: 480.0
-CZ-485ns_tg-4.8500000000000005ns_tramp:
+CZ-485ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.8500000000000005
+  t_ramp: 1.2
   tg: 485.0
-CZ-490ns_tg-4.9ns_tramp:
+CZ-490ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.9
+  t_ramp: 1.2
   tg: 490.0
-CZ-495ns_tg-4.95ns_tramp:
+CZ-495ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 4.95
+  t_ramp: 1.2
   tg: 495.0
-CZ-50ns_tg-0.5ns_tramp:
+CZ-500ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.5
+  t_ramp: 1.2
+  tg: 500.0
+CZ-505ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 505.0
+CZ-50ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
   tg: 50.0
-CZ-55ns_tg-0.55ns_tramp:
+CZ-510ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.55
+  t_ramp: 1.2
+  tg: 510.0
+CZ-515ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 515.0
+CZ-520ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 520.0
+CZ-525ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 525.0
+CZ-530ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 530.0
+CZ-535ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 535.0
+CZ-540ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 540.0
+CZ-545ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 545.0
+CZ-550ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 550.0
+CZ-555ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 555.0
+CZ-55ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
   tg: 55.0
-CZ-60ns_tg-0.6ns_tramp:
+CZ-560ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.6
+  t_ramp: 1.2
+  tg: 560.0
+CZ-565ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 565.0
+CZ-570ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 570.0
+CZ-575ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 575.0
+CZ-580ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 580.0
+CZ-585ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 585.0
+CZ-590ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 590.0
+CZ-595ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 595.0
+CZ-600ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 600.0
+CZ-605ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 605.0
+CZ-60ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
   tg: 60.0
-CZ-65ns_tg-0.65ns_tramp:
+CZ-610ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.65
+  t_ramp: 1.2
+  tg: 610.0
+CZ-615ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 615.0
+CZ-620ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 620.0
+CZ-625ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 625.0
+CZ-630ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 630.0
+CZ-635ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 635.0
+CZ-640ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 640.0
+CZ-645ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 645.0
+CZ-650ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 650.0
+CZ-655ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 655.0
+CZ-65ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
   tg: 65.0
-CZ-70ns_tg-0.7000000000000001ns_tramp:
+CZ-660ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.7000000000000001
+  t_ramp: 1.2
+  tg: 660.0
+CZ-665ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 665.0
+CZ-670ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 670.0
+CZ-675ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 675.0
+CZ-680ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 680.0
+CZ-685ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 685.0
+CZ-690ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 690.0
+CZ-695ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 695.0
+CZ-700ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 700.0
+CZ-705ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 705.0
+CZ-70ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
   tg: 70.0
-CZ-75ns_tg-0.75ns_tramp:
+CZ-710ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.75
+  t_ramp: 1.2
+  tg: 710.0
+CZ-715ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 715.0
+CZ-720ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 720.0
+CZ-725ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 725.0
+CZ-730ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 730.0
+CZ-735ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 735.0
+CZ-740ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 740.0
+CZ-745ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 745.0
+CZ-750ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 750.0
+CZ-755ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 755.0
+CZ-75ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
   tg: 75.0
-CZ-80ns_tg-0.8ns_tramp:
+CZ-760ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.8
+  t_ramp: 1.2
+  tg: 760.0
+CZ-765ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 765.0
+CZ-770ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 770.0
+CZ-775ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 775.0
+CZ-780ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 780.0
+CZ-785ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 785.0
+CZ-790ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 790.0
+CZ-795ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 795.0
+CZ-800ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 800.0
+CZ-805ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 805.0
+CZ-80ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
   tg: 80.0
-CZ-85ns_tg-0.85ns_tramp:
+CZ-810ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.85
+  t_ramp: 1.2
+  tg: 810.0
+CZ-815ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 815.0
+CZ-820ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 820.0
+CZ-825ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 825.0
+CZ-830ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 830.0
+CZ-835ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 835.0
+CZ-840ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 840.0
+CZ-845ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 845.0
+CZ-850ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 850.0
+CZ-855ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 855.0
+CZ-85ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
   tg: 85.0
-CZ-90ns_tg-0.9ns_tramp:
+CZ-860ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.9
+  t_ramp: 1.2
+  tg: 860.0
+CZ-865ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 865.0
+CZ-870ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 870.0
+CZ-875ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 875.0
+CZ-880ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 880.0
+CZ-885ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 885.0
+CZ-890ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 890.0
+CZ-895ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 895.0
+CZ-900ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 900.0
+CZ-905ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 905.0
+CZ-90ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
   tg: 90.0
-CZ-95ns_tg-0.9500000000000001ns_tramp:
+CZ-910ns:
   dt: 0.001
   geo_phase: 3.141592653589793
   omega_0: 1.135
   save_components:
-    _Pulse__delta_wmod:
-      preprocess_t:
-        _Pulse__g_ac:
-          geo_phase: 3.141592653589793
-    _Pulse__g_ac:
-      geo_phase: 3.141592653589793
     _Pulse__omega_A: {}
     _Pulse__omega_B:
       geo_phase: 3.141592653589793
-  t_ramp: 0.9500000000000001
+  t_ramp: 1.2
+  tg: 910.0
+CZ-915ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 915.0
+CZ-920ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 920.0
+CZ-925ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 925.0
+CZ-930ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 930.0
+CZ-935ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 935.0
+CZ-940ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 940.0
+CZ-945ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 945.0
+CZ-950ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 950.0
+CZ-955ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 955.0
+CZ-95ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
   tg: 95.0
+CZ-960ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 960.0
+CZ-965ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 965.0
+CZ-970ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 970.0
+CZ-975ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 975.0
+CZ-980ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 980.0
+CZ-985ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 985.0
+CZ-990ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 990.0
+CZ-995ns:
+  dt: 0.001
+  geo_phase: 3.141592653589793
+  omega_0: 1.135
+  save_components:
+    _Pulse__omega_A: {}
+    _Pulse__omega_B:
+      geo_phase: 3.141592653589793
+  t_ramp: 1.2
+  tg: 995.0

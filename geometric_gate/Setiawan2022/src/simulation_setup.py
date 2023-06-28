@@ -196,9 +196,8 @@ def setup_sim_from_configs(
     # if pulse_lbls is nonempty, only setup sim for pulses with labels
     # in pulse_lbls
     if pulse_lbls:
-        for lbl in config.pulse_config_dict:
-            if lbl not in pulse_lbls:
-                config.pulse_config_dict.pop(lbl)
+        config.pulse_config_dict = {lbl: config.pulse_config_dict[lbl]
+                                    for lbl in pulse_lbls}
     return config, setup_sim(config, cache_results, use_pulse_cache, multiprocess)
 
 
@@ -323,7 +322,7 @@ def get_pulse_profile(
     pulse_config: PulseConfig,
     circuit: CompositeSystem,
     cache_results: bool = True,
-    use_pulse_cache: bool = False,
+    use_pulse_cache: bool = True,
 ) -> PulseProfile:
     if pulse_config.circuit_config is not None:
         pulse_ct: CompositeSystem = setup_circuit(pulse_config.circuit_config)
@@ -384,7 +383,7 @@ def get_pulse(
     t_ramp = pulse_config.pulse_params["t_ramp"]
     tlist = np.arange(0, tg + 2 * t_ramp, dt)
     geo_phase = pulse_config.geo_phase
-    return pulse_builder.build_pulse(tlist, geo_phase, tlist_ramp)
+    return pulse_builder.build_pulse(tlist, geo_phase)
 
 
 def get_component(
