@@ -320,8 +320,8 @@ def load_gate(gate_name) -> GateProfile:
     assert gate_name in cache, f"{gate_name} has not been cached"
     fname: str = cache[gate_name]["file"]
     fpath: str = add_path(fname, "gate")
-    if fname[-3:] != ".qu":
-        fpath = fpath + ".qu"
+    if fname[-3:] == ".qu":
+        fpath = fpath[:-3]
     return qload(fpath)
 
 

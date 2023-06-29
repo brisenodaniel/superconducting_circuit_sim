@@ -39,6 +39,14 @@ class StaticPulseAttr:
         circuit: CompositeSystem,
         n_comp_state: int = 5,
     ) -> StaticPulseAttr:
+        """Class contains pulse variables that do not change over timesteps, but
+        are computationally intensive to compute
+        Public attributes:
+           w_mod: Dictionary with keys 'A', 'B' and values corresponding to
+        adjusted transition frequencies for the exited and ground states in the
+        lambda configuration for fluxionia A and B. Frequencies are adjusted to
+        correct for stark-shift and diabatic dynamics."""
+
         # give current object it's id
         self._id = StaticPulseAttr.__get_unique_id()
         # Set up circuit and state indexing
@@ -101,16 +109,60 @@ class StaticPulseAttr:
         return tuple(idx)
 
     def eigenen(self, state: str | int | tuple[int, 3]) -> float:
+        """Returns the eigenenergy corresponding to a state, given \
+        a unique identifier of the state.
+
+        Parameters
+        ----------
+        state : str | int | tuple[int, 3]
+            Unique identifier for the state.
+
+            If str, must be a three-character string\
+            with characters 'g', 'e', or 'f'. A string 'xyz' will correspond to the product\
+            state |xyz>, where x,y,z are the states of fluxonium A, fluxonium B, and the \
+            transmon coupler, respectively.
+
+            If int, the input `i` will correspond to the i'th eigenstate of the \
+            dressed hamiltonian.
+
+            If 3-element integer tuple, the input `(x,y,z)` will correspond to \
+            the state |xyz>.
+
+        Returns
+        -------
+        float
+            Eigenvalue corresponding to the given eigenstate input
+        """
+
         idx = self.state_idx(state)
-        # if isinstance(state, str):
-        # state = self.__str_to_tuple(state)
-        # state = self.state_idx(state)
-        # elif isinstance(state, tuple):
-        # state = self.st
-        # state = self._comp_coord[state]
         return self._eigenenergies[idx]
 
     def state(self, state_idx: str | tuple[int, 3] | int) -> Qobj:
+        """Returns the eigenstate vector given a unique identifier of \
+        the eigenstate.
+
+        Parameters
+        ----------
+        state_idx : str | tuple[int, 3] | int
+            Unique identifier for the state.
+
+            If str, must be a three-character string\
+            with characters 'g', 'e', or 'f'. A string 'xyz' will correspond to the product\
+            state |xyz>, where x,y,z are the states of fluxonium A, fluxonium B, and the \
+            transmon coupler, respectively.
+
+            If int, the input `i` will correspond to the i'th eigenstate of the \
+            dressed hamiltonian.
+
+            If 3-element integer tuple, the input `(x,y,z)` will correspond to \
+            the state |xyz>.
+
+        Returns
+        -------
+        Qobj
+           Eigenstate vector in the bare product basis.
+        """
+
         if isinstance(state_idx, str):
             state_idx = self.__str_to_tuple(state_idx)
         if isinstance(state_idx, int):
@@ -120,6 +172,30 @@ class StaticPulseAttr:
             return self._comp_states[k, l, m]
 
     def state_idx(self, state: str | tuple[int, 3] | Qobj | int) -> int:
+        """Index of dressed eigenstate corresponding to computational\
+        state in bare product basis.
+
+       Given a unique identifier of a bare computational state, returns the \
+       index of the corresponding dressed eigenstate.
+
+        Parameters
+        ----------
+        state : str | tuple[int, 3] | Qobj | int
+            If str, must be a three-character string\
+            with characters 'g', 'e', or 'f'. A string 'xyz' will correspond to the product\
+            state |xyz>, where x,y,z are the states of fluxonium A, fluxonium B, and the \
+            transmon coupler, respectively.
+
+            If 3-element integer tuple, the input `(x,y,z)` will correspond to \
+            the state |xyz>.
+
+        Returns
+        -------
+        int
+           Index of the dressed eigenstate corresponding to the input, where the \
+        eigenstates are ordered by increasing eigenenergy.
+        """
+
         idx = state  # idx dummy variable to ensure no side effects on state
         if isinstance(idx, str):
             n, m, k = self.__str_to_tuple(state)
@@ -169,6 +245,20 @@ class StaticPulseAttr:
 
 # begin pulse def
 class Pulse:
+    """
+    Generator for pulses implementing a geometric C-phase gate \
+    with phase gamma.
+
+    Public Attributes
+    -----------------
+    n_comp_states: int
+        Number of eigenstates considered when generating the pulse.
+
+    Public Methods
+    --------------
+
+    """
+
     def __init__(
         self,
         pulse_params: dict[dict[float]],
@@ -178,6 +268,30 @@ class Pulse:
         tg: float | None = None,
         n_comp_states: int = 5,
     ):
+        """Class constructor.
+
+        Parameters
+        ----------
+        pulse_params : dict[dict[float]]
+            Dictionary of pulse parameters as described in docstrings in
+            gen_configs.py.
+        circuit : CompositeSystem
+            Circuit used to generate pulse. Pulse design assumes the gate \
+            will be implemented on a circuit identical to this parameter.
+        dt : float, optional
+            Timestep size to use in integration. If not provided, must be \
+            provided in `pulse_params`. NOTE: This is not the same as the \
+            timestep size of the discrete pulse itself.
+        t_ramp : float, optional
+            Duration of cosine ramp added to beggining and end of pulse, \
+        in ns. If not provided, must be provided in `pulse_params`.
+        tg : float, optional
+            Gate duration in ns. Does not include ramp time.
+        n_comp_states : int
+            Number of energy eigenstates to consider in pulse generation. \
+            defaults to 5.
+        """
+
         self.static_attr: StaticPulseAttr = StaticPulseAttr(
             pulse_params, circuit, n_comp_states
         )
@@ -376,35 +490,55 @@ class Pulse:
         """
         return self.__adag_a.full()
 
-    def __delta_wmod(self, g_ac: dict[str, np.ndarray[complex | float]]
-                     ) -> dict[str, np.ndarray[float]]:
+    def __delta_wmod(
+        self, g_ac: dict[str, np.ndarray[complex | float]]
+    ) -> dict[str, np.ndarray[float]]:
         delta_ge1: np.ndarray[float] = self.__delta_ek(g_ac, "ge1")
-        delta_ee0: np.ndarray[float] = self.__delta_ek(g_ac, 'ee0')
-        delta_gf0: np.ndarray[float] = self.__delta_ek(g_ac, 'gf0')
+        delta_ee0: np.ndarray[float] = self.__delta_ek(g_ac, "ee0")
+        delta_gf0: np.ndarray[float] = self.__delta_ek(g_ac, "gf0")
         return {"A": delta_ge1 - delta_ee0, "B": delta_ge1 - delta_gf0}
 
-    def __w_mod(self,
-                g_ac: dict[str, np.ndarray[complex | float]]
-                ) -> dict[str, np.ndarray[float]]:
+    def __w_mod(
+        self, g_ac: dict[str, np.ndarray[complex | float]]
+    ) -> dict[str, np.ndarray[float]]:
         deltas: dict[str, np.ndarray[float]] = self.__delta_wmod(g_ac)
-        return {'A': self.static_attr.w_mod['A'] + deltas['A'],
-                'B': self.static_attr.w_mod['B'] + deltas['B']}
+        return {
+            "A": self.static_attr.w_mod["A"] + deltas["A"],
+            "B": self.static_attr.w_mod["B"] + deltas["B"],
+        }
 
-    def delta_wC(self, tlist: np.ndarray[float], geo_phase: float) -> float:
+    def build_pulse(self, tlist: np.ndarray[float], geo_phase: float) -> np.ndarray[float]:
+        """Builds the pulse applied to the transmon coupler described by eq (31)
+
+        Given an array of timesteps and a phase angle, returns a pulse that when \
+        applied to two fluxonia (A,B) coupled by a transmon, will implement a C-phase \
+        gate, where the computational states are as given in Setiawan et. al.
+
+        Parameters
+        ----------
+        tlist : np.ndarray[float]
+            Timestep list. For each t in tlist, the pulse at time t will \
+            be returned.
+        geo_phase : float
+            Geometric phase to print on fluxonium B, if fluxonium A is in the first \
+        excited state.
+
+        Returns
+        -------
+        np.ndarray[float]
+            Value of the pulse at each time `t` in `tlist`
+
+        """
+
         d_wC: np.ndarray[float] | int = 0
         gs: dict[str, np.ndarray[float]] = self.__g_ac(tlist, geo_phase)
         w_mods: dict[str, np.ndarray[float]] = self.__w_mod(gs)
         for flux in ["A", "B"]:
-            exp_arg = 1.j * cumulative_trapezoid(w_mods[flux], tlist)
+            exp_arg = 1.0j * cumulative_trapezoid(w_mods[flux], tlist)
             exp_val = np.exp(exp_arg)
             exp_term = gs[flux][1:] * exp_val
             d_wC += np.real(exp_term)
         return d_wC
-
-    def build_pulse(self, tlist: np.ndarray[float], geo_phase: float
-                    ) -> np.ndarray[float]:
-        # alias for delta_wC
-        return self.delta_wC(tlist, geo_phase)
 
     # Diagnostic functions
     def get_integrand_func(
