@@ -41,14 +41,7 @@ def make_czs():
          'omega_0': 1.135,
          'tg': 130,
          't_ramp': 1.3,
-         'save_components': {
-             '_Pulse__omega_A': {},
-             '_Pulse__omega_B': {'geo_phase': np.pi},
-             #  '_Pulse__delta_wmod': {'preprocess_t':
-             #   {'_Pulse__g_ac':
-             #  {'geo_phase': np.pi}}},
-             #  '_Pulse__g_ac': {'geo_phase': np.pi}
-         }}
+         }
     pulse_configs = {'CZ': base_configs}
     tg_list = np.arange(10, 1000, 5)
     for tg in tg_list:

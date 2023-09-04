@@ -8,6 +8,6 @@ B: # Pulse parameters for fluxonium B control line
  w_mod: 2.43
 #global pulse params
 tg: 130 #ns
-omega_0: 1.135 #units of GHz/ns, needs to be multiplied by 2pi*tg before use
+omega_0: 1.135 #units of GHz/ns, needs to be multiplied by 2pi before use
 dt: 0.01
 n_comp_states: 5

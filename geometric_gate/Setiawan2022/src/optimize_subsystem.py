@@ -379,4 +379,7 @@ def build_optimized_system(constr_qsys: Callable['...', Subsystem],
         qsys: Subsystem = constr_qsys(**constr_args)
     qsys = diagonalize_Qsys(qsys)
     qsys = qsys.truncate(truncate_to)
+    # set zero of energy
+    zero_point = qsys.H[0, 0]
+    qsys.H = qsys.H - zero_point
     return qsys

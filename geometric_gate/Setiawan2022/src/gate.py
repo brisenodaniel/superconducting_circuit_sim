@@ -356,15 +356,15 @@ def _trivial_z_qs(U: Qobj) -> Qobj:
     # set global phase to phase of 00
     U = U * np.exp(-1.0j * np.angle(U[0, 0]))
     # get phase of middle two diagonal elements
-    phi_1_1 = np.angle(U[1, 1])
-    phi_2_2 = np.angle(U[2, 2])
+   # phi_00 = np.angle(U[0, 0])
+    phi_11 = np.angle(U[1, 1])
+    phi_22 = np.angle(U[2, 2])
     # assemble trivial z unitary
-    diag = [
-        1,
-        np.exp(-1.0j * phi_1_1),
-        np.exp(-1.0j * phi_2_2),
-        np.exp(-1.0j * (phi_1_1 + phi_2_2)),
-    ]
+    diag = [1,
+            np.exp(-1.0j * phi_11),
+            np.exp(-1.0j * phi_22),
+            np.exp(-1.0j * (phi_11 + phi_22)),
+            ]
     triv_Z = np.diag(diag)
     triv_Z = qt.Qobj(triv_Z, dims=[[2, 2], [2, 2]])
     return triv_Z * U
@@ -563,7 +563,6 @@ def assemble_sim_hamiltonian(
     --NPDOCYAS--
 
     """
-
     H_0: Qobj = circuit.H
     if isinstance(drive_op, Qobj):
         H_d: Qobj = drive_op

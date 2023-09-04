@@ -39,18 +39,30 @@ def build_interaction_H(gs: dict[str:float], bare_sys: CompositeSystem) -> Qobj:
          described in eq (23) of Setiawan et. al. 2022.
     """
     H_int: Qobj | int = 0
+
     for g_lbl in ("g_AC", "g_BC"):
         # extract coupling strengths and relevant operators
-        g: float = (
-            np.pi * 2 * gs[g_lbl]
-        )  # convert coupling strengths to radian frequency
+        # g: float = (
+        # np.pi * 2 * gs[g_lbl]
+        # )  # convert coupling strengths to radian frequency
+        g = gs[g_lbl]
         sys_lbl: str = g_lbl[2]
-        n_j: Qobj = bare_sys.get_raised_op(sys_lbl, "n")
-        n_C: Qobj = bare_sys.get_raised_op("C", ["a"], lambda a: a.dag() + a)
+        n_j: Qobj = bare_sys.get_raised_op(sys_lbl,
+                                           "n",
+                                           use_dressed_eigenbasis=False,
+                                           match_dressed_H_dims=False)
+        n_C: Qobj = bare_sys.get_raised_op("C", ["a"], lambda a: a.dag() + a,
+                                           use_dressed_eigenbasis=False,
+                                           match_dressed_H_dims=False)
         # build interaction hamiltonian
         H_int += g * n_j * n_C
-    n_A: Qobj = bare_sys.get_raised_op("A", "n")
-    n_B: Qobj = bare_sys.get_raised_op("B", "n")
+    n_A: Qobj = bare_sys.get_raised_op("A", "n",
+                                       use_dressed_eigenbasis=False,
+                                       match_dressed_H_dims=False)
+    n_B: Qobj = bare_sys.get_raised_op("B", "n",
+                                       use_dressed_eigenbasis=False,
+                                       match_dressed_H_dims=False)
+#    H_int += 2*np.pi*gs["g_AB"] * n_A * n_B
     H_int += gs["g_AB"] * n_A * n_B
     return H_int
 
@@ -64,6 +76,7 @@ def build_bare_system(
     nlev: int = 30,
     flux_param_lbls: list[str] = ["E_C", "E_L", "E_J", "phi_ext"],
     transmon_param_lbls: list[str] = ["w", "U"],
+        **kwargs
 ) -> CompositeSystem:
     """Function builds the composite system with hamiltonian H = H_A + H_B + H_C, as described in\
      eq(22) in Setiawan et. al. 2022 (without the terms H_int, H_mod)
@@ -93,8 +106,10 @@ def build_bare_system(
         CompositeSystem: The system with subsystems flux_A, flux_B, transmon. The hamiltonian corresponds to the tensor product of these
         three subsystems' hamiltonians.
     """
-    flux_constr: Callable["...", Subsystem] = subsystems.build_fluxonium_operators
-    transmon_constr: Callable["...", Subsystem] = subsystems.build_transmon_operators
+    flux_constr: Callable["...",
+                          Subsystem] = subsystems.build_fluxonium_operators
+    transmon_constr: Callable["...",
+                              Subsystem] = subsystems.build_transmon_operators
 
     flux_A_params: dict[str, float] = {
         lbl: ct_params["A"][lbl] for lbl in flux_param_lbls
@@ -124,7 +139,10 @@ def build_bare_system(
     transmon = opt.build_optimized_system(**opt_sys_params)
     subsystems_dict = {"A": flux_A, "B": flux_B, "C": transmon}
     subsystems_idx = {"A": 0, "B": 1, "C": 2}
-    bare_system = CompositeSystem(subsystems_dict, subsystems_idx)
+    if kwargs is None:
+        kwargs = {}
+    bare_system = CompositeSystem(
+        subsystems_dict, subsystems_idx, nlev=nlev, **kwargs)
     return bare_system
 
 
@@ -137,6 +155,7 @@ def build_static_system(
     nlev: int = 30,
     flux_param_lbls: list[str] = ["E_C", "E_L", "E_J", "phi_ext"],
     transmon_param_lbls: list[str] = ["w", "U"],
+        **kwargs
 ) -> CompositeSystem:
     """Function builds the composite system with hamiltonian H = H_A + H_B + H_C + H_int, as described in\
         eq(22) in Setiawan et. al. 2022 (without the term H_mod)
@@ -164,10 +183,15 @@ def build_static_system(
                     given by equation (23)    """
 
     bare_sys_params: dict = locals()  # make copy of parameters
-    bare_system: CompositeSystem = build_bare_system(
+    # unpack additional keyword arguments
+    kwargs: dict | None = bare_sys_params.pop('kwargs')
+    if kwargs is None:
+        kwargs = {}
+    bare_sys_params.update(kwargs)
+    static_system: CompositeSystem = build_bare_system(
         **bare_sys_params
     )  # build_bare_systems takes same parameters as current function
     interaction_params: dict[str, float] = ct_params["interaction"]
-    H_int: Qobj = build_interaction_H(interaction_params, bare_system)
-    static_system: CompositeSystem = bare_system.plus_interaction_term(H_int)
+    H_int: Qobj = build_interaction_H(interaction_params, static_system)
+    static_system.add_interaction_term(H_int)
     return static_system

@@ -27,6 +27,8 @@ from pulse import Pulse, StaticPulseAttr
 from state_labeling import CompCoord, CompTensor
 from typing import TypeAlias, TypeVar, Any, Generic, Callable, Iterable
 from functools import partial
+from numbers import Number
+from unit_conversions import get_conversions
 
 dummy_res = qt.mesolve(qt.qeye(2), qt.basis(2, 0), [0, 1])
 Qobj: TypeAlias = qt.Qobj
@@ -43,7 +45,6 @@ class PulseConfig(Generic[PulseParams]):
     geo_phase: float
     name: str
     circuit_config: CircuitParams | None = None
-    save_components: dict[str, dict[str, Any]] = field(default_factory={})
     target_unitary: str = "CZ"
 
     def as_dict(self) -> PulseDict:
@@ -52,7 +53,6 @@ class PulseConfig(Generic[PulseParams]):
         desc.update(self.pulse_params)
         desc["geo_phase"] = self.geo_phase
         desc["circuit_config"] = self.circuit_config
-        desc["save_components"] = self.save_components
         desc["target_unitary"] = self.target_unitary
         return desc
 
@@ -82,9 +82,6 @@ class PulseProfile(Generic[PulseParams]):
     pulse: np.ndarray[float]
     pulse_config: PulseConfig
     circuit: CompositeSystem | None = None
-    profiled_components: dict[str, np.ndarray[float | complex]] = field(
-        default_factory=dict
-    )
 
     def as_dict(self) -> PulseDict:
         return self.pulse_config.as_dict()
@@ -102,11 +99,9 @@ class PulseProfile(Generic[PulseParams]):
             pulse=self.pulse,
             pulse_config=self.pulse_config.copy(),
             circuit=self.circuit,
-            profiled_components=self.profiled_components.copy(),
         )
 
 
-@dataclass
 class Config(Generic[PulseParams]):
     """Simple container class for simulation configuration details.
 
@@ -132,11 +127,85 @@ class Config(Generic[PulseParams]):
     default_pulse_conf (Optional): Dictionary with default pulse parameters,
     used to fill in parameters not provided by the pulse configs in
     `pulses`.
+
+    ct_conversions (Optional): Possibly nested dictionary with circuit\
+    parameter name keys and conversion factor labels.
+
+    pulse_conversions (Optional): Possibly nested dictionary with\
+     pulse parameter name keys and conversion factor labels.
     """
 
-    ct_params: CircuitParams
-    pulse_config_dict: dict[str, PulseConfig | PulseParams]
-    default_pulse_params: PulseParams | None = None
+    def __init__(
+        self,
+            ct_params: CircuitParams,
+            pulse_config_dict: dict[str, PulseConfig | PulseParams],
+            default_pulse_params: PulseParams | None = None,
+            ct_conversions:
+            dict[str, Number | dict[str, Number]] | None = None,
+            pulse_conversions:
+            dict[str, Number | dict[str, Number]] | None = None):
+
+        self.ct_params = {}
+        for ct_lbl, params in ct_params.items():
+            self.ct_params[ct_lbl] = self.convert_units(params,
+                                                        ct_conversions)
+        self.pulse_config_dict = {}
+        for pulse_lbl, pulse_params in pulse_config_dict.items():
+            self.pulse_config_dict[pulse_lbl] = \
+                self.convert_units(
+                    pulse_params, pulse_conversions
+            )
+        self.default_pulse_params = None
+        if default_pulse_params is not None:
+            self.default_pulse_params = self.convert_units(
+                default_pulse_params, pulse_conversions
+            )
+        self.conversions = {
+            'circuit': ct_conversions,
+            'pulse': pulse_conversions
+        }
+
+    def convert_units(self,
+                      unconverted_params: dict[str, float | dict[str, float]],
+                      unit_conversions:
+                      dict[str, float | dict[str, float]] | None | Number
+                      ) -> dict:
+        params = unconverted_params.copy()
+        if unit_conversions is None:
+            return params
+
+        elif isinstance(unit_conversions, Number):
+            for lbl, param_val in params:
+                if isinstance(param_val, Number):
+                    params[lbl] = unit_conversions * param_val
+                elif isinstance(param_val, dict):
+                    params[lbl] = self.convert_units(param_val,
+                                                     unit_conversions)
+                else:
+                    exc = TypeError(
+                        f'Parameters must be of numeric type, or a \
+                        dictionary of string labels and numeric values.\
+                        Got {type(param_val)}'
+                    )
+                    raise exc
+
+        elif isinstance(unit_conversions, dict):
+            for lbl, conversion in unit_conversions.items():
+                if lbl in params:
+                    param_val = params[lbl]
+                    if isinstance(conversion, dict):
+                        params[lbl] = self.convert_units(param_val, conversion)
+                    elif isinstance(conversion, Number):
+                        params[lbl] = param_val * conversion
+                    else:
+                        exc = TypeError(f'Unit conversions must be of Numeric\
+                        Type, recieved {type(conversion)}')
+                        raise exc
+        else:
+            exc = TypeError(f'Unit conversions must be of Numeric type, or \
+            a (possibly nested) dictionary of string keys and Numeric values.\
+            Got {type(unit_conversions)}')
+        return params
 
 
 def collect_sim_params_from_configs() -> Config:
@@ -161,10 +230,13 @@ def collect_sim_params_from_configs() -> Config:
     circuits = file_io.get_ct_params()
     pulse_defaults = file_io.get_pulse_defaults()
     pulse_collection_params = file_io.get_pulse_specs()
+    circuit_conv, pulse_conv = get_conversions()
     return Config(
         ct_params=circuits,
         default_pulse_params=pulse_defaults,
         pulse_config_dict=pulse_collection_params,
+        ct_conversions=circuit_conv,
+        pulse_conversions=pulse_conv
     )
 
 
@@ -208,7 +280,9 @@ def setup_circuit(ct_params: CircuitParams) -> CompositeSystem:
     # arguments, so we must first separate ct_params into two dictionaries
     # corresponding to the two parameter types
     copy_params = ct_params.copy()
-    global_args: dict[str, float] = copy_params.pop("global")
+    global_args: dict[str, float] | None = copy_params.pop("global")
+    if global_args is None:
+        global_args = {}
     return build_static_system(copy_params, **global_args)
 
 
@@ -287,10 +361,10 @@ def setup_pulse_params(
     ct_params: CircuitParams,
 ) -> PulseConfig:
     non_default_params = gate_pulse_params.copy()  # prevent side effects on input
-    if "save_components" in non_default_params:
-        save_components = non_default_params.pop("save_components")
-    else:
-        save_components = None
+    #   if "save_components" in non_default_params:
+    #   save_components = non_default_params.pop("save_components")
+    #   else:
+    #   save_components = None
     if "target_unitary" in non_default_params:
         target_unitary = non_default_params.pop("target_unitary")
     else:
@@ -309,7 +383,6 @@ def setup_pulse_params(
         circuit_config: CircuitParams = ct_params
     pulse_config = PulseConfig(
         pulse_params=params,
-        save_components=save_components,
         name=gate_name,
         geo_phase=phase,
         circuit_config=circuit_config,
@@ -331,7 +404,6 @@ def get_pulse_profile(
     cached_pulse_configs: dict[str,
                                PulseParams] = file_io.get_cache_description()
     pulse_array: np.ndarray | None = None
-    components: dict[str, np.ndarray[complex]] = {}
     # determine whether pulse or components are cached
     pulse_builder: Pulse | None = None
     if pulse_cached(cached_pulse_configs, pulse_config) and use_pulse_cache:
@@ -341,29 +413,12 @@ def get_pulse_profile(
         pulse_array: np.ndarray = get_pulse(pulse_config, pulse_builder)
         if cache_results:
             file_io.cache_pulse(pulse_config, pulse_array)
-    for comp_name in pulse_config.save_components:
-        if (
-            component_cached(cached_pulse_configs, pulse_config, comp_name)
-            and use_pulse_cache
-        ):
-            components[comp_name] = file_io.load_pulse_component(
-                pulse_config, comp_name
-            )
-        else:
-            component_array = get_component(
-                pulse_config, comp_name, pulse_builder, pulse_ct
-            )
-            components[comp_name] = component_array
-            if cache_results:
-                file_io.cache_pulse_component(
-                    pulse_config, comp_name, component_array)
     profile = PulseProfile(
         name=pulse_config.name,
         geo_phase=pulse_config.geo_phase,
         pulse=pulse_array,
         pulse_config=pulse_config,
         circuit=pulse_ct,
-        profiled_components=components,
     )
     return profile
 
@@ -386,35 +441,35 @@ def get_pulse(
     return pulse_builder.build_pulse(tlist, geo_phase)
 
 
-def get_component(
-    pulse_config: PulseConfig,
-    component_name: str,
-    pulse_builder: Pulse | None = None,
-    circuit: CompositeSystem | None = None,
-) -> dict[str, np.ndarray[complex]]:
-    assert not (
-        pulse_builder is None and circuit is None
-    ), "`pulse_builder` and `circuit` params cannot both be None"
-    if pulse_builder is None:
-        pulse_builder = Pulse(pulse_config.pulse_params, circuit)
-    pulse_component_funcs: list[
-        tuple[str, Callable["...", complex]]
-    ] = inspect.getmembers(pulse_builder, predicate=inspect.ismethod)
-    pulse_component_funcs: dict[str, Callable["...", complex]] = dict(
-        pulse_component_funcs
-    )  # cast to dict type
-    func: Callable["...", complex] = pulse_component_funcs[component_name]
-    dt: float = pulse_config.pulse_params["dt"]
-    tg: float = pulse_config.pulse_params["tg"]
-    t_ramp: float = pulse_config.pulse_params["t_ramp"]
-    tlist = np.arange(0, tg + 2 * t_ramp, dt)
-    component_kwargs = pulse_config.save_components[component_name]
-    if component_kwargs is None:
-        component_kwargs = {}
-    if "preprocess_t" in component_kwargs:
-        preprocess_kwargs = component_kwargs.pop("preprocess_t")
-        tlist = preprocess_t(tlist, preprocess_kwargs, pulse_component_funcs)
-    return func(tlist, **component_kwargs)
+# def get_component(
+    # pulse_config: PulseConfig,
+    # component_name: str,
+    # pulse_builder: Pulse | None = None,
+    # circuit: CompositeSystem | None = None,
+# ) -> dict[str, np.ndarray[complex]]:
+    # assert not (
+    # pulse_builder is None and circuit is None
+    # ), "`pulse_builder` and `circuit` params cannot both be None"
+    # if pulse_builder is None:
+    # pulse_builder = Pulse(pulse_config.pulse_params, circuit)
+    # pulse_component_funcs: list[
+    # tuple[str, Callable["...", complex]]
+    # ] = inspect.getmembers(pulse_builder, predicate=inspect.ismethod)
+    # pulse_component_funcs: dict[str, Callable["...", complex]] = dict(
+    # pulse_component_funcs
+    # )  # cast to dict type
+    # func: Callable["...", complex] = pulse_component_funcs[component_name]
+    # dt: float = pulse_config.pulse_params["dt"]
+    # tg: float = pulse_config.pulse_params["tg"]
+    # t_ramp: float = pulse_config.pulse_params["t_ramp"]
+    # tlist = np.arange(0, tg + 2 * t_ramp, dt)
+    # component_kwargs = pulse_config.save_components[component_name]
+    # if component_kwargs is None:
+    # component_kwargs = {}
+    # if "preprocess_t" in component_kwargs:
+    # preprocess_kwargs = component_kwargs.pop("preprocess_t")
+    # tlist = preprocess_t(tlist, preprocess_kwargs, pulse_component_funcs)
+    # return func(tlist, **component_kwargs)
 
 
 def preprocess_t(tlist, kwargs, funcs):
@@ -439,40 +494,34 @@ def pulse_cached(
         pulse_desc: PulseDict = pulse_config.as_dict()
         # replace None values with empty dicts
         pulse_desc = file_io.tidy_cache(pulse_desc)
-        for key in ["file", "save_components"]:
-            if key in cached_params and key not in pulse_desc:
-                cached_params.pop(key)
         pulse_desc.pop("name")
-        for data in [pulse_desc, cached_params]:
-            if "save_components" in data:
-                data.pop("save_components")
         return pulse_desc == cached_params
     else:
         return False
 
 
-def component_cached(
-    cached_pulse_configs: dict[str, PulseParams],
-    pulse_config: PulseConfig,
-    component_name,
-) -> bool:
-    assert component_name in pulse_config.save_components, (
-        f"Wanted to check if {component_name} saved in cache\
-    for {pulse_config.name}"
-        + f", but {component_name} is not specified by config\
-    for {pulse_config.name}"
-    )
-    cache: dict[str, PulseParams] = cached_pulse_configs.copy()
-    if pulse_config.name in cache:
-        if "save_components" in cache[pulse_config.name]:
-            component_args = pulse_config.save_components[component_name]
-            # replace any instance of None with empty dictionary
-            component_args = file_io.tidy_cache(component_args)
-            cached_components: dict[str, dict[str, complex] | None] = cache[
-                pulse_config.name
-            ]["save_components"]
-            if component_name in cached_components:
-                if "file" in cached_components[component_name]:
-                    cached_components[component_name].pop("file")
-                    return component_args == cached_components[component_name]
-    return False
+# def component_cached(
+    # cached_pulse_configs: dict[str, PulseParams],
+    # pulse_config: PulseConfig,
+    # component_name,
+# ) -> bool:
+    # assert component_name in pulse_config.save_components, (
+        # f"Wanted to check if {component_name} saved in cache\
+    # for {pulse_config.name}"
+        # + f", but {component_name} is not specified by config\
+    # for {pulse_config.name}"
+    # )
+    # cache: dict[str, PulseParams] = cached_pulse_configs.copy()
+    # if pulse_config.name in cache:
+        # if "save_components" in cache[pulse_config.name]:
+        # component_args = pulse_config.save_components[component_name]
+        # replace any instance of None with empty dictionary
+        # component_args = file_io.tidy_cache(component_args)
+        # cached_components: dict[str, dict[str, complex] | None] = cache[
+        # pulse_config.name
+        # ]["save_components"]
+        # if component_name in cached_components:
+        # if "file" in cached_components[component_name]:
+        # cached_components[component_name].pop("file")
+        # return component_args == cached_components[component_name]
+    # return False

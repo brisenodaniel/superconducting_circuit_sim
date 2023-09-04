@@ -68,6 +68,14 @@ class Subsystem:
         for key, value in ops.items():
             self.__setitem__(key, value)
 
+    @property
+    def ops(self) -> list[str]:
+        return list(self._ops.keys())
+
+    @property
+    def operator(self) -> list[str]:
+        return self.ops()
+
     # getters and setters
     # for _state
     @property
@@ -284,9 +292,9 @@ def build_fluxonium_operators(
 
     Args:
         nlev (int): Number of energy levels to consider in the system
-        E_C (float): Circuit parameter, capacitance energy coefficient in GHz
-        E_J (float): Circuit parameter, josephenson energy coefficient in GHz
-        E_L (float): Circuit parameter, linear inductive energy coefficient in GHz
+        E_C (float): Circuit parameter, capacitance energy coefficient
+        E_J (float): Circuit parameter, josephenson energy coefficient
+        E_L (float): Circuit parameter, linear inductive energy coefficient
         phi_ext (float): External flux threading  loop formed by josephenson
          junction and linear inductor.
 
@@ -294,8 +302,6 @@ def build_fluxonium_operators(
         dict[str,Qobj]: _Dictionary of operators acting on fluxonium state vector.
            Includes Hamiltonian operator
     """
-    # Transform E_C, E_J, E_L into units of radian frequency
-    E_C, E_J, E_L = [2 * np.pi * E for E in (E_C, E_J, E_L)]
     a: Qobj = qt.destroy(nlev)
     n_zpf: float = (E_L / (32 * E_C)) ** (1 / 4)
     phi_zpf: float = (2 * E_C / E_L) ** (1 / 4)
@@ -348,8 +354,10 @@ def build_transmon_operators(nlev: int, w: float, U: float) -> Subsystem:
         dict[str,Qobj]: Dictionary of operators acting on transmon state vector.
         Includes hamiltonian.
     """
+    # assemble hamiltonian operators
     a: Qobj = qt.destroy(nlev)
-    H: Qobj = w * a.dag() * a - U * a.dag() ** 2 * a**2
+    H: Qobj = w * a.dag() * a - U * a.dag() * a.dag() * a * a
     ops = {"a": a, "H": H}
     transmon = Subsystem(ops)
+
     return transmon

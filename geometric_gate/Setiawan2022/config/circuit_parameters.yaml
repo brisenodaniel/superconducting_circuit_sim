@@ -2,46 +2,48 @@
 # Circuit parameters for two fluxonia coupled via a transmon
 # Parameters taken from Setiawan et. al. 2022 in the literature folder
 # All quantities in GHz unless otherwise indicated
-#A: # Fluxonium A Parameters
- #E_C: 1.8
- #E_J: 4.5
- #E_L: 1.5
- #phi_ext: 0.5
- #w: 11.24690169985146
-#B: # Fluxonium B Parameters
- #E_C: 1.1
- #E_J: 3.5
- #E_L: 1.0
- #phi_ext: 0.5
- #w: 5.403539364174444
-#C: # Transmon Coupler Parameters
- #U: 0.005 # radian frequency
- #w: 6.974335690969341 # radian frequency
-#interaction: # Parameters relevant to interaction hamiltonian
- #g_AC: 0.63
- #g_BC: 0.6
- #g_AB: 0.04
-#global: # Parameters affecting all components
-   #nlev: 5
+# Note that quantities are in units of frequency, not radian frequency
+# A: # Fluxonium A Parameters
+ #  E_C: 1.8
+ #  E_J: 4.5
+ #  E_L: 1.5
+ #  phi_ext: 0.5
+ #  w: 11.24690169985146
+# B: # Fluxonium B Parameters
+ #  E_C: 1.1
+ #  E_J: 3.5
+ #  E_L: 1.0
+ #  phi_ext: 0.5
+ #  w: 5.403539364174444
+# C: # Transmon Coupler Parameters
+ #  U: 0.005 # radian frequency
+ #  w: 6.974335690969341 # radian frequency
+# interaction: # Parameters relevant to interaction hamiltonian
+ #  g_AC: 0.63
+ #  g_BC: 0.6
+ #  g_AB: 0.04
+# global: # Parameters affecting all components
+   #  nlev: 5
 pulse_gen_ct:
-  A: # Fluxonium A Parameters
-    E_C: 1.8
-    E_J: 4.5
-    E_L: 1.5
-    phi_ext: 0.5
-    w: 11.24690169985146
-  B: # Fluxonium B Parameters
-    E_C: 1.1
-    E_J: 3.5
-    E_L: 1.0
-    phi_ext: 0.5
-    w: 5.403539364174444
-  C: # Transmon Coupler Parameters
-    U: 0.005 # radian frequency
-    w: 6.974335690969341 # radian frequency
-  interaction: # Parameters relevant to interaction hamiltonian
-    g_AC: 0.63
-    g_BC: 0.6
-    g_AB: 0.04
-  global: # Parameters affecting all components
-    nlev: 5
+   A: # Fluxonium A Parameters
+     E_C: 1.8
+     E_J: 4.5
+     E_L: 1.5
+     phi_ext: 0.5
+     w: 1.79
+   B: # Fluxonium B Parameters
+     E_C: 1.1
+     E_J: 3.5
+     E_L: 1.0
+     phi_ext: 0.5
+     w: 0.86
+   C: # Transmon Coupler Parameters
+     U: 0.005
+     w: 1.11
+   interaction: # Parameters relevant to interaction hamiltonian
+     g_AC: 0.63
+     g_BC: 0.6
+     g_AB: 0.04
+   global: # Parameters affecting all components
+     #frozen_basis: 1 # boolean, 1 is truthy
+     nlev: 30 #dims of composite dressed hamiltonian

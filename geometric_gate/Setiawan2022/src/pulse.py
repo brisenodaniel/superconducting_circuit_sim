@@ -51,7 +51,6 @@ class StaticPulseAttr:
         self._id = StaticPulseAttr.__get_unique_id()
         # Set up circuit and state indexing
         self._ct: CompositeSystem = circuit
-        self._ct.freeze()  # Markes CompositeSystem as immutable object for fast-hashing
         self._params: dict[dict[float]] = pulse_params
         self._n_comp_state: int = n_comp_state
         self._eigenstates: np.ndarray[Qobj]
@@ -313,13 +312,13 @@ class Pulse:
             self.n_comp_states: int = pulse_params["n_comp_states"]
         else:
             self.n_comp_states: int = n_comp_states
-        self._omega_0: float = 2 * np.pi * \
+        self._omega_0: float =\
             self._params["omega_0"] / pulse_params["tg"]
 
     def __omega_A(self, t: np.ndarray[float]) -> np.ndarray[float]:
-        ramp_up_t = t[t < self._t_ramp]
-        ramp_down_t = t[self._tg + self._t_ramp < t]
-        pulse_t = t[(self._t_ramp <= t) & (t <= self._tg + self._t_ramp)]
+        ramp_up_t = t[t <= self._t_ramp]
+        ramp_down_t = t[t > self._tg + self._t_ramp]
+        pulse_t = t[(self._t_ramp < t) & (t <= self._tg + self._t_ramp)]
         t_ = pulse_t - self._t_ramp
 
         ramp_up = np.zeros(shape=ramp_up_t.shape, dtype=float)
@@ -337,10 +336,10 @@ class Pulse:
         return omega_A
 
     def __omega_B(self, t: np.ndarray[float], geo_phase: float) -> np.ndarray[complex]:
-        ramp_up_t = t[t < self._t_ramp]
+        ramp_up_t = t[t <= self._t_ramp]
         ramp_down_t = t[self._tg + self._t_ramp < t] - \
             (self._tg + self._t_ramp)
-        pulse_t = t[(self._t_ramp <= t) & (t <= self._tg + self._t_ramp)]
+        pulse_t = t[(self._t_ramp < t) & (t <= self._tg + self._t_ramp)]
         t_ = pulse_t - self._t_ramp
         theta = self.__theta(t_, 0)
         dtheta = self.__theta(t_, 1)
@@ -351,10 +350,10 @@ class Pulse:
         )
         omega_B: np.ndarray[float] = self._omega_0 * phase * pulse_env
         ramp_up: np.ndarray[float] = omega_B[0] * (
-            1 - np.cos(ramp_up_t * np.pi / (self._t_ramp * 2))
+            (1 - np.cos(ramp_up_t * np.pi / ramp_up_t[-1]))/2
         )
         ramp_down: np.ndarray[float] = omega_B[-1] * (
-            np.cos(ramp_down_t * np.pi / (self._t_ramp * 2))
+            (1 + np.cos(ramp_down_t * np.pi / ramp_down_t[-1]))/2
         )
         return np.concatenate((ramp_up, omega_B, ramp_down))
 
@@ -374,18 +373,20 @@ class Pulse:
 
     def __theta_interval_1(self, t: np.ndarray[float], d: int) -> float:
         tg = self._params["tg"]
-        derivs: list[float] = [np.pi / 2,
-                               np.pi / (2 * tg), np.pi / (2 * tg**2)]
-        return derivs[d] * self.__polynom(t / tg, d=d)
+        return (np.pi/2) * (tg**(-d)) * self.__polynom(t/tg, d=d)
+        # return derivs[d] * self.__polynom(t / tg, d=d)
 
     def __theta_interval_2(self, t: np.ndarray[float], d: int) -> float:
         tg = self._params["tg"]
-        derivs: list[float] = [
-            (np.pi / 2), (np.pi / (2 * tg)), (np.pi / (2 * tg**2))]
-        if d == 0:
-            return derivs[d] * (1 - self.__polynom(t / tg - 1 / 2, d=d))
-        else:
-            return -1 * derivs[d] * self.__polynom(t / tg - 1 / 2, d=d)
+        # derivs: list[float] = [
+        # (np.pi / 2), (np.pi / (2 * tg)), (np.pi / (2 * tg**2))]
+        # if d == 0:
+        # return derivs[d] * (1 - self.__polynom(t / tg - 1 / 2, d=d))
+        # else:
+        # return -1 * derivs[d] * self.__polynom(t / tg - 1 / 2, d=d)
+        # heaviside function acts as Dirac delta function
+        return (np.pi/2) * (np.heaviside(-d, 1) - tg**(-d)
+                            * self.__polynom(t/tg - 1/2, d=d))
 
     def __polynom(self, t: float, d: int = 0) -> float:
         # implements eq A3
@@ -407,18 +408,25 @@ class Pulse:
         gf0_idx: int = self.static_attr.state_idx("gf0")
         return {
             "A": self.__omega_A(t) / (self.__adag_a[ge1_idx, ee0_idx]),
-            "B": self.__omega_B(t, geo_phase) / (self.__adag_a[ge1_idx, gf0_idx]),
+            "B": self.__omega_B(t, geo_phase) /
+            (self.__adag_a[ge1_idx, gf0_idx]),
         }
 
     @cached_property
     def highest_leakage_st(self) -> int:
-        leakage_states_idxes = [
-            self.static_attr.comp_coord[i, j, k]
-            for i in range(self.n_comp_states)
-            for j in range(self.n_comp_states)
-            for k in range(self.n_comp_states)
-        ]
-        return max(leakage_states_idxes)
+        excited_state_idx = max(
+            [self.static_attr.state_idx(state_lbl)
+             for state_lbl in ('egg', 'geg', 'eeg', 'ge1',
+                               'ee0', 'gf0')]
+        )
+        # leakage_states_idxes = [
+        # self.static_attr.comp_coord[i, j, k]
+        # for i in range(self.n_comp_states)
+        # for j in range(self.n_comp_states)
+        # for k in range(self.n_comp_states)
+        # ]
+        # return max(leakage_states_idxes)
+        return excited_state_idx + 3
 
     # @cache
     def __delta_ek(
@@ -478,8 +486,9 @@ class Pulse:
         """
         adag_a: Qobj = self._ct.get_raised_op(
             "C", ["a"], lambda a: a.dag() * a)
-        eigenbasis: np.array[Qobj] = self._ct.H.eigenstates()[1]
-        adag_a = adag_a.transform(eigenbasis)
+        if self._ct.frozen_basis:
+            eigenbasis: np.array[Qobj] = self._ct.H.eigenstates()[1]
+            adag_a = adag_a.transform(eigenbasis)
         return adag_a
 
     @cached_property
@@ -503,8 +512,10 @@ class Pulse:
     ) -> dict[str, np.ndarray[float]]:
         deltas: dict[str, np.ndarray[float]] = self.__delta_wmod(g_ac)
         return {
-            "A": self.static_attr.w_mod["A"] + deltas["A"],
-            "B": self.static_attr.w_mod["B"] + deltas["B"],
+            #  'A': 2*np.pi*0.84 + deltas["A"],  # - 10.559012261959055,
+            #  'B': 2*np.pi*2.43 + deltas['B']  # - 30.526068228398643
+            "A": -self.static_attr.w_mod["A"] + deltas["A"],
+            "B": -self.static_attr.w_mod["B"] + deltas["B"],
         }
 
     def build_pulse(self, tlist: np.ndarray[float], geo_phase: float) -> np.ndarray[float]:
@@ -520,8 +531,7 @@ class Pulse:
             Timestep list. For each t in tlist, the pulse at time t will \
             be returned.
         geo_phase : float
-            Geometric phase to print on fluxonium B, if fluxonium A is in the first \
-        excited state.
+            Geometric phase to print on fluxonium B, if fluxonium A is in the firste.
 
         Returns
         -------
@@ -529,12 +539,14 @@ class Pulse:
             Value of the pulse at each time `t` in `tlist`
 
         """
+        if self._omega_0 == 0:
+            return np.zeros(shape=tlist.shape)[1:]
 
         d_wC: np.ndarray[float] | int = 0
         gs: dict[str, np.ndarray[float]] = self.__g_ac(tlist, geo_phase)
         w_mods: dict[str, np.ndarray[float]] = self.__w_mod(gs)
         for flux in ["A", "B"]:
-            exp_arg = 1.0j * cumulative_trapezoid(w_mods[flux], tlist)
+            exp_arg = - 1.0j * cumulative_trapezoid(w_mods[flux], tlist)
             exp_val = np.exp(exp_arg)
             exp_term = gs[flux][1:] * exp_val
             d_wC += np.real(exp_term)
@@ -554,179 +566,179 @@ class Pulse:
 # as specified in that file's documentation. Then, run
 # this file as a script from this directory `$python pulse.py`
 
-
+#
 # extract configuration parameters
-def get_params(path: str) -> dict[str, float | dict[str, float]]:
-    with open(path, "r") as stream:
-        try:
-            params: dict = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-    return params
-
-
+# def get_params(path: str) -> dict[str, float | dict[str, float]]:
+    # with open(path, "r") as stream:
+        # try:
+        # params: dict = yaml.safe_load(stream)
+        # except yaml.YAMLError as exc:
+        # print(exc)
+    # return params
+#
+#
 # the following raises an error during profiling, but is not used
 # by the profile, so we wrap in a try-catch
-try:
+# try:
     # define default constants
-    default_p_params: dict[str, float | dict[str, float]] = get_params(
-        "../config/pulse_parameters.yaml"
-    )
-    default_tg: float = default_p_params["tg"]
-    default_amp: float = default_p_params["omega_0"]
-except FileNotFoundError:
-    default_p_params = {}
-    default_tg = 0
-    default_amp = 0
-
-
-def build_npy_fname(
-    gate_lbl: str,
-    tg: float = default_tg,
-    amp: float = default_amp,
-    dt: float = 1e-2,
-    include_dir: bool = True,
-) -> str:
-    fname = f"{gate_lbl}_{tg}ns_{amp}GHz_{dt}dt.npy"
-    if include_dir:
-        fname = "../output/pulses/" + fname
-    return fname
-
-
+    # default_p_params: dict[str, float | dict[str, float]] = get_params(
+        # "../config/pulse_parameters.yaml"
+    # )
+    # default_tg: float = default_p_params["tg"]
+    # default_amp: float = default_p_params["omega_0"]
+# except FileNotFoundError:
+    # default_p_params = {}
+    # default_tg = 0
+    # default_amp = 0
+#
+#
+# def build_npy_fname(
+    # gate_lbl: str,
+    # tg: float = default_tg,
+    # amp: float = default_amp,
+    # dt: float = 1e-2,
+    # include_dir: bool = True,
+# ) -> str:
+    # fname = f"{gate_lbl}_{tg}ns_{amp}GHz_{dt}dt.npy"
+    # if include_dir:
+        # fname = "../output/pulses/" + fname
+    # return fname
+#
+#
 # define funcs
-def is_prebuilt(
-    gate_label: str | int,
-    tg: str | int = default_tg,
-    amp: float | int = default_amp,
-    dt=1e-2,
-) -> bool:
-    prebuilt_pulses = os.listdir("../output/pulses")
-    fname: str = build_npy_fname(gate_label, tg, amp, dt, include_dir=False)
+# def is_prebuilt(
+    # gate_label: str | int,
+    # tg: str | int = default_tg,
+    # amp: float | int = default_amp,
+    # dt=1e-2,
+# ) -> bool:
+    # prebuilt_pulses = os.listdir("../output/pulses")
+    # fname: str = build_npy_fname(gate_label, tg, amp, dt, include_dir=False)
     # fname:str = f'{geo_phase}_{tg}ns_{dt}dt_{amp}GHz_pulse.npy'
-    return fname in prebuilt_pulses
-
-
-def build_pulse(
-    gate_label: str,
-    geo_phase: float,
-    circuit: CompositeSystem,
-    tg: float = default_tg,
-    omega_0: float = default_amp,
-    dt: float = 0.01,
-    save_spec=False,
-    **kwargs,
-) -> np.ndarray[float]:
-    fname = build_npy_fname(gate_label, tg, omega_0, dt)
-    if is_prebuilt(gate_label, tg, omega_0, dt) and "save_components" not in kwargs:
-        return np.load(fname)
-    else:
-        pulse_params: dict[str, float | dict[str, float]] = {
-            **default_p_params,
-            "tg": tg,
-            "omega_0": omega_0,
-        }
-        tlist = np.arange(0, tg, dt)
-        pulse_generator: Pulse = Pulse(
-            pulse_params=pulse_params, circuit=circuit, dt=dt
-        )
-        pulse_spec = {
-            gate_label: {"geo_phase": geo_phase,
-                         "tg": tg, "omega_0": omega_0, "dt": dt}
-        }
-        if save_spec:
-            write_pulse_spec(pulse_spec)
-        if "save_components" in kwargs:
-            save_pulse_components(
-                pulse_generator, gate_label, pulse_spec[gate_label], **kwargs
-            )
-        if is_prebuilt(gate_label, tg, omega_0, dt):
-            return np.load(fname)
-        else:
-            return pulse_generator.build_pulse(tlist, geo_phase, fname)
-
-
-def write_pulse_spec(pulse_spec: dict[str, dict[str, float]]) -> None:
-    current_specs = get_params("../config/pulses.yaml")
-    updated_specs = {**current_specs, **pulse_spec}
-    with open("../config/pulses.yaml", "w") as yfile:
-        try:
-            yaml.safe_dump(updated_specs, yfile)
-        except yaml.YAMLError as exc:
-            print(exc)
-
-
-def build_pulses(pulses_params: list[dict[str, float | str]] | None = None) -> None:
-    """function checks that all pulses specified in \
-    `../config/pulses.yaml` are written to the `../output/pulses`
-    directory as a .npy file. If an entry in pulses.yaml is
-    found that does not have a corresponding .npy file, that
-    pulse will be generated and it's .npy file written.
-    """
-    if pulses_params is None:
-        with open("../config/pulses.yaml", "r") as stream:
-            try:
-                pulse_specs = yaml.safe_load(stream)
-            except yaml.YAMLError as exc:
-                print(exc)
-        for gate_lbl, spec in pulse_specs.items():
-            build_pulse(gate_label=gate_lbl, **spec)
-    else:
-        return list([build_pulse(**pulse_params) for pulse_params in pulses_params])
-
-
-def profile_pulse_component(
-    func: Callable["...", float | complex],
-    tlist: np.ndarray[float],
-    **kwargs: dict[str, float],
-) -> np.ndarray[Any]:
-    result_array = np.array([func(t=t, **kwargs) for t in tlist])
-    return result_array
-
-
-def save_pulse_component(
-    fname: str,
-    gate_lbl: str,
-    tg: float,
-    omega_0: float,
-    dt: float,
-    func: Callable["...", float | complex],
-    **kwargs: dict[str, float],
-) -> None:
-    if is_prebuilt(f"{gate_lbl}_{fname}", tg, omega_0, dt):
-        return None
-    else:
-        tlist = np.arange(0, tg, dt)
-        result_array = profile_pulse_component(func, tlist, **kwargs)
-        fname = build_npy_fname(f"{gate_lbl}_{fname}", tg, omega_0, dt)
-        np.save(fname, result_array)
-
-
-def save_pulse_components(
-    pulse_generator: Pulse, gate_label: str, pulse_spec: dict[str, float], **kwargs
-):
-    pulse_components = kwargs["save_components"]
-    pulse_generator_methods = inspect.getmembers(
-        pulse_generator, predicate=inspect.ismethod
-    )
-    pulse_generator_methods = dict(pulse_generator_methods)
-    for component_method, component_method_kwargs in pulse_components.items():
-        if component_method_kwargs is None:
-            component_method_kwargs = {}
-        func: Callable["...", Any] = pulse_generator_methods[component_method]
-        tg = pulse_spec["tg"]
-        omega_0 = pulse_spec["omega_0"]
-        dt = pulse_spec["dt"]
-        save_pulse_component(
-            fname=component_method,
-            gate_lbl=gate_label,
-            tg=tg,
-            omega_0=omega_0,
-            dt=dt,
-            func=func,
-            **component_method_kwargs,
-        )
-
-
-if __name__ == "__main__":
-    pass
+    # return fname in prebuilt_pulses
+#
+#
+# def build_pulse(
+    # gate_label: str,
+    # geo_phase: float,
+    # circuit: CompositeSystem,
+    # tg: float = default_tg,
+    # omega_0: float = default_amp,
+    # dt: float = 0.01,
+    # save_spec=False,
+    # **kwargs,
+# ) -> np.ndarray[float]:
+    # fname = build_npy_fname(gate_label, tg, omega_0, dt)
+    # if is_prebuilt(gate_label, tg, omega_0, dt) and "save_components" not in kwargs:
+        # return np.load(fname)
+    # else:
+        # pulse_params: dict[str, float | dict[str, float]] = {
+        # **default_p_params,
+        # "tg": tg,
+        # "omega_0": omega_0,
+        # }
+        # tlist = np.arange(0, tg, dt)
+        # pulse_generator: Pulse = Pulse(
+        # pulse_params=pulse_params, circuit=circuit, dt=dt
+        # )
+        # pulse_spec = {
+        # gate_label: {"geo_phase": geo_phase,
+        # "tg": tg, "omega_0": omega_0, "dt": dt}
+        # }
+        # if save_spec:
+        # write_pulse_spec(pulse_spec)
+        # if "save_components" in kwargs:
+        # save_pulse_components(
+        # pulse_generator, gate_label, pulse_spec[gate_label], **kwargs
+        # )
+        # if is_prebuilt(gate_label, tg, omega_0, dt):
+        # return np.load(fname)
+        # else:
+        # return pulse_generator.build_pulse(tlist, geo_phase, fname)
+#
+#
+# def write_pulse_spec(pulse_spec: dict[str, dict[str, float]]) -> None:
+    # current_specs = get_params("../config/pulses.yaml")
+    # updated_specs = {**current_specs, **pulse_spec}
+    # with open("../config/pulses.yaml", "w") as yfile:
+        # try:
+        # yaml.safe_dump(updated_specs, yfile)
+        # except yaml.YAMLError as exc:
+        # print(exc)
+#
+#
+# def build_pulses(pulses_params: list[dict[str, float | str]] | None = None) -> None:
+    # """function checks that all pulses specified in \
+    # `../config/pulses.yaml` are written to the `../output/pulses`
+    # directory as a .npy file. If an entry in pulses.yaml is
+    # found that does not have a corresponding .npy file, that
+    # pulse will be generated and it's .npy file written.
+    # """
+    # if pulses_params is None:
+        # with open("../config/pulses.yaml", "r") as stream:
+        # try:
+        # pulse_specs = yaml.safe_load(stream)
+        # except yaml.YAMLError as exc:
+        # print(exc)
+        # for gate_lbl, spec in pulse_specs.items():
+        # build_pulse(gate_label=gate_lbl, **spec)
+    # else:
+        # return list([build_pulse(**pulse_params) for pulse_params in pulses_params])
+#
+#
+# def profile_pulse_component(
+    # func: Callable["...", float | complex],
+    # tlist: np.ndarray[float],
+    # **kwargs: dict[str, float],
+# ) -> np.ndarray[Any]:
+    # result_array = np.array([func(t=t, **kwargs) for t in tlist])
+    # return result_array
+#
+#
+# def save_pulse_component(
+    # fname: str,
+    # gate_lbl: str,
+    # tg: float,
+    # omega_0: float,
+    # dt: float,
+    # func: Callable["...", float | complex],
+    # **kwargs: dict[str, float],
+# ) -> None:
+    # if is_prebuilt(f"{gate_lbl}_{fname}", tg, omega_0, dt):
+        # return None
+    # else:
+        # tlist = np.arange(0, tg, dt)
+        # result_array = profile_pulse_component(func, tlist, **kwargs)
+        # fname = build_npy_fname(f"{gate_lbl}_{fname}", tg, omega_0, dt)
+        # np.save(fname, result_array)
+#
+#
+# def save_pulse_components(
+    # pulse_generator: Pulse, gate_label: str, pulse_spec: dict[str, float], **kwargs
+# ):
+    # pulse_components = kwargs["save_components"]
+    # pulse_generator_methods = inspect.getmembers(
+        # pulse_generator, predicate=inspect.ismethod
+    # )
+    # pulse_generator_methods = dict(pulse_generator_methods)
+    # for component_method, component_method_kwargs in pulse_components.items():
+        # if component_method_kwargs is None:
+        # component_method_kwargs = {}
+        # func: Callable["...", Any] = pulse_generator_methods[component_method]
+        # tg = pulse_spec["tg"]
+        # omega_0 = pulse_spec["omega_0"]
+        # dt = pulse_spec["dt"]
+        # save_pulse_component(
+        # fname=component_method,
+        # gate_lbl=gate_label,
+        # tg=tg,
+        # omega_0=omega_0,
+        # dt=dt,
+        # func=func,
+        # **component_method_kwargs,
+        # )
+#
+#
+# if __name__ == "__main__":
+    # pass
 # build_pulses()
